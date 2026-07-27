@@ -53,10 +53,10 @@ export default function Login() {
 
             {/* Log in btn */}
             <TouchableOpacity
-                style={[styles.loginButton]}
+                style={[styles.loginButton, {backgroundColor: activeColors.primaryButton}]}
                 onPress={handleLogin}
             >
-                <Text style={[styles.loginButtonText]}>
+                <Text style={[styles.loginButtonText, {color: activeColors.primaryButtonText}]}>
                     Log in
                 </Text>
             </TouchableOpacity>
@@ -68,7 +68,7 @@ export default function Login() {
                 </Text>
                 <Link asChild href={"/register"} replace>
                     <TouchableOpacity>
-                        <Text style={[styles.registerText, {color: activeColors.text}]}>
+                        <Text style={[styles.registerText, {color: activeColors.link}]}>
                             Sign up
                         </Text>
                     </TouchableOpacity>
@@ -100,11 +100,12 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 8,
         alignItems: 'center',
+        marginTop: 10,
+        marginBottom: 10,
     },
     loginButtonText: {
         fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 20,
     },
     registerContainer: {
         flexDirection: 'row',
