@@ -66,7 +66,7 @@ export default function Login() {
                 <Text style={{color: activeColors.text}}>
                     Don't have an account?{" "}
                 </Text>
-                <Link href={"/register"} asChild>
+                <Link asChild href={"/register"} replace>
                     <TouchableOpacity>
                         <Text style={[styles.registerText, {color: activeColors.text}]}>
                             Sign up
