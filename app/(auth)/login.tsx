@@ -27,6 +27,7 @@ export default function Login() {
                 placeholder={"E-mail"}
                 value={email}
                 onChangeText={setEmail}
+                keyboardType={"email-address"}
                 autoCapitalize={"none"}
             />
             <TextInput
