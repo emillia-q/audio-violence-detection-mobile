@@ -23,16 +23,18 @@ export default function Login() {
 
             {/* Inputs */}
             <TextInput
-                style={[styles.input, {color: activeColors.text, borderColor: activeColors.icon}]}
+                style={[styles.input, {color: activeColors.text, borderColor: activeColors.border}]}
                 placeholder={"E-mail"}
+                placeholderTextColor={activeColors.placeholder}
                 value={email}
                 onChangeText={setEmail}
                 keyboardType={"email-address"}
                 autoCapitalize={"none"}
             />
             <TextInput
-                style={[styles.input, {color: activeColors.text, borderColor: activeColors.icon}]}
+                style={[styles.input, {color: activeColors.text, borderColor: activeColors.border}]}
                 placeholder={"Password"}
+                placeholderTextColor={activeColors.placeholder}
                 value={password}
                 onChangeText={setPassword}
                 secureTextEntry
