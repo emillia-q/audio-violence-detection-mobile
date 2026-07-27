@@ -20,6 +20,7 @@ export default function Login() {
                 placeholder={"E-mail"}
                 value={email}
                 onChangeText={setEmail}
+                autoCapitalize={"none"}
             />
         </View>
     )
