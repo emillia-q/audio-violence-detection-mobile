@@ -1,39 +1,41 @@
-/**
- * Below are the colors that are used in the app. The colors are defined in the light and dark mode.
- * There are many other ways to style your app. For example, [Nativewind](https://www.nativewind.dev/), [Tamagui](https://tamagui.dev/), [unistyles](https://reactnativeunistyles.vercel.app), etc.
- */
-
 import { Platform } from 'react-native';
 
-const tintColorLight = '#0a7ea4';
-const tintColorDark = '#fff';
+const backgroundDark = '#0F172A';
+const textSilver = '#E2E8F0';
+const borderDefault = '#334155';
 
 export const Colors = {
-  light: {
-    text: '#11181C',
-    background: '#fff',
-    tint: tintColorLight,
-    icon: '#687076',
-    tabIconDefault: '#687076',
-    tabIconSelected: tintColorLight,
-    border: '#cccccc',
-    placeholder: '#888888',
-    link: '#2563eb',
-    primaryButton: '#0a7ea4',
-    primaryButtonText: '#ffffff',
+  default: {
+    background: backgroundDark,
+    text: textSilver,
+    border: borderDefault,
+    placeholder: '#94A3B8',
+    primaryButton: '#2563EB',
+    primaryButtonText: '#FFFFFF',
+    link: '#60A5FA',
+    tint: '#2563EB',
   },
-  dark: {
-    text: '#ECEDEE',
-    background: '#151718',
-    tint: tintColorDark,
-    icon: '#9BA1A6',
-    tabIconDefault: '#9BA1A6',
-    tabIconSelected: tintColorDark,
-    border: '#444444',
-    placeholder: '#aaaaaa',
-    link: '#60a5fa',
-    primaryButton: '#2e8baf',
-    primaryButtonText: '#ffffff',
+
+  user: {
+    background: backgroundDark,
+    text: textSilver,
+    border: borderDefault,
+    placeholder: '#94A3B8',
+    primaryButton: '#3B82F6',
+    primaryButtonText: '#FFFFFF',
+    link: '#60A5FA',
+    tint: '#3B82F6',
+  },
+
+  trustedUser: {
+    background: backgroundDark,
+    text: textSilver,
+    border: borderDefault,
+    placeholder: '#94A3B8',
+    primaryButton: '#1E40AF',
+    primaryButtonText: '#FFFFFF',
+    link: '#93C5FD',
+    tint: '#1E40AF',
   },
 };
 
