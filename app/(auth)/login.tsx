@@ -6,7 +6,9 @@ import {
     useColorScheme,
     KeyboardAvoidingView,
     Platform,
-    TouchableOpacity, View
+    TouchableOpacity,
+    View,
+    StatusBar
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
@@ -15,10 +17,8 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
-    // Get phone theme
-    const theme = useColorScheme() ?? 'light';
-    // Get appropriate color package
-    const activeColors = Colors[theme];
+    // Shared theme
+    const activeColors = Colors.default;
 
     const handleLogin = () => {
         // TODO: call backend
@@ -29,12 +29,20 @@ export default function Login() {
         <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             style={[styles.container, {backgroundColor: activeColors.background}]}>
+
+            <StatusBar barStyle="light-content" backgroundColor={activeColors.background} />
+
             <Text style={[styles.title, {color: activeColors.text}]}>
-                Audio Violence Detection</Text>
+                Audio Violence Detection
+            </Text>
 
             {/* Inputs */}
             <TextInput
-                style={[styles.input, {color: activeColors.text, borderColor: activeColors.border}]}
+                style={[styles.input, {
+                    color: activeColors.text,
+                    borderColor: activeColors.border,
+                    backgroundColor: 'rgba(255,255,255,0.05)'
+                }]}
                 placeholder={"E-mail"}
                 placeholderTextColor={activeColors.placeholder}
                 value={email}
@@ -43,7 +51,11 @@ export default function Login() {
                 autoCapitalize={"none"}
             />
             <TextInput
-                style={[styles.input, {color: activeColors.text, borderColor: activeColors.border}]}
+                style={[styles.input, {
+                    color: activeColors.text,
+                    borderColor: activeColors.border,
+                    backgroundColor: 'rgba(255,255,255,0.05)'
+                }]}
                 placeholder={"Password"}
                 placeholderTextColor={activeColors.placeholder}
                 value={password}
@@ -82,30 +94,38 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         justifyContent: 'center',
-        padding: 20,
+        padding: 25,
     },
     title: {
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 28,
+        fontWeight: '900',
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 40,
+        letterSpacing: 1,
     },
     input: {
         borderWidth: 1,
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
+        padding: 15,
+        borderRadius: 12,
+        marginBottom: 15,
+        fontSize: 16,
     },
     loginButton: {
-        padding: 15,
-        borderRadius: 8,
+        padding: 16,
+        borderRadius: 12,
         alignItems: 'center',
-        marginTop: 10,
-        marginBottom: 10,
+        marginTop: 15,
+        marginBottom: 20,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.3,
+        shadowRadius: 5,
+        elevation: 5,
     },
     loginButtonText: {
-        fontSize: 16,
+        fontSize: 18,
         fontWeight: 'bold',
+        letterSpacing: 0.5,
     },
     registerContainer: {
         flexDirection: 'row',
@@ -113,5 +133,6 @@ const styles = StyleSheet.create({
     },
     registerText: {
         fontWeight: 'bold',
+        fontSize: 16,
     }
 });
