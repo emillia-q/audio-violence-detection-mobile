@@ -1,5 +1,14 @@
 import {useState} from "react";
-import {Text, TextInput, View, StyleSheet, useColorScheme, KeyboardAvoidingView, Platform} from "react-native";
+import {
+    Text,
+    TextInput,
+    View,
+    StyleSheet,
+    useColorScheme,
+    KeyboardAvoidingView,
+    Platform,
+    TouchableOpacity
+} from "react-native";
 import {Colors} from "@/src/constants/theme";
 
 export default function Login() {
@@ -41,6 +50,18 @@ export default function Login() {
                 onChangeText={setPassword}
                 secureTextEntry
             />
+
+            {/* Log in btn */}
+            <TouchableOpacity
+                style={[styles.loginButton]}
+                onPress={handleLogin}
+            >
+                <Text
+                    style={[styles.loginButtonText]}
+                >
+                    Log in
+                </Text>
+            </TouchableOpacity>
         </KeyboardAvoidingView>
     )
 }
@@ -62,5 +83,14 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
         marginBottom: 10,
+    },
+    loginButton: {
+        padding: 15,
+        borderRadius: 8,
+        alignItems: 'center',
+    },
+    loginButtonText: {
+        fontSize: 16,
+        fontWeight: 'bold',
     }
 });
