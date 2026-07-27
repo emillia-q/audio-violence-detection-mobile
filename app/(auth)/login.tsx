@@ -22,6 +22,13 @@ export default function Login() {
                 onChangeText={setEmail}
                 autoCapitalize={"none"}
             />
+            <TextInput
+                style={styles.input}
+                placeholder={"Password"}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+            />
         </View>
     )
 }
