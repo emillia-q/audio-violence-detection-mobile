@@ -19,6 +19,8 @@ export const Colors = {
     border: '#cccccc',
     placeholder: '#888888',
     link: '#2563eb',
+    primaryButton: '#0a7ea4',
+    primaryButtonText: '#ffffff',
   },
   dark: {
     text: '#ECEDEE',
@@ -30,6 +32,8 @@ export const Colors = {
     border: '#444444',
     placeholder: '#aaaaaa',
     link: '#60a5fa',
+    primaryButton: '#2e8baf',
+    primaryButtonText: '#ffffff',
   },
 };
 
