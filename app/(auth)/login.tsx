@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {Text, TextInput, View, StyleSheet, useColorScheme} from "react-native";
+import {Text, TextInput, View, StyleSheet, useColorScheme, KeyboardAvoidingView, Platform} from "react-native";
 import {Colors} from "@/src/constants/theme";
 
 export default function Login() {
@@ -17,7 +17,9 @@ export default function Login() {
     }
 
     return (
-        <View style={[styles.container, {backgroundColor: activeColors.background}]}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            style={[styles.container, {backgroundColor: activeColors.background}]}>
             <Text style={[styles.title, {color: activeColors.text}]}>
                 Audio Violence Detection</Text>
 
@@ -39,7 +41,7 @@ export default function Login() {
                 onChangeText={setPassword}
                 secureTextEntry
             />
-        </View>
+        </KeyboardAvoidingView>
     )
 }
 
