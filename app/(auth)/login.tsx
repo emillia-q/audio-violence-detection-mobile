@@ -6,9 +6,10 @@ import {
     useColorScheme,
     KeyboardAvoidingView,
     Platform,
-    TouchableOpacity
+    TouchableOpacity, View
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
+import {Link} from "expo-router";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -55,12 +56,24 @@ export default function Login() {
                 style={[styles.loginButton]}
                 onPress={handleLogin}
             >
-                <Text
-                    style={[styles.loginButtonText]}
-                >
+                <Text style={[styles.loginButtonText]}>
                     Log in
                 </Text>
             </TouchableOpacity>
+
+            {/* Sign in when have no account */}
+            <View style={styles.registerContainer}>
+                <Text style={{color: activeColors.text}}>
+                    Don't have an account?{" "}
+                </Text>
+                <Link href={"/register"} asChild>
+                    <TouchableOpacity>
+                        <Text style={[styles.registerText, {color: activeColors.text}]}>
+                            Sign up
+                        </Text>
+                    </TouchableOpacity>
+                </Link>
+            </View>
         </KeyboardAvoidingView>
     )
 }
@@ -90,6 +103,14 @@ const styles = StyleSheet.create({
     },
     loginButtonText: {
         fontSize: 16,
+        fontWeight: 'bold',
+        marginBottom: 20,
+    },
+    registerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    registerText: {
         fontWeight: 'bold',
     }
 });
