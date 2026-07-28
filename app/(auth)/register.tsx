@@ -49,7 +49,7 @@ export default function Register() {
 
                 {/* Inputs */}
                 {/* First & last name */}
-                <Text style={[styles.text, {color: activeColors.text}]}>
+                <Text style={[styles.label, {color: activeColors.placeholder}]}>
                     First name
                 </Text>
                 <CustomInput
@@ -59,7 +59,7 @@ export default function Register() {
                     value={firstName}
                     onChangeText={setFirstName}
                 />
-                <Text style={[styles.text, {color: activeColors.text}]}>
+                <Text style={[styles.label, {color: activeColors.placeholder}]}>
                     Last name
                 </Text>
                 <CustomInput
@@ -70,7 +70,7 @@ export default function Register() {
                     onChangeText={setLastName}
                 />
                 {/* E-mail */}
-                <Text style={[styles.text, {color: activeColors.text}]}>
+                <Text style={[styles.label, {color: activeColors.placeholder}]}>
                     E-mail
                 </Text>
                 <CustomInput
@@ -83,7 +83,7 @@ export default function Register() {
                     autoCapitalize={"none"}
                 />
                 {/* Password */}
-                <Text style={[styles.text, {color: activeColors.text}]}>
+                <Text style={[styles.label, {color: activeColors.placeholder}]}>
                     Password
                 </Text>
                 <CustomInput
@@ -94,7 +94,7 @@ export default function Register() {
                     onChangeText={setPassword}
                     secureTextEntry
                 />
-                <Text style={[styles.text, {color: activeColors.text}]}>
+                <Text style={[styles.label, {color: activeColors.placeholder}]}>
                     Confirm password
                 </Text>
                 <CustomInput
@@ -147,10 +147,13 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         letterSpacing: 1,
     },
-    text: {
-        fontSize: 16,
-        marginLeft: 10,
-        marginBottom: 6,
+    label: {
+        fontSize: 14,
+        fontWeight: '600',
+        marginLeft: 4,
+        marginBottom: 12,
+        textTransform: 'uppercase',
+        letterSpacing: 0.5,
     },
     input: {
         marginBottom: 12,
