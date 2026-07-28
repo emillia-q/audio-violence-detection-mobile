@@ -1,6 +1,7 @@
-import {StyleSheet, TextInput, TextInputProps, View} from "react-native";
+import {StyleSheet, TextInput, TextInputProps, TouchableOpacity, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {useState} from "react";
+import {Ionicons} from "@expo/vector-icons";
 
 interface CustomInputProps extends TextInputProps {}
 
@@ -43,6 +44,20 @@ export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}:
                     {color: activeColors.text}
                 ]}
             />
+
+            {/* Password eye */}
+            {isPasswordField && (
+                <TouchableOpacity
+                    style={styles.iconContainer}
+                    onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                >
+                    <Ionicons
+                        name={isPasswordVisible ? "eye-off" : "eye"}
+                        size={22}
+                        color={activeColors.placeholder}
+                    />
+                </TouchableOpacity>
+            )}
         </View>
     );
 }
@@ -53,12 +68,17 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1.5,
         borderRadius: 14,
-        overflow: 'hidden',
+        overflow: 'hidden', // Bg not stick out beyond corners
     },
     input: {
         flex: 1,
         paddingVertical: 16,
         paddingHorizontal: 16,
         fontSize: 16,
-    }
+    },
+    iconContainer: {
+        paddingHorizontal: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 })
