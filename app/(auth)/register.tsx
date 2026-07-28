@@ -1,5 +1,14 @@
 import {useState} from "react";
-import {KeyboardAvoidingView, Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StatusBar,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View
+} from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
@@ -30,89 +39,94 @@ export default function Register() {
 
             <StatusBar barStyle="light-content" backgroundColor={activeColors.background} />
 
-            <Text style={[styles.title, {color: activeColors.text}]}>
-                Create Account
-            </Text>
-
-            {/* Inputs */}
-            {/* First & last name */}
-            <Text style={[styles.text, {color: activeColors.text}]}>
-                First name
-            </Text>
-            <CustomInput
-                style={[styles.input]}
-                placeholder={"e.g. Anna"}
-                placeholderTextColor={activeColors.placeholder}
-                value={firstName}
-                onChangeText={setFirstName}
-            />
-            <Text style={[styles.text, {color: activeColors.text}]}>
-                Last name
-            </Text>
-            <CustomInput
-                style={[styles.input]}
-                placeholder={"e.g. Nowak"}
-                placeholderTextColor={activeColors.placeholder}
-                value={lastName}
-                onChangeText={setLastName}
-            />
-            {/* E-mail */}
-            <Text style={[styles.text, {color: activeColors.text}]}>
-                E-mail
-            </Text>
-            <CustomInput
-                style={[styles.input]}
-                placeholder={"e.g. anna@example.com"}
-                placeholderTextColor={activeColors.placeholder}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType={"email-address"}
-                autoCapitalize={"none"}
-            />
-            {/* Password */}
-            <Text style={[styles.text, {color: activeColors.text}]}>
-                Password
-            </Text>
-            <CustomInput
-                style={[styles.input]}
-                placeholder={"Password"}
-                placeholderTextColor={activeColors.placeholder}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-            <Text style={[styles.text, {color: activeColors.text}]}>
-                Confirm password
-            </Text>
-            <CustomInput
-                style={[styles.input]}
-                placeholder={"Repeat your password"}
-                placeholderTextColor={activeColors.placeholder}
-                value={confirmPassword}
-                onChangeText={setConfirmPassword}
-                secureTextEntry
-            />
-
-            {/* Register btn */}
-            <CustomButton
-                style={styles.registerButton}
-                title={"Sign up"}
-                onPress={handleRegister}
-            />
-
-            {/* Log in when already have account */}
-            <View style={styles.loginContainer}>
-                <Text style={{color: activeColors.text}}>
-                    Already have an account?{" "}
+            <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
+                <Text style={[styles.title, {color: activeColors.text}]}>
+                    Create Account
                 </Text>
-                <Link asChild href={"/login"} replace>
-                    <TouchableOpacity>
-                        <Text style={[styles.loginText, {color: activeColors.link}]}>
-                            Log in
-                        </Text>
-                    </TouchableOpacity>
-                </Link>
-            </View>
+
+                {/* Inputs */}
+                {/* First & last name */}
+                <Text style={[styles.text, {color: activeColors.text}]}>
+                    First name
+                </Text>
+                <CustomInput
+                    style={[styles.input]}
+                    placeholder={"e.g. Anna"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={firstName}
+                    onChangeText={setFirstName}
+                />
+                <Text style={[styles.text, {color: activeColors.text}]}>
+                    Last name
+                </Text>
+                <CustomInput
+                    style={[styles.input]}
+                    placeholder={"e.g. Nowak"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={lastName}
+                    onChangeText={setLastName}
+                />
+                {/* E-mail */}
+                <Text style={[styles.text, {color: activeColors.text}]}>
+                    E-mail
+                </Text>
+                <CustomInput
+                    style={[styles.input]}
+                    placeholder={"e.g. anna@example.com"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType={"email-address"}
+                    autoCapitalize={"none"}
+                />
+                {/* Password */}
+                <Text style={[styles.text, {color: activeColors.text}]}>
+                    Password
+                </Text>
+                <CustomInput
+                    style={[styles.input]}
+                    placeholder={"Password"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+                <Text style={[styles.text, {color: activeColors.text}]}>
+                    Confirm password
+                </Text>
+                <CustomInput
+                    style={[styles.input]}
+                    placeholder={"Repeat your password"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={confirmPassword}
+                    onChangeText={setConfirmPassword}
+                    secureTextEntry
+                />
+
+                {/* Register btn */}
+                <CustomButton
+                    style={styles.registerButton}
+                    title={"Sign up"}
+                    onPress={handleRegister}
+                />
+
+                {/* Log in when already have account */}
+                <View style={styles.loginContainer}>
+                    <Text style={{color: activeColors.text}}>
+                        Already have an account?{" "}
+                    </Text>
+                    <Link asChild href={"/login"} replace>
+                        <TouchableOpacity>
+                            <Text style={[styles.loginText, {color: activeColors.link}]}>
+                                Log in
+                            </Text>
+                        </TouchableOpacity>
+                    </Link>
+                </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     );
 }
@@ -120,11 +134,11 @@ export default function Register() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        padding: 25,
     },
     scrollContainer: {
-      flexGrow: 1,
+        flexGrow: 1,
+        justifyContent: 'center',
+        padding: 25,
     },
     title: {
         fontSize: 28,
