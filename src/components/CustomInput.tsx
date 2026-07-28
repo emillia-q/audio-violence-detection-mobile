@@ -3,11 +3,13 @@ import {Colors} from "@/src/constants/theme";
 
 interface CustomInputProps extends TextInputProps {}
 
-export function CustomInput(props: CustomInputProps) {
+export function CustomInput({style, ...rest}: CustomInputProps) {
     const activeColors = Colors.default;
 
     return (
         <TextInput
+            {...rest}
+            placeholderTextColor={activeColors.placeholder}
             style={[
                 styles.input,
                 {
@@ -15,10 +17,8 @@ export function CustomInput(props: CustomInputProps) {
                     borderColor: activeColors.border,
                     backgroundColor: 'rgba(255,255,255,0.05)'
                 },
-                props.style // Allows to override
+                style
             ]}
-            placeholderTextColor={activeColors.placeholder}
-            {...props}
         />
     );
 }
