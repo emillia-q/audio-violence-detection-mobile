@@ -1,41 +1,49 @@
 import { Platform } from 'react-native';
 
-const backgroundDark = '#0F172A';
-const textSilver = '#E2E8F0';
+const backgroundDark = '#0B1121'; // Main bg
+const surfaceDark = '#1E293B'; // Inputs
+const textSilver = '#F8FAFC'; // Headers
+const textMuted = '#94A3B8'; // Descriptions & labels
 const borderDefault = '#334155';
 
 export const Colors = {
   default: {
     background: backgroundDark,
+    surface: surfaceDark,
     text: textSilver,
+    muted: textMuted,
     border: borderDefault,
-    placeholder: '#94A3B8',
-    primaryButton: '#2563EB',
+    placeholder: '#64748B',
+    primaryButton: '#4F46E5',
     primaryButtonText: '#FFFFFF',
-    link: '#60A5FA',
-    tint: '#2563EB',
+    link: '#818CF8',
+    tint: '#4F46E5',
   },
 
   user: {
     background: backgroundDark,
+    surface: surfaceDark,
     text: textSilver,
+    muted: textMuted,
     border: borderDefault,
-    placeholder: '#94A3B8',
-    primaryButton: '#3B82F6',
+    placeholder: '#64748B',
+    primaryButton: '#0284C7',
     primaryButtonText: '#FFFFFF',
-    link: '#60A5FA',
-    tint: '#3B82F6',
+    link: '#38BDF8',
+    tint: '#0284C7',
   },
 
   trustedUser: {
     background: backgroundDark,
+    surface: surfaceDark,
     text: textSilver,
+    muted: textMuted,
     border: borderDefault,
-    placeholder: '#94A3B8',
-    primaryButton: '#1E40AF',
+    placeholder: '#64748B',
+    primaryButton: '#1E3A8A',
     primaryButtonText: '#FFFFFF',
     link: '#93C5FD',
-    tint: '#1E40AF',
+    tint: '#1E3A8A',
   },
 };
 
