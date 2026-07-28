@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
-import {CustomInput} from "@/src/components/CustomInput";
+import {CustomInput} from "@/src/components/ui/CustomInput";
 
 export default function Login() {
     const [email, setEmail] = useState('');
