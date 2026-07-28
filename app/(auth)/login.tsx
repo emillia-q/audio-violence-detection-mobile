@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
+import {CustomInput} from "@/src/components/CustomInput";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -37,12 +38,8 @@ export default function Login() {
             </Text>
 
             {/* Inputs */}
-            <TextInput
-                style={[styles.input, {
-                    color: activeColors.text,
-                    borderColor: activeColors.border,
-                    backgroundColor: 'rgba(255,255,255,0.05)'
-                }]}
+            <CustomInput
+                style={styles.input}
                 placeholder={"E-mail"}
                 placeholderTextColor={activeColors.placeholder}
                 value={email}
@@ -50,12 +47,8 @@ export default function Login() {
                 keyboardType={"email-address"}
                 autoCapitalize={"none"}
             />
-            <TextInput
-                style={[styles.input, {
-                    color: activeColors.text,
-                    borderColor: activeColors.border,
-                    backgroundColor: 'rgba(255,255,255,0.05)'
-                }]}
+            <CustomInput
+                style={styles.input}
                 placeholder={"Password"}
                 placeholderTextColor={activeColors.placeholder}
                 value={password}
@@ -104,11 +97,7 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     input: {
-        borderWidth: 1,
-        padding: 15,
-        borderRadius: 12,
         marginBottom: 15,
-        fontSize: 16,
     },
     loginButton: {
         padding: 16,
