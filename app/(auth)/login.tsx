@@ -36,9 +36,14 @@ export default function Login() {
                 contentContainerStyle={styles.scrollContainer}
                 showsVerticalScrollIndicator={false}
             >
-                <Text style={[styles.title, {color: activeColors.text}]}>
-                    Audio Violence Detection
-                </Text>
+                <View style={styles.headerContainer}>
+                    <Text style={[styles.title, {color: activeColors.text}]}>
+                        Audio Detection System
+                    </Text>
+                    <Text style={[styles.subtitle, {color: activeColors.muted}]}>
+                        Authenticate to access the audio monitoring system.
+                    </Text>
+                </View>
 
                 {/* Inputs */}
                 <Text style={[styles.label, {color: activeColors.muted}]}>
@@ -97,14 +102,26 @@ const styles = StyleSheet.create({
     scrollContainer: {
         flexGrow: 1,
         justifyContent: 'center',
-        padding: 25,
+        paddingHorizontal: 25,
+        paddingTop: 40,
+        paddingBottom: 60,
+    },
+    headerContainer: {
+        alignItems: 'center',
+        marginBottom: 32,
     },
     title: {
-        fontSize: 28,
-        fontWeight: '900',
+        fontSize: 30,
+        fontWeight: '800',
         textAlign: 'center',
-        marginBottom: 40,
-        letterSpacing: 1,
+        marginBottom: 8,
+        letterSpacing: 0.5,
+    },
+    subtitle: {
+        fontSize: 15,
+        lineHeight: 22,
+        textAlign: 'center',
+        paddingHorizontal: 10,
     },
     label: {
         fontSize: 13,
