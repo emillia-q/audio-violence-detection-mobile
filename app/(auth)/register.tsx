@@ -31,7 +31,7 @@ export default function Register() {
             <StatusBar barStyle="light-content" backgroundColor={activeColors.background} />
 
             <Text style={[styles.title, {color: activeColors.text}]}>
-                Registration
+                Create Account
             </Text>
 
             {/* Inputs */}
@@ -81,9 +81,12 @@ export default function Register() {
                 onChangeText={setPassword}
                 secureTextEntry
             />
+            <Text style={[styles.text, {color: activeColors.text}]}>
+                Confirm password
+            </Text>
             <CustomInput
                 style={[styles.input]}
-                placeholder={"Confirm password"}
+                placeholder={"Repeat your password"}
                 placeholderTextColor={activeColors.placeholder}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
@@ -93,7 +96,7 @@ export default function Register() {
             {/* Register btn */}
             <CustomButton
                 style={styles.registerButton}
-                title={"Register"}
+                title={"Sign up"}
                 onPress={handleRegister}
             />
 
@@ -119,6 +122,9 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 25,
+    },
+    scrollContainer: {
+      flexGrow: 1,
     },
     title: {
         fontSize: 28,
