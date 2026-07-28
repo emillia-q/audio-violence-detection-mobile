@@ -141,11 +141,11 @@ const styles = StyleSheet.create({
         padding: 25,
     },
     title: {
-        fontSize: 28,
-        fontWeight: '900',
+        fontSize: 32,
+        fontWeight: '800',
         textAlign: 'center',
-        marginBottom: 40,
-        letterSpacing: 1,
+        marginBottom: 35,
+        letterSpacing: 0.5,
     },
     label: {
         fontSize: 14,
