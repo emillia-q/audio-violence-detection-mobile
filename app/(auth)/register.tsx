@@ -1,6 +1,7 @@
 import {useState} from "react";
-import {KeyboardAvoidingView, Platform, StatusBar, StyleSheet} from "react-native";
+import {KeyboardAvoidingView, Platform, StatusBar, StyleSheet, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
+import {CustomInput} from "@/src/components/ui/CustomInput";
 
 export default function Register() {
     const [firstName, setFirstName] = useState('');
@@ -27,7 +28,22 @@ export default function Register() {
 
             <StatusBar barStyle="light-content" backgroundColor={activeColors.background} />
 
-
+            {/* Inputs */}
+            {/* First & last name */}
+            <CustomInput
+                style={[styles.input]}
+                placeholder={"First name"}
+                placeholderTextColor={activeColors.placeholder}
+                value={firstName}
+                onChangeText={setFirstName}
+            />
+            <CustomInput
+                style={[styles.input]}
+                placeholder={"Last name"}
+                placeholderTextColor={activeColors.placeholder}
+                value={lastName}
+                onChangeText={setLastName}
+            />
         </KeyboardAvoidingView>
     );
 }
@@ -37,5 +53,8 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 25,
+    },
+    input: {
+        marginBottom: 10,
     },
 })
