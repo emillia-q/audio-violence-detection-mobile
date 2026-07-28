@@ -44,6 +44,17 @@ export default function Register() {
                 value={lastName}
                 onChangeText={setLastName}
             />
+            {/*E-mail */}
+            <CustomInput
+                style={[styles.input]}
+                placeholder={"E-mail"}
+                placeholderTextColor={activeColors.placeholder}
+                value={email}
+                onChangeText={setEmail}
+                keyboardType={"email-address"}
+                autoCapitalize={"none"}
+            />
+
         </KeyboardAvoidingView>
     );
 }
