@@ -1,9 +1,7 @@
 import {useState} from "react";
 import {
     Text,
-    TextInput,
     StyleSheet,
-    useColorScheme,
     KeyboardAvoidingView,
     Platform,
     TouchableOpacity,
@@ -12,6 +10,8 @@ import {
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
+import {CustomInput} from "@/src/components/ui/CustomInput";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -37,12 +37,8 @@ export default function Login() {
             </Text>
 
             {/* Inputs */}
-            <TextInput
-                style={[styles.input, {
-                    color: activeColors.text,
-                    borderColor: activeColors.border,
-                    backgroundColor: 'rgba(255,255,255,0.05)'
-                }]}
+            <CustomInput
+                style={styles.input}
                 placeholder={"E-mail"}
                 placeholderTextColor={activeColors.placeholder}
                 value={email}
@@ -50,12 +46,8 @@ export default function Login() {
                 keyboardType={"email-address"}
                 autoCapitalize={"none"}
             />
-            <TextInput
-                style={[styles.input, {
-                    color: activeColors.text,
-                    borderColor: activeColors.border,
-                    backgroundColor: 'rgba(255,255,255,0.05)'
-                }]}
+            <CustomInput
+                style={styles.input}
                 placeholder={"Password"}
                 placeholderTextColor={activeColors.placeholder}
                 value={password}
@@ -64,14 +56,11 @@ export default function Login() {
             />
 
             {/* Log in btn */}
-            <TouchableOpacity
-                style={[styles.loginButton, {backgroundColor: activeColors.primaryButton}]}
+            <CustomButton
+                style={styles.loginButton}
+                title={"Log in"}
                 onPress={handleLogin}
-            >
-                <Text style={[styles.loginButtonText, {color: activeColors.primaryButtonText}]}>
-                    Log in
-                </Text>
-            </TouchableOpacity>
+            />
 
             {/* Sign in when have no account */}
             <View style={styles.registerContainer}>
@@ -104,28 +93,11 @@ const styles = StyleSheet.create({
         letterSpacing: 1,
     },
     input: {
-        borderWidth: 1,
-        padding: 15,
-        borderRadius: 12,
         marginBottom: 15,
-        fontSize: 16,
     },
     loginButton: {
-        padding: 16,
-        borderRadius: 12,
-        alignItems: 'center',
         marginTop: 15,
         marginBottom: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-        elevation: 5,
-    },
-    loginButtonText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        letterSpacing: 0.5,
     },
     registerContainer: {
         flexDirection: 'row',
