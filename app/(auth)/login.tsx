@@ -41,18 +41,24 @@ export default function Login() {
                 </Text>
 
                 {/* Inputs */}
+                <Text style={[styles.label, {color: activeColors.muted}]}>
+                    E-mail
+                </Text>
                 <CustomInput
-                    style={styles.input}
-                    placeholder={"E-mail"}
+                    style={styles.inputGroup}
+                    placeholder={"e.g. anna@example.com"}
                     placeholderTextColor={activeColors.placeholder}
                     value={email}
                     onChangeText={setEmail}
                     keyboardType={"email-address"}
                     autoCapitalize={"none"}
                 />
+                <Text style={[styles.label, {color: activeColors.muted}]}>
+                    Password
+                </Text>
                 <CustomInput
                     style={styles.input}
-                    placeholder={"Password"}
+                    placeholder={"Enter your password"}
                     placeholderTextColor={activeColors.placeholder}
                     value={password}
                     onChangeText={setPassword}
@@ -68,7 +74,7 @@ export default function Login() {
 
                 {/* Sign in when have no account */}
                 <View style={styles.registerContainer}>
-                    <Text style={{color: activeColors.text}}>
+                    <Text style={{color: activeColors.muted}}>
                         Don't have an account?{" "}
                     </Text>
                     <Link asChild href={"/register"} replace>
@@ -100,16 +106,28 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         letterSpacing: 1,
     },
+    label: {
+        fontSize: 13,
+        fontWeight: '700',
+        marginLeft: 4,
+        marginBottom: 8,
+        textTransform: 'uppercase',
+        letterSpacing: 0.8,
+    },
     input: {
-        marginBottom: 15,
+        marginBottom: 12,
+    },
+    inputGroup: {
+        marginBottom: 24,
     },
     loginButton: {
-        marginTop: 15,
-        marginBottom: 20,
+        marginTop: 20,
+        marginBottom: 30,
     },
     registerContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        paddingBottom: 20,
     },
     registerText: {
         fontWeight: 'bold',
