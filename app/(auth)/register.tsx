@@ -2,6 +2,7 @@ import {useState} from "react";
 import {KeyboardAvoidingView, Platform, StatusBar, StyleSheet, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {CustomInput} from "@/src/components/ui/CustomInput";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 export default function Register() {
     const [firstName, setFirstName] = useState('');
@@ -72,6 +73,12 @@ export default function Register() {
                 secureTextEntry
             />
 
+            {/* Register btn */}
+            <CustomButton
+                style={styles.registerButton}
+                title={"Register"}
+                onPress={handleRegister}
+            />
 
         </KeyboardAvoidingView>
     );
@@ -86,4 +93,8 @@ const styles = StyleSheet.create({
     input: {
         marginBottom: 10,
     },
+    registerButton: {
+        marginTop: 15,
+        marginBottom: 200,
+    }
 })
