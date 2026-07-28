@@ -8,6 +8,10 @@ export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}:
     const activeColors = Colors.default;
 
     const [isFocused, setIsFocused] = useState(false);
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+    // If field is set as password add eye icon
+    const isPasswordField = secureTextEntry !== undefined;
 
     return (
         <View style={[
@@ -21,6 +25,9 @@ export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}:
             <TextInput
                 {...rest}
                 placeholderTextColor={activeColors.placeholder}
+
+                // Password uncover
+                secureTextEntry={isPasswordField && !isPasswordVisible}
 
                 // Toggle focus
                 onFocus={(e) => {
