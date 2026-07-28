@@ -30,6 +30,10 @@ export default function Register() {
 
             <StatusBar barStyle="light-content" backgroundColor={activeColors.background} />
 
+            <Text style={[styles.title, {color: activeColors.text}]}>
+                Registration
+            </Text>
+
             {/* Inputs */}
             {/* First & last name */}
             <CustomInput
@@ -103,6 +107,13 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         padding: 25,
+    },
+    title: {
+        fontSize: 28,
+        fontWeight: '900',
+        textAlign: 'center',
+        marginBottom: 40,
+        letterSpacing: 1,
     },
     input: {
         marginBottom: 10,
