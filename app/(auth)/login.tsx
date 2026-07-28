@@ -98,16 +98,8 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     loginButton: {
-        padding: 16,
-        borderRadius: 12,
-        alignItems: 'center',
         marginTop: 15,
         marginBottom: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-        elevation: 5,
     },
     loginButtonText: {
         fontSize: 18,
