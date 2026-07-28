@@ -11,6 +11,7 @@ import {
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
 import {CustomInput} from "@/src/components/ui/CustomInput";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -55,14 +56,11 @@ export default function Login() {
             />
 
             {/* Log in btn */}
-            <TouchableOpacity
-                style={[styles.loginButton, {backgroundColor: activeColors.primaryButton}]}
+            <CustomButton
+                style={styles.loginButton}
+                title={"Log in"}
                 onPress={handleLogin}
-            >
-                <Text style={[styles.loginButtonText, {color: activeColors.primaryButtonText}]}>
-                    Log in
-                </Text>
-            </TouchableOpacity>
+            />
 
             {/* Sign in when have no account */}
             <View style={styles.registerContainer}>
