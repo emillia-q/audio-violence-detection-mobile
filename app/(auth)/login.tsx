@@ -6,7 +6,7 @@ import {
     Platform,
     TouchableOpacity,
     View,
-    StatusBar
+    StatusBar, ScrollView
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
@@ -32,49 +32,54 @@ export default function Login() {
 
             <StatusBar barStyle="light-content" backgroundColor={activeColors.background} />
 
-            <Text style={[styles.title, {color: activeColors.text}]}>
-                Audio Violence Detection
-            </Text>
-
-            {/* Inputs */}
-            <CustomInput
-                style={styles.input}
-                placeholder={"E-mail"}
-                placeholderTextColor={activeColors.placeholder}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType={"email-address"}
-                autoCapitalize={"none"}
-            />
-            <CustomInput
-                style={styles.input}
-                placeholder={"Password"}
-                placeholderTextColor={activeColors.placeholder}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-
-            {/* Log in btn */}
-            <CustomButton
-                style={styles.loginButton}
-                title={"Log in"}
-                onPress={handleLogin}
-            />
-
-            {/* Sign in when have no account */}
-            <View style={styles.registerContainer}>
-                <Text style={{color: activeColors.text}}>
-                    Don't have an account?{" "}
+            <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
+                <Text style={[styles.title, {color: activeColors.text}]}>
+                    Audio Violence Detection
                 </Text>
-                <Link asChild href={"/register"} replace>
-                    <TouchableOpacity>
-                        <Text style={[styles.registerText, {color: activeColors.link}]}>
-                            Sign up
-                        </Text>
-                    </TouchableOpacity>
-                </Link>
-            </View>
+
+                {/* Inputs */}
+                <CustomInput
+                    style={styles.input}
+                    placeholder={"E-mail"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType={"email-address"}
+                    autoCapitalize={"none"}
+                />
+                <CustomInput
+                    style={styles.input}
+                    placeholder={"Password"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+
+                {/* Log in btn */}
+                <CustomButton
+                    style={styles.loginButton}
+                    title={"Log in"}
+                    onPress={handleLogin}
+                />
+
+                {/* Sign in when have no account */}
+                <View style={styles.registerContainer}>
+                    <Text style={{color: activeColors.text}}>
+                        Don't have an account?{" "}
+                    </Text>
+                    <Link asChild href={"/register"} replace>
+                        <TouchableOpacity>
+                            <Text style={[styles.registerText, {color: activeColors.link}]}>
+                                Sign up
+                            </Text>
+                        </TouchableOpacity>
+                    </Link>
+                </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     )
 }
@@ -82,6 +87,9 @@ export default function Login() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    scrollContainer: {
+        flexGrow: 1,
         justifyContent: 'center',
         padding: 25,
     },
