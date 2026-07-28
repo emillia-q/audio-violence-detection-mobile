@@ -36,24 +36,33 @@ export default function Register() {
 
             {/* Inputs */}
             {/* First & last name */}
+            <Text style={[styles.text, {color: activeColors.text}]}>
+                First name
+            </Text>
             <CustomInput
                 style={[styles.input]}
-                placeholder={"First name"}
+                placeholder={"e.g. Anna"}
                 placeholderTextColor={activeColors.placeholder}
                 value={firstName}
                 onChangeText={setFirstName}
             />
+            <Text style={[styles.text, {color: activeColors.text}]}>
+                Last name
+            </Text>
             <CustomInput
                 style={[styles.input]}
-                placeholder={"Last name"}
+                placeholder={"e.g. Nowak"}
                 placeholderTextColor={activeColors.placeholder}
                 value={lastName}
                 onChangeText={setLastName}
             />
             {/* E-mail */}
+            <Text style={[styles.text, {color: activeColors.text}]}>
+                E-mail
+            </Text>
             <CustomInput
                 style={[styles.input]}
-                placeholder={"E-mail"}
+                placeholder={"e.g. anna@example.com"}
                 placeholderTextColor={activeColors.placeholder}
                 value={email}
                 onChangeText={setEmail}
@@ -61,6 +70,9 @@ export default function Register() {
                 autoCapitalize={"none"}
             />
             {/* Password */}
+            <Text style={[styles.text, {color: activeColors.text}]}>
+                Password
+            </Text>
             <CustomInput
                 style={[styles.input]}
                 placeholder={"Password"}
@@ -71,7 +83,7 @@ export default function Register() {
             />
             <CustomInput
                 style={[styles.input]}
-                placeholder={"Password"}
+                placeholder={"Confirm password"}
                 placeholderTextColor={activeColors.placeholder}
                 value={confirmPassword}
                 onChangeText={setConfirmPassword}
@@ -115,8 +127,13 @@ const styles = StyleSheet.create({
         marginBottom: 40,
         letterSpacing: 1,
     },
+    text: {
+        fontSize: 16,
+        marginLeft: 10,
+        marginBottom: 6,
+    },
     input: {
-        marginBottom: 10,
+        marginBottom: 12,
     },
     registerButton: {
         marginTop: 15,
