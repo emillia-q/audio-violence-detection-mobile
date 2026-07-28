@@ -1,8 +1,9 @@
 import {useState} from "react";
-import {KeyboardAvoidingView, Platform, StatusBar, StyleSheet, View} from "react-native";
+import {KeyboardAvoidingView, Platform, StatusBar, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import {Link} from "expo-router";
 
 export default function Register() {
     const [firstName, setFirstName] = useState('');
@@ -80,6 +81,19 @@ export default function Register() {
                 onPress={handleRegister}
             />
 
+            {/* Log in when already have account */}
+            <View style={styles.loginContainer}>
+                <Text style={{color: activeColors.text}}>
+                    Already have an account?{" "}
+                </Text>
+                <Link asChild href={"/login"} replace>
+                    <TouchableOpacity>
+                        <Text style={[styles.loginText, {color: activeColors.link}]}>
+                            Log in
+                        </Text>
+                    </TouchableOpacity>
+                </Link>
+            </View>
         </KeyboardAvoidingView>
     );
 }
@@ -95,6 +109,14 @@ const styles = StyleSheet.create({
     },
     registerButton: {
         marginTop: 15,
-        marginBottom: 200,
+        marginBottom: 20,
+    },
+    loginContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+    },
+    loginText: {
+        fontWeight: 'bold',
+        fontSize: 16,
     }
-})
+});
