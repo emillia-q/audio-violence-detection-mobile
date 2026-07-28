@@ -49,7 +49,7 @@ export default function Register() {
 
                 {/* Inputs */}
                 {/* First & last name */}
-                <Text style={[styles.label, {color: activeColors.placeholder}]}>
+                <Text style={[styles.label, {color: activeColors.muted}]}>
                     First name
                 </Text>
                 <CustomInput
@@ -59,7 +59,7 @@ export default function Register() {
                     value={firstName}
                     onChangeText={setFirstName}
                 />
-                <Text style={[styles.label, {color: activeColors.placeholder}]}>
+                <Text style={[styles.label, {color: activeColors.muted}]}>
                     Last name
                 </Text>
                 <CustomInput
@@ -70,7 +70,7 @@ export default function Register() {
                     onChangeText={setLastName}
                 />
                 {/* E-mail */}
-                <Text style={[styles.label, {color: activeColors.placeholder}]}>
+                <Text style={[styles.label, {color: activeColors.muted}]}>
                     E-mail
                 </Text>
                 <CustomInput
@@ -83,7 +83,7 @@ export default function Register() {
                     autoCapitalize={"none"}
                 />
                 {/* Password */}
-                <Text style={[styles.label, {color: activeColors.placeholder}]}>
+                <Text style={[styles.label, {color: activeColors.muted}]}>
                     Password
                 </Text>
                 <CustomInput
@@ -94,7 +94,7 @@ export default function Register() {
                     onChangeText={setPassword}
                     secureTextEntry
                 />
-                <Text style={[styles.label, {color: activeColors.placeholder}]}>
+                <Text style={[styles.label, {color: activeColors.muted}]}>
                     Confirm password
                 </Text>
                 <CustomInput
