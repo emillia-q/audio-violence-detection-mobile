@@ -101,11 +101,6 @@ const styles = StyleSheet.create({
         marginTop: 15,
         marginBottom: 20,
     },
-    loginButtonText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        letterSpacing: 0.5,
-    },
     registerContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
