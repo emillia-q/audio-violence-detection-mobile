@@ -10,10 +10,14 @@ export function CustomButton({style, title, ...rest}: CustomButtonProps) {
 
     return (
         <TouchableOpacity
+            activeOpacity={0.85} // Smoother click
             {...rest}
             style={[
                 styles.button,
-                {backgroundColor: activeColors.primaryButton},
+                {
+                    backgroundColor: activeColors.primaryButton,
+                    shadowColor: activeColors.primaryButton, // Better than black on a dark bg
+                },
                 style
             ]}
         >
@@ -26,18 +30,19 @@ export function CustomButton({style, title, ...rest}: CustomButtonProps) {
 
 const styles = StyleSheet.create({
     button: {
-        padding: 16,
-        borderRadius: 12,
+        paddingVertical: 16,
+        paddingHorizontal: 24,
+        borderRadius: 14,
         alignItems: 'center',
-        shadowColor: "#000",
+        justifyContent: 'center',
         shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.3,
-        shadowRadius: 5,
-        elevation: 5,
+        shadowOpacity: 0.25,
+        shadowRadius: 8,
+        elevation: 4,
     },
     text: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 17,
+        fontWeight: '700',
         letterSpacing: 0.5,
     }
 })

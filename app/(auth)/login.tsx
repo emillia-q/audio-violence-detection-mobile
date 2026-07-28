@@ -6,7 +6,7 @@ import {
     Platform,
     TouchableOpacity,
     View,
-    StatusBar
+    StatusBar, ScrollView
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
@@ -32,49 +32,65 @@ export default function Login() {
 
             <StatusBar barStyle="light-content" backgroundColor={activeColors.background} />
 
-            <Text style={[styles.title, {color: activeColors.text}]}>
-                Audio Violence Detection
-            </Text>
+            <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
+                <View style={styles.headerContainer}>
+                    <Text style={[styles.title, {color: activeColors.text}]}>
+                        Audio Detection System
+                    </Text>
+                    <Text style={[styles.subtitle, {color: activeColors.muted}]}>
+                        Authenticate to access the audio monitoring system.
+                    </Text>
+                </View>
 
-            {/* Inputs */}
-            <CustomInput
-                style={styles.input}
-                placeholder={"E-mail"}
-                placeholderTextColor={activeColors.placeholder}
-                value={email}
-                onChangeText={setEmail}
-                keyboardType={"email-address"}
-                autoCapitalize={"none"}
-            />
-            <CustomInput
-                style={styles.input}
-                placeholder={"Password"}
-                placeholderTextColor={activeColors.placeholder}
-                value={password}
-                onChangeText={setPassword}
-                secureTextEntry
-            />
-
-            {/* Log in btn */}
-            <CustomButton
-                style={styles.loginButton}
-                title={"Log in"}
-                onPress={handleLogin}
-            />
-
-            {/* Sign in when have no account */}
-            <View style={styles.registerContainer}>
-                <Text style={{color: activeColors.text}}>
-                    Don't have an account?{" "}
+                {/* Inputs */}
+                <Text style={[styles.label, {color: activeColors.muted}]}>
+                    E-mail
                 </Text>
-                <Link asChild href={"/register"} replace>
-                    <TouchableOpacity>
-                        <Text style={[styles.registerText, {color: activeColors.link}]}>
-                            Sign up
-                        </Text>
-                    </TouchableOpacity>
-                </Link>
-            </View>
+                <CustomInput
+                    style={styles.inputGroup}
+                    placeholder={"e.g. anna@example.com"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={email}
+                    onChangeText={setEmail}
+                    keyboardType={"email-address"}
+                    autoCapitalize={"none"}
+                />
+                <Text style={[styles.label, {color: activeColors.muted}]}>
+                    Password
+                </Text>
+                <CustomInput
+                    style={styles.input}
+                    placeholder={"Enter your password"}
+                    placeholderTextColor={activeColors.placeholder}
+                    value={password}
+                    onChangeText={setPassword}
+                    secureTextEntry
+                />
+
+                {/* Log in btn */}
+                <CustomButton
+                    style={styles.loginButton}
+                    title={"Log in"}
+                    onPress={handleLogin}
+                />
+
+                {/* Sign in when have no account */}
+                <View style={styles.registerContainer}>
+                    <Text style={{color: activeColors.muted}}>
+                        Don't have an account?{" "}
+                    </Text>
+                    <Link asChild href={"/register"} replace>
+                        <TouchableOpacity>
+                            <Text style={[styles.registerText, {color: activeColors.link}]}>
+                                Sign up
+                            </Text>
+                        </TouchableOpacity>
+                    </Link>
+                </View>
+            </ScrollView>
         </KeyboardAvoidingView>
     )
 }
@@ -82,26 +98,53 @@ export default function Login() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    scrollContainer: {
+        flexGrow: 1,
         justifyContent: 'center',
-        padding: 25,
+        paddingHorizontal: 25,
+        paddingTop: 40,
+        paddingBottom: 60,
+    },
+    headerContainer: {
+        alignItems: 'center',
+        marginBottom: 32,
     },
     title: {
-        fontSize: 28,
-        fontWeight: '900',
+        fontSize: 30,
+        fontWeight: '800',
         textAlign: 'center',
-        marginBottom: 40,
-        letterSpacing: 1,
+        marginBottom: 8,
+        letterSpacing: 0.5,
+    },
+    subtitle: {
+        fontSize: 15,
+        lineHeight: 22,
+        textAlign: 'center',
+        paddingHorizontal: 10,
+    },
+    label: {
+        fontSize: 13,
+        fontWeight: '700',
+        marginLeft: 4,
+        marginBottom: 8,
+        textTransform: 'uppercase',
+        letterSpacing: 0.8,
     },
     input: {
-        marginBottom: 15,
+        marginBottom: 12,
+    },
+    inputGroup: {
+        marginBottom: 24,
     },
     loginButton: {
-        marginTop: 15,
-        marginBottom: 20,
+        marginTop: 20,
+        marginBottom: 30,
     },
     registerContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        paddingBottom: 20,
     },
     registerText: {
         fontWeight: 'bold',
