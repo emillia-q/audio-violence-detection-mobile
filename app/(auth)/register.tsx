@@ -63,7 +63,7 @@ export default function Register() {
                     Last name
                 </Text>
                 <CustomInput
-                    style={[styles.input]}
+                    style={[styles.inputGroup]}
                     placeholder={"e.g. Nowak"}
                     placeholderTextColor={activeColors.placeholder}
                     value={lastName}
@@ -74,7 +74,7 @@ export default function Register() {
                     E-mail
                 </Text>
                 <CustomInput
-                    style={[styles.input]}
+                    style={[styles.inputGroup]}
                     placeholder={"e.g. anna@example.com"}
                     placeholderTextColor={activeColors.placeholder}
                     value={email}
@@ -158,6 +158,9 @@ const styles = StyleSheet.create({
     input: {
         marginBottom: 12,
     },
+    inputGroup: {
+      marginBottom: 24,
+    },
     registerButton: {
         marginTop: 15,
         marginBottom: 20,
@@ -165,6 +168,7 @@ const styles = StyleSheet.create({
     loginContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
+        paddingBottom: 20,
     },
     loginText: {
         fontWeight: 'bold',
