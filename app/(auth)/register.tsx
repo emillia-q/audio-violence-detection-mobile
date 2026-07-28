@@ -44,7 +44,7 @@ export default function Register() {
                 value={lastName}
                 onChangeText={setLastName}
             />
-            {/*E-mail */}
+            {/* E-mail */}
             <CustomInput
                 style={[styles.input]}
                 placeholder={"E-mail"}
@@ -54,6 +54,24 @@ export default function Register() {
                 keyboardType={"email-address"}
                 autoCapitalize={"none"}
             />
+            {/* Password */}
+            <CustomInput
+                style={[styles.input]}
+                placeholder={"Password"}
+                placeholderTextColor={activeColors.placeholder}
+                value={password}
+                onChangeText={setPassword}
+                secureTextEntry
+            />
+            <CustomInput
+                style={[styles.input]}
+                placeholder={"Password"}
+                placeholderTextColor={activeColors.placeholder}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+                secureTextEntry
+            />
+
 
         </KeyboardAvoidingView>
     );
