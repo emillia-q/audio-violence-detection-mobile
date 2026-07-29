@@ -13,6 +13,7 @@ import {Colors} from "@/src/constants/theme";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {Link} from "expo-router";
+import {authService} from "@/src/api/service/auth";
 
 export default function Register() {
     const [firstName, setFirstName] = useState('');
@@ -24,12 +25,23 @@ export default function Register() {
     // Shared theme
     const activeColors = Colors.default;
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         if (password != confirmPassword) {
             console.log("Error: passwords are different")
             return
         }
-        console.log("Data: ", {firstName, lastName, email, password})
+
+        try {
+            const response = await authService.register({
+                firstName,
+                lastName,
+                email,
+                password
+            });
+            alert('new user added');
+        } catch (error) {
+            alert(error);
+        }
     }
 
     return (
