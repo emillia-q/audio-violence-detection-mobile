@@ -12,7 +12,7 @@ export const authService = {
     },
 
     register: async (data: RegisterRequest): Promise<AuthResponse> => {
-        const response = await apiClient.post<AuthResponse>('${PATH}/register', data);
+        const response = await apiClient.post<AuthResponse>(`${PATH}/register`, data);
         return response.data;
     }
 }
