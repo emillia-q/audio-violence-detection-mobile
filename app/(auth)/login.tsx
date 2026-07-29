@@ -12,6 +12,7 @@ import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import {authService} from "@/src/api/service/auth";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -20,9 +21,13 @@ export default function Login() {
     // Shared theme
     const activeColors = Colors.default;
 
-    const handleLogin = () => {
-        // TODO: call backend
-        console.log("Data: ", {email, password});
+    const handleLogin = async () => {
+        try {
+            const response = await authService.login({email, password});
+            alert(`jol jol siema ${response.firstName}`);
+        } catch (error) {
+            alert(error)
+        }
     }
 
     return (
