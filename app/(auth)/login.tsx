@@ -26,7 +26,7 @@ export default function Login() {
             const response = await authService.login({email, password});
             alert(`jol jol siema ${response.firstName}`);
         } catch (error) {
-            alert(error)
+            alert(error);
         }
     }
 
