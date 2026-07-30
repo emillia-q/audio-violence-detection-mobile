@@ -14,8 +14,11 @@ import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {Link} from "expo-router";
 import {authService} from "@/src/api/service/auth";
+import {useAuth} from "@/src/context/AuthContext";
 
 export default function Register() {
+    const {login} = useAuth();
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
@@ -38,7 +41,9 @@ export default function Register() {
                 email,
                 password
             });
-            alert('new user added');
+
+            // Pass token from backend to context -> log in immediately upon registration
+            await login(response.token);
         } catch (error) {
             alert(error);
         }
