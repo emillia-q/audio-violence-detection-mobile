@@ -27,4 +27,19 @@ apiClient.interceptors.request.use(
     (error) => {
         return Promise.reject(error);
     }
-)
+);
+
+// Session expiration
+apiClient.interceptors.response.use(
+    (response) => response,
+    async (error) => {
+        if (error.response && error.responseStatus === 401) {
+            try {
+                await SecureStore.deleteItemAsync(TOKEN_KEY);
+            } catch (error) {
+                console.error("Error while deleting expired token", error);
+            }
+        }
+        return Promise.reject(error);
+    }
+);
