@@ -1,6 +1,8 @@
 import {createContext, ReactNode, useState} from "react";
 import * as SecureStore from 'expo-secure-store';
 
+const TOKEN_KEY = 'token';
+
 interface AuthContextType {
     token: string | null;
     login: (token: string) => Promise<void>;
@@ -15,13 +17,13 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     // Called after successful login
     const login = async (token: string) => {
         // Save token in store
-        await SecureStore.setItemAsync('token', token);
+        await SecureStore.setItemAsync(TOKEN_KEY, token);
         // Save token in cache
         setToken(token);
     }
 
     const logout = async  () => {
-        await SecureStore.deleteItemAsync('token');
+        await SecureStore.deleteItemAsync(TOKEN_KEY);
         setToken(null);
     }
 
