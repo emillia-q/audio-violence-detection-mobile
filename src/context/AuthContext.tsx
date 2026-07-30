@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useState} from "react";
+import {createContext, ReactNode, useEffect, useState} from "react";
 import * as SecureStore from 'expo-secure-store';
 
 const TOKEN_KEY = 'token';
@@ -13,6 +13,19 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
     const [token, setToken] = useState<string | null>(null);
+
+    // Check storage once when launching the app
+    useEffect(() => {
+        const loadToken = async () => {
+            try {
+                const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);
+                if (storedToken)
+                    setToken(storedToken);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+    }, []);
 
     // Called after successful login
     const login = async (token: string) => {
