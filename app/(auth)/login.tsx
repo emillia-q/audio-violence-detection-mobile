@@ -13,8 +13,11 @@ import {Link} from "expo-router";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {authService} from "@/src/api/service/auth";
+import {useAuth} from "@/src/context/AuthContext";
 
 export default function Login() {
+    const {login} = useAuth();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -24,7 +27,9 @@ export default function Login() {
     const handleLogin = async () => {
         try {
             const response = await authService.login({email, password});
-            alert(`jol jol siema ${response.firstName}`);
+
+            // Pass token from backend to context
+            await login(response.token);
         } catch (error) {
             alert(error);
         }
