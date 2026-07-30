@@ -20,6 +20,11 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
         setToken(token);
     }
 
+    const logout = async  () => {
+        await SecureStore.deleteItemAsync('token');
+        setToken(null);
+    }
+
     return (
         <AuthContext.Provider value={{
             token,
