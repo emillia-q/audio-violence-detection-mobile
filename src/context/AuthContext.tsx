@@ -1,5 +1,6 @@
 import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import * as SecureStore from 'expo-secure-store';
+import {setLogoutHandler} from "@/src/api/client";
 
 const TOKEN_KEY = 'token';
 
@@ -18,6 +19,8 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
 
     // Check storage once when launching the app
     useEffect(() => {
+        // Link logout function to Axios interceptor for 401 handling
+        setLogoutHandler(logout);
         const loadToken = async () => {
             try {
                 const storedToken = await SecureStore.getItemAsync(TOKEN_KEY);

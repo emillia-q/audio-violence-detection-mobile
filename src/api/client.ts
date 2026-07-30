@@ -30,12 +30,22 @@ apiClient.interceptors.request.use(
 );
 
 // Session expiration
+let logoutCallback: (() => void) | null = null;
+
+// Called once in AuthContext
+export const setLogoutHandler = (callback: () => void) => {
+    logoutCallback = callback;
+};
+
 apiClient.interceptors.response.use(
     (response) => response,
     async (error) => {
-        if (error.response && error.responseStatus === 401) {
+        if (error.response && error.response.status === 401) {
             try {
                 await SecureStore.deleteItemAsync(TOKEN_KEY);
+
+                if (logoutCallback)
+                    logoutCallback();
             } catch (error) {
                 console.error("Error while deleting expired token", error);
             }
