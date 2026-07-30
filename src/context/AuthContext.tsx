@@ -5,6 +5,7 @@ const TOKEN_KEY = 'token';
 
 interface AuthContextType {
     token: string | null;
+    loading: boolean;
     login: (token: string) => Promise<void>;
     logout: () => Promise<void>;
 }
@@ -13,6 +14,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export const AuthProvider = ({children}: {children: ReactNode}) => {
     const [token, setToken] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
 
     // Check storage once when launching the app
     useEffect(() => {
@@ -23,6 +25,8 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
                     setToken(storedToken);
             } catch (error) {
                 console.error(error);
+            } finally {
+                setLoading(false);
             }
         }
         loadToken();
@@ -44,6 +48,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
     return (
         <AuthContext.Provider value={{
             token,
+            loading,
             login,
             logout
         }}>
