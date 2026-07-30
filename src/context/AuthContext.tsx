@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useEffect, useState} from "react";
+import {createContext, ReactNode, useContext, useEffect, useState} from "react";
 import * as SecureStore from 'expo-secure-store';
 
 const TOKEN_KEY = 'token';
@@ -49,4 +49,11 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
             {children}
         </AuthContext.Provider>
     )
+}
+
+export const useAuth = (): AuthContextType => {
+    const context = useContext(AuthContext);
+    if (!context)
+        throw new Error("useAuth must be used within an AuthProvider");
+    return context;
 }
