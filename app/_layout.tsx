@@ -3,7 +3,7 @@ import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import { Colors } from '@/src/constants/theme';
-import {AuthProvider} from "@/src/context/AuthContext";
+import {AuthProvider, useAuth} from "@/src/context/AuthContext";
 
 const CustomDarkTheme = {
     ...DarkTheme,
@@ -16,16 +16,24 @@ const CustomDarkTheme = {
     },
 };
 
+function RootLayoutNav() {
+    const {token} = useAuth();
+
+    return (
+        <ThemeProvider value={CustomDarkTheme}>
+            <Stack>
+                <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            </Stack>
+            <StatusBar style="light" />
+        </ThemeProvider>
+    );
+}
+
 export default function RootLayout() {
     return (
         <AuthProvider>
-            <ThemeProvider value={CustomDarkTheme}>
-                <Stack>
-                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                    <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-                </Stack>
-                <StatusBar style="light" />
-            </ThemeProvider>
+            <RootLayoutNav/>
         </AuthProvider>
     );
 }
