@@ -1,4 +1,4 @@
-import {createContext} from "react";
+import {createContext, ReactNode} from "react";
 
 interface AuthContextType {
     token: string | null;
@@ -7,3 +7,7 @@ interface AuthContextType {
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({children}: {children: ReactNode}) => {
+
+}
