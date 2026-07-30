@@ -25,6 +25,7 @@ export const AuthProvider = ({children}: {children: ReactNode}) => {
                 console.error(error);
             }
         }
+        loadToken();
     }, []);
 
     // Called after successful login
