@@ -5,6 +5,7 @@ import 'react-native-reanimated';
 import { Colors } from '@/src/constants/theme';
 import {AuthProvider, useAuth} from "@/src/context/AuthContext";
 import {useEffect} from "react";
+import {ModeProvider} from "@/src/context/ModeContext";
 
 const CustomDarkTheme = {
     ...DarkTheme,
@@ -52,7 +53,9 @@ function RootLayoutNav() {
 export default function RootLayout() {
     return (
         <AuthProvider>
-            <RootLayoutNav/>
+            <ModeProvider>
+                <RootLayoutNav/>
+            </ModeProvider>
         </AuthProvider>
     );
 }
