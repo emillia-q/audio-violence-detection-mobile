@@ -29,7 +29,7 @@ export default function DashboardScreen() {
 
   return (
       <SafeAreaView style={styles.safeArea}>
-        <ModeSwitcher selectedIndex={currentPage} onSelect={handleSwitch}/>
+        <ModeSwitcher/>
 
         {/* Swipe mode change */}
         <PagerView
