@@ -3,19 +3,22 @@ import { Platform } from 'react-native';
 const backgroundDark = '#0B1121'; // Main bg
 const surfaceDark = '#1E293B'; // Inputs
 const textSilver = '#F8FAFC'; // Headers
-const textMuted = '#94A3B8'; // Descriptions & labels
-const borderDefault = '#334155';
+const textGray = '#94A3B8'; // Descriptions & labels
+const borderGray = '#334155';
+const textWhite = '#FFFFFF';
 
 export const Colors = {
   default: {
     background: backgroundDark,
     surface: surfaceDark,
     text: textSilver,
-    muted: textMuted,
-    border: borderDefault,
+    muted: textGray,
+    textActive: textWhite,
+    textInactive: textGray,
+    border: borderGray,
     placeholder: '#64748B',
     primaryButton: '#4F46E5',
-    primaryButtonText: '#FFFFFF',
+    primaryButtonText: textWhite,
     link: '#818CF8',
     tint: '#4F46E5',
   },
@@ -24,11 +27,13 @@ export const Colors = {
     background: backgroundDark,
     surface: surfaceDark,
     text: textSilver,
-    muted: textMuted,
-    border: borderDefault,
+    muted: textGray,
+    textActive: textWhite,
+    textInactive: textGray,
+    border: borderGray,
     placeholder: '#64748B',
     primaryButton: '#0284C7',
-    primaryButtonText: '#FFFFFF',
+    primaryButtonText: textWhite,
     link: '#38BDF8',
     tint: '#0284C7',
   },
@@ -37,11 +42,13 @@ export const Colors = {
     background: backgroundDark,
     surface: surfaceDark,
     text: textSilver,
-    muted: textMuted,
-    border: borderDefault,
+    muted: textGray,
+    textActive: textWhite,
+    textInactive: textGray,
+    border: borderGray,
     placeholder: '#64748B',
     primaryButton: '#1E3A8A',
-    primaryButtonText: '#FFFFFF',
+    primaryButtonText: textWhite,
     link: '#93C5FD',
     tint: '#1E3A8A',
   },
