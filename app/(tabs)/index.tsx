@@ -28,10 +28,10 @@ export default function DashboardScreen() {
           ref={pagerRef}
           onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
         >
-          <View key={"1"}>
+          <View key={"user_dashboard"}>
             <UserDashboard/>
           </View>
-          <View key={"2"}>
+          <View key={"trusted_user_dashboard"}>
             <TrustedUserDashboard/>
           </View>
         </PagerView>
