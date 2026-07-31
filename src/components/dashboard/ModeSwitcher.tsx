@@ -17,7 +17,10 @@ export default function ModeSwitcher() {
                     ]}
                     onPress={() => setMode('user')}
                 >
-                    <Text style={[styles.tabText, {color: isUserMode ? Colors.default.textActive : Colors.default.textInactive}]}>
+                    <Text style={[
+                        styles.tabText,
+                        {color: isUserMode ? Colors.default.textActive : Colors.default.textInactive}]}
+                    >
                         My safety
                     </Text>
                 </TouchableOpacity>
@@ -29,7 +32,10 @@ export default function ModeSwitcher() {
                     ]}
                     onPress={() => setMode('trustedUser')}
                 >
-                    <Text style={[styles.tabText, {color: !isUserMode ? Colors.default.textActive : Colors.default.textInactive}]}>
+                    <Text style={[
+                        styles.tabText,
+                        {color: !isUserMode ? Colors.default.textActive : Colors.default.textInactive}]}
+                    >
                         Superman
                     </Text>
                 </TouchableOpacity>
