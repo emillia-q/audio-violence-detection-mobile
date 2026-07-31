@@ -35,14 +35,14 @@ function RootLayoutNav() {
         if (!token && !inAuthGroup)
             router.replace('/(auth)/login');
         else if (token && inAuthGroup)
-            router.replace('/(tabs)');
+            router.replace('/(main)');
     }, [token, loading, segments]);
 
     return (
         <ThemeProvider value={CustomDarkTheme}>
             <Stack>
                 <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="(main)" options={{ headerShown: false }} />
             </Stack>
             <StatusBar style="light" />
         </ThemeProvider>
