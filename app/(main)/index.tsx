@@ -1,4 +1,4 @@
-import {useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import PagerView from "react-native-pager-view";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet, View} from "react-native";
@@ -13,9 +13,10 @@ export default function DashboardScreen() {
   const {mode, setMode} = useMode();
 
   // Mode switcher
-  const handleSwitch = (index: number) => {
-
-  }
+  useEffect(() => {
+    const pageIndex = mode === 'user' ? 0 : 1;
+    pagerRef.current?.setPage(pageIndex);
+  }, [mode]);
 
   // Swipe
   const handlePageSelected = (e: any) => {
@@ -33,9 +34,9 @@ export default function DashboardScreen() {
         {/* Swipe mode change */}
         <PagerView
           style={styles.pageView}
-          initialPage={0}
+          initialPage={mode === 'user' ? 0 : 1}
           ref={pagerRef}
-          onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
+          onPageSelected={handlePageSelected}
         >
           <View key={"user_dashboard"}>
             <UserDashboard/>
