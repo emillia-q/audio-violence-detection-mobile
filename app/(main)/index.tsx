@@ -6,15 +6,24 @@ import {Colors} from "@/src/constants/theme";
 import ModeSwitcher from "@/src/components/dashboard/ModeSwitcher";
 import UserDashboard from "@/src/components/dashboard/UserDashboard";
 import TrustedUserDashboard from "@/src/components/dashboard/TrustedUserDashboard";
+import {useMode} from "@/src/context/ModeContext";
 
 export default function DashboardScreen() {
   const pagerRef = useRef<PagerView>(null);
-  const [currentPage, setCurrentPage] = useState(0);
+  const {mode, setMode} = useMode();
 
   // Mode switcher
   const handleSwitch = (index: number) => {
-    pagerRef.current?.setPage(index);
-    setCurrentPage(index);
+
+  }
+
+  // Swipe
+  const handlePageSelected = (e: any) => {
+    const position = e.nativeEvent.position;
+    if (position === 0 && mode !== 'user')
+      setMode('user');
+    if (position === 1 && mode !== 'trustedUser')
+      setMode('trustedUser');
   }
 
   return (
