@@ -1,13 +1,10 @@
 import {StyleSheet, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
+import {useMode} from "@/src/context/ModeContext";
 
-interface ModeSwitcherProps {
-    selectedIndex: number;
-    onSelect: (index: number) => void;
-}
-
-export default function ModeSwitcher({selectedIndex, onSelect}: ModeSwitcherProps) {
-    const isUserMode = selectedIndex === 0;
+export default function ModeSwitcher() {
+    const {mode, setMode} = useMode();
+    const isUserMode = mode === 'user';
 
     return (
         <View style={styles.container}>
