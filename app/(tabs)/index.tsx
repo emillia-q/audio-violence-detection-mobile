@@ -1,5 +1,11 @@
 import {useRef, useState} from "react";
 import PagerView from "react-native-pager-view";
+import {SafeAreaView} from "react-native-safe-area-context";
+import {StyleSheet, View} from "react-native";
+import {Colors} from "@/src/constants/theme";
+import ModeSwitcher from "@/src/components/ModeSwitcher";
+import UserDashboard from "@/src/components/dashboard/UserDashboard";
+import TrustedUserDashboard from "@/src/components/dashboard/TrustedUserDashboard";
 
 export default function DashboardScreen() {
   const pagerRef = useRef<PagerView>(null);
@@ -10,4 +16,35 @@ export default function DashboardScreen() {
     pagerRef.current?.setPage(index);
     setCurrentPage(index);
   }
+
+  return (
+      <SafeAreaView style={styles.safeArea}>
+        <ModeSwitcher selectedIndex={currentPage} onSelect={handleSwitch}/>
+
+        {/* Swipe mode change */}
+        <PagerView
+          style={styles.pageView}
+          initialPage={0}
+          ref={pagerRef}
+          onPageSelected={(e) => setCurrentPage(e.nativeEvent.position)}
+        >
+          <View key={"1"}>
+            <UserDashboard/>
+          </View>
+          <View key={"2"}>
+            <TrustedUserDashboard/>
+          </View>
+        </PagerView>
+      </SafeAreaView>
+  );
 }
+
+const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: Colors.default.background,
+  },
+  pageView: {
+    flex: 1,
+  },
+});
