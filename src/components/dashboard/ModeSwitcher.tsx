@@ -21,6 +21,18 @@ export default function ModeSwitcher() {
                         My safety
                     </Text>
                 </TouchableOpacity>
+                <TouchableOpacity
+                    activeOpacity={0.8}
+                    style={[
+                        styles.tab,
+                        !isUserMode && {backgroundColor: Colors.trustedUser.primaryButton}
+                    ]}
+                    onPress={() => setMode('trustedUser')}
+                >
+                    <Text style={[styles.tabText, !isUserMode ? styles.activeText : styles.inactiveText]}>
+                        Superman
+                    </Text>
+                </TouchableOpacity>
             </View>
         </View>
     );
