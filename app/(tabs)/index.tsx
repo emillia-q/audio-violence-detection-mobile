@@ -1,23 +1,13 @@
-import { View, Text, StyleSheet } from 'react-native';
+import {useRef, useState} from "react";
+import PagerView from "react-native-pager-view";
 
-export default function HomeScreen() {
-  return (
-      <View style={styles.container}>
-        <Text style={styles.text}>Audio Violence Mobile</Text>
-      </View>
-  );
+export default function DashboardScreen() {
+  const pagerRef = useRef<PagerView>(null);
+  const [currentPage, setCurrentPage] = useState(0);
+
+  // Mode switcher
+  const handleSwitch = (index: number) => {
+    pagerRef.current?.setPage(index);
+    setCurrentPage(index);
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center', // vertically
-    alignItems: 'center',     // horizontally
-    backgroundColor: '#f5f5f5',
-  },
-  text: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#333',
-  },
-});
