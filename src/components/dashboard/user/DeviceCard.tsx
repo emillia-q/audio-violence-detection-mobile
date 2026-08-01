@@ -14,7 +14,7 @@ export default function DeviceCard({name, onPress}: DeviceCardProps) {
             style={styles.cardContainer}
             onPress={onPress}
         >
-            <Text style={styles.deviceName}>
+            <Text style={styles.deviceName} numberOfLines={1}>
                 {name}
             </Text>
             <Text style={styles.chevronIcon}>
