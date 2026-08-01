@@ -31,7 +31,7 @@ export default function StatusBadge({status, text}: StatusBadgeProps) {
             <View style={[styles.dot, {backgroundColor: color}]}/>
 
             {/* Status text */}
-            <Text style={[styles.badgeText, {backgroundColor: color}]}>
+            <Text style={[styles.badgeText, {color: color}]}>
                 {text}
             </Text>
         </View>
@@ -42,6 +42,11 @@ const styles = StyleSheet.create({
     badgeContainer: {
         flexDirection: 'row',
         alignItems: 'center',
+        backgroundColor: 'rgba(255, 255, 255, 0.05)',
+        paddingVertical: 4,
+        paddingHorizontal: 8,
+        borderRadius: 999,
+        alignSelf: 'flex-start',
     },
     dot: {
         height: 8,
