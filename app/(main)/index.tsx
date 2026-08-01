@@ -3,9 +3,9 @@ import PagerView from "react-native-pager-view";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
-import ModeSwitcher from "@/src/components/dashboard/ModeSwitcher";
-import UserDashboard from "@/src/components/dashboard/UserDashboard";
-import TrustedUserDashboard from "@/src/components/dashboard/TrustedUserDashboard";
+import ModeSwitcher from "@/src/components/dashboard/shared/ModeSwitcher";
+import UserDashboard from "@/src/components/dashboard/user/UserDashboard";
+import TrustedUserDashboard from "@/src/components/dashboard/trusted-user/TrustedUserDashboard";
 import {useMode} from "@/src/context/ModeContext";
 
 export default function DashboardScreen() {
