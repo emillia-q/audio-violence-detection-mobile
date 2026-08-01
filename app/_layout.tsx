@@ -5,6 +5,7 @@ import 'react-native-reanimated';
 import { Colors } from '@/src/constants/theme';
 import {AuthProvider, useAuth} from "@/src/context/AuthContext";
 import {useEffect} from "react";
+import {ModeProvider} from "@/src/context/ModeContext";
 
 const CustomDarkTheme = {
     ...DarkTheme,
@@ -35,14 +36,14 @@ function RootLayoutNav() {
         if (!token && !inAuthGroup)
             router.replace('/(auth)/login');
         else if (token && inAuthGroup)
-            router.replace('/(tabs)');
+            router.replace('/(main)');
     }, [token, loading, segments]);
 
     return (
         <ThemeProvider value={CustomDarkTheme}>
             <Stack>
                 <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+                <Stack.Screen name="(main)" options={{ headerShown: false }} />
             </Stack>
             <StatusBar style="light" />
         </ThemeProvider>
@@ -52,7 +53,9 @@ function RootLayoutNav() {
 export default function RootLayout() {
     return (
         <AuthProvider>
-            <RootLayoutNav/>
+            <ModeProvider>
+                <RootLayoutNav/>
+            </ModeProvider>
         </AuthProvider>
     );
 }
