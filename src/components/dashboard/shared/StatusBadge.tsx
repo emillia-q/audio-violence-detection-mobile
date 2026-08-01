@@ -1,4 +1,5 @@
 import {Colors} from "@/src/constants/theme";
+import {StyleSheet, Text, View} from "react-native";
 
 type StatusType = 'online' | 'offline' | 'warning';
 
@@ -23,4 +24,35 @@ export default function StatusBadge({status, text}: StatusBadgeProps) {
     }
 
     const color = getStatusColor();
+
+    return (
+        <View style={styles.badgeContainer}>
+            {/* Status dot */}
+            <View style={[styles.dot, {backgroundColor: color}]}/>
+
+            {/* Status text */}
+            <Text style={[styles.badgeText, {backgroundColor: color}]}>
+                {text}
+            </Text>
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    badgeContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    dot: {
+        height: 8,
+        width: 8,
+        borderRadius: 4,
+        marginRight: 6,
+    },
+    badgeText: {
+      fontSize: 12,
+      fontWeight: '700',
+      textTransform: 'uppercase',
+      letterSpacing: 0.5,
+    },
+});
