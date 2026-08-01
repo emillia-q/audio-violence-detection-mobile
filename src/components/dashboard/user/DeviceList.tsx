@@ -1,5 +1,6 @@
 import {StyleSheet, Text, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
+import DeviceCard from "@/src/components/dashboard/user/DeviceCard";
 
 interface Device {
     id: number;
@@ -19,6 +20,20 @@ export default function DeviceList({devices}: DeviceListProps) {
             </View>
         );
     }
+
+    // 200 - list of devices
+    return (
+        <View style={styles.listContainer}>
+            {devices.map((device) => (
+                <DeviceCard
+                    key={device.id}
+                    id={device.id}
+                    name={device.name}
+                    onPress={() => console.log("jeszcze nic nie robie")}
+                />
+            ))}
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -35,5 +50,8 @@ const styles = StyleSheet.create({
         color: Colors.default.text,
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    listContainer: {
+        width: '100%',
     },
 });
