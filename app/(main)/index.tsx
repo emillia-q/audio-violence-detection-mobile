@@ -1,8 +1,7 @@
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 import PagerView from "react-native-pager-view";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet, View} from "react-native";
-import {Colors} from "@/src/constants/theme";
 import ModeSwitcher from "@/src/components/dashboard/shared/ModeSwitcher";
 import UserDashboard from "@/src/components/dashboard/user/UserDashboard";
 import TrustedUserDashboard from "@/src/components/dashboard/trusted-user/TrustedUserDashboard";
@@ -52,7 +51,6 @@ export default function DashboardScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
-    backgroundColor: Colors.default.background,
   },
   pageView: {
     flex: 1,
