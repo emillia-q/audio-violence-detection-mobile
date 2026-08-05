@@ -4,7 +4,7 @@ import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
 import {AuthProvider, useAuth} from "@/src/context/AuthContext";
 import {useEffect, useMemo} from "react";
-import {ModeProvider, useMode, useTheme} from "@/src/context/ModeContext";
+import {ModeProvider, useTheme} from "@/src/context/ModeContext";
 
 function RootLayoutNav() {
     const {token, loading} = useAuth();
