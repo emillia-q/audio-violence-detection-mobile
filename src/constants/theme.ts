@@ -2,28 +2,18 @@ import { Platform } from 'react-native';
 
 const textWhite = '#FFFFFF';
 
-export const Colors = {
-  shared: {
-    background: '#101A2D',
-    surface: '#1A2940',
-    text: '#F1F6FC',
-    muted: '#A8B8CC',
-    textActive: textWhite,
-    textInactive: '#A8B8CC',
-    border: '#32455F',
-    placeholder: '#71839C',
-    primaryButton: '#4F46E5',
-    primaryButtonText: textWhite,
-    link: '#818CF8',
-    tint: '#4F46E5',
-  },
+const commonColors = {
+  textActive: textWhite,
+  danger: '#FB7185',
+};
 
+export const Colors = {
   default: {
+    ...commonColors,
     background: '#101A2D',
     surface: '#1A2940',
     text: '#F1F6FC',
     muted: '#A8B8CC',
-    textActive: textWhite,
     textInactive: '#A8B8CC',
     border: '#32455F',
     placeholder: '#71839C',
@@ -31,14 +21,19 @@ export const Colors = {
     primaryButtonText: textWhite,
     link: '#818CF8',
     tint: '#4F46E5',
+    surfaceElevated: '#243752',
+    success: '#34D399',
+    warning: '#FBBF24',
+    disabled: '#52657D',
   },
 
   user: {
+    ...commonColors,
     background: '#102842',
     surface: '#193958',
+    surfaceElevated: '#234665',
     text: '#EAF4FF',
     muted: '#A9C4DB',
-    textActive: textWhite,
     textInactive: '#A9C4DB',
     border: '#2C5579',
     placeholder: '#7FA4C2',
@@ -46,14 +41,18 @@ export const Colors = {
     primaryButtonText: textWhite,
     link: '#7DCDFF',
     tint: '#47A7E3',
+    success: '#42D3A4',
+    warning: '#F5C451',
+    disabled: '#496982',
   },
 
   trustedUser: {
+    ...commonColors,
     background: '#07162D',
     surface: '#0D2748',
+    surfaceElevated: '#133657',
     text: '#EAF2FF',
     muted: '#A3BDD9',
-    textActive: textWhite,
     textInactive: '#A3BDD9',
     border: '#1C456E',
     placeholder: '#7298BF',
@@ -61,8 +60,18 @@ export const Colors = {
     primaryButtonText: textWhite,
     link: '#9DD6FF',
     tint: '#519FDD',
+    success: '#32C995',
+    warning: '#EFBF4A',
+    disabled: '#345371',
   },
 };
+
+export type ThemeName = 'default' | 'user' | 'trustedUser';
+export type AppTheme = (typeof Colors)[ThemeName];
+
+export function getTheme(name: ThemeName): AppTheme {
+  return Colors[name];
+}
 
 
 export const Fonts = Platform.select({
