@@ -6,7 +6,7 @@ import {Ionicons} from "@expo/vector-icons";
 interface CustomInputProps extends TextInputProps {}
 
 export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}: CustomInputProps) {
-    const activeColors = Colors.default;
+    const activeColors = Colors.shared;
 
     const [isFocused, setIsFocused] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);

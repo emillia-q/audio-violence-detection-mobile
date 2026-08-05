@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: Colors.default.surface,
-        borderColor: Colors.default.border,
+        backgroundColor: Colors.user.surface,
+        borderColor: Colors.user.border,
         borderWidth: 1,
         borderRadius: 16,
         padding: 16,
@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
     deviceName: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.default.text,
+        color: Colors.user.text,
     },
     chevronIcon: {
       fontSize: 24,
-      color: Colors.default.muted,
+      color: Colors.user.muted,
       paddingLeft: 8,
     },
 });

@@ -19,7 +19,7 @@ export default function ModeSwitcher() {
                 >
                     <Text style={[
                         styles.tabText,
-                        {color: isUserMode ? Colors.default.textActive : Colors.default.textInactive}]}
+                        {color: isUserMode ? Colors.shared.textActive : Colors.shared.textInactive}]}
                     >
                         My safety
                     </Text>
@@ -34,7 +34,7 @@ export default function ModeSwitcher() {
                 >
                     <Text style={[
                         styles.tabText,
-                        {color: !isUserMode ? Colors.default.textActive : Colors.default.textInactive}]}
+                        {color: !isUserMode ? Colors.shared.textActive : Colors.shared.textInactive}]}
                     >
                         Superman
                     </Text>
@@ -47,11 +47,11 @@ export default function ModeSwitcher() {
 const styles = StyleSheet.create({
     container: {
         padding: 16,
-        backgroundColor: Colors.default.background,
+        backgroundColor: Colors.shared.background,
     },
     switcherTrack: {
         flexDirection: 'row',
-        backgroundColor: Colors.default.surface,
+        backgroundColor: Colors.shared.surface,
         borderRadius: 12,
         padding: 4,
     },

@@ -19,7 +19,7 @@ export default function StatusBadge({status, text}: StatusBadgeProps) {
             case "warning":
                 return '#EF4444';
             default:
-                return Colors.default.muted;
+                return Colors.shared.muted;
         }
     }
 

@@ -1,22 +1,32 @@
 import { Platform } from 'react-native';
 
-const backgroundDark = '#0B1121'; // Main bg
-const surfaceDark = '#1E293B'; // Inputs
-const textSilver = '#F8FAFC'; // Headers
-const textGray = '#94A3B8'; // Descriptions & labels
-const borderGray = '#334155';
 const textWhite = '#FFFFFF';
 
 export const Colors = {
-  default: {
-    background: backgroundDark,
-    surface: surfaceDark,
-    text: textSilver,
-    muted: textGray,
+  shared: {
+    background: '#101A2D',
+    surface: '#1A2940',
+    text: '#F1F6FC',
+    muted: '#A8B8CC',
     textActive: textWhite,
-    textInactive: textGray,
-    border: borderGray,
-    placeholder: '#64748B',
+    textInactive: '#A8B8CC',
+    border: '#32455F',
+    placeholder: '#71839C',
+    primaryButton: '#4F46E5',
+    primaryButtonText: textWhite,
+    link: '#818CF8',
+    tint: '#4F46E5',
+  },
+
+  default: {
+    background: '#101A2D',
+    surface: '#1A2940',
+    text: '#F1F6FC',
+    muted: '#A8B8CC',
+    textActive: textWhite,
+    textInactive: '#A8B8CC',
+    border: '#32455F',
+    placeholder: '#71839C',
     primaryButton: '#4F46E5',
     primaryButtonText: textWhite,
     link: '#818CF8',
@@ -24,35 +34,36 @@ export const Colors = {
   },
 
   user: {
-    background: backgroundDark,
-    surface: surfaceDark,
-    text: textSilver,
-    muted: textGray,
+    background: '#102842',
+    surface: '#193958',
+    text: '#EAF4FF',
+    muted: '#A9C4DB',
     textActive: textWhite,
-    textInactive: textGray,
-    border: borderGray,
-    placeholder: '#64748B',
-    primaryButton: '#0284C7',
+    textInactive: '#A9C4DB',
+    border: '#2C5579',
+    placeholder: '#7FA4C2',
+    primaryButton: '#237DB5',
     primaryButtonText: textWhite,
-    link: '#38BDF8',
-    tint: '#0284C7',
+    link: '#7DCDFF',
+    tint: '#47A7E3',
   },
 
   trustedUser: {
-    background: backgroundDark,
-    surface: surfaceDark,
-    text: textSilver,
-    muted: textGray,
+    background: '#07162D',
+    surface: '#0D2748',
+    text: '#EAF2FF',
+    muted: '#A3BDD9',
     textActive: textWhite,
-    textInactive: textGray,
-    border: borderGray,
-    placeholder: '#64748B',
-    primaryButton: '#1E3A8A',
+    textInactive: '#A3BDD9',
+    border: '#1C456E',
+    placeholder: '#7298BF',
+    primaryButton: '#164E8C',
     primaryButtonText: textWhite,
-    link: '#93C5FD',
-    tint: '#1E3A8A',
+    link: '#9DD6FF',
+    tint: '#519FDD',
   },
 };
+
 
 export const Fonts = Platform.select({
   ios: {

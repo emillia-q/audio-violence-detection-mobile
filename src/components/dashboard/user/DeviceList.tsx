@@ -36,14 +36,14 @@ const styles = StyleSheet.create({
     emptyContainer: {
         alignItems: 'center',
         padding: 24,
-        backgroundColor: Colors.default.surface,
-        borderColor: Colors.default.border,
+        backgroundColor: Colors.user.surface,
+        borderColor: Colors.user.border,
         borderWidth: 1,
         borderRadius: 16,
         borderStyle: 'dashed',
     },
     emptyTitle: {
-        color: Colors.default.text,
+        color: Colors.user.text,
         fontSize: 16,
         fontWeight: 'bold',
     },
