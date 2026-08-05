@@ -16,7 +16,7 @@ const STATUS_COLORS: Record<StatusType, string> = {
 
 export default function StatusBadge({status, text}: StatusBadgeProps) {
     // Set color based on status
-    const color = STATUS_COLORS[status] ?? '#64748B';
+    const color = STATUS_COLORS[status] ?? STATUS_COLORS.offline;
 
     return (
         <View style={styles.badgeContainer}>
