@@ -1,14 +1,10 @@
 import {StyleSheet, Text, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
 import DeviceCard from "@/src/components/dashboard/user/DeviceCard";
-
-interface Device {
-    id: number;
-    name: string;
-}
+import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 
 interface DeviceListProps {
-    devices: Device[];
+    devices: DeviceListResponse[];
 }
 
 export default function DeviceList({devices}: DeviceListProps) {
