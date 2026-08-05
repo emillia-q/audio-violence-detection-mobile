@@ -1,4 +1,3 @@
-import {Colors} from "@/src/constants/theme";
 import {StyleSheet, Text, View} from "react-native";
 
 type StatusType = 'online' | 'offline' | 'warning';
@@ -8,22 +7,16 @@ interface StatusBadgeProps {
     text: string;
 }
 
+// Defined once to avoid memory overhead
+const STATUS_COLORS: Record<StatusType, string> = {
+    online: '#10B981',
+    offline: '#64748B',
+    warning: '#EF4444',
+};
+
 export default function StatusBadge({status, text}: StatusBadgeProps) {
     // Set color based on status
-    const getStatusColor = () => {
-        switch (status) {
-            case "online":
-                return '#10B981';
-            case "offline":
-                return '#64748B';
-            case "warning":
-                return '#EF4444';
-            default:
-                return Colors.shared.muted;
-        }
-    }
-
-    const color = getStatusColor();
+    const color = STATUS_COLORS[status] ?? '#64748B';
 
     return (
         <View style={styles.badgeContainer}>
