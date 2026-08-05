@@ -1,14 +1,15 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
-import {useMode} from "@/src/context/ModeContext";
+import {useMode, useTheme} from "@/src/context/ModeContext";
 
 export default function ModeSwitcher() {
     const {mode, setMode} = useMode();
+    const theme = useTheme();
     const isUserMode = mode === 'user';
 
     return (
         <View style={styles.container}>
-            <View style={styles.switcherTrack}>
+            <View style={[styles.switcherTrack, {backgroundColor: theme.surface}]}>
                 <TouchableOpacity
                     activeOpacity={0.8}
                     style={[
@@ -19,7 +20,7 @@ export default function ModeSwitcher() {
                 >
                     <Text style={[
                         styles.tabText,
-                        {color: isUserMode ? Colors.shared.textActive : Colors.shared.textInactive}]}
+                        {color: isUserMode ? Colors.user.textActive : theme.textInactive}]}
                     >
                         My safety
                     </Text>
@@ -34,7 +35,7 @@ export default function ModeSwitcher() {
                 >
                     <Text style={[
                         styles.tabText,
-                        {color: !isUserMode ? Colors.shared.textActive : Colors.shared.textInactive}]}
+                        {color: !isUserMode ? Colors.trustedUser.textActive : theme.textInactive}]}
                     >
                         Superman
                     </Text>
@@ -47,11 +48,9 @@ export default function ModeSwitcher() {
 const styles = StyleSheet.create({
     container: {
         padding: 16,
-        backgroundColor: Colors.shared.background,
     },
     switcherTrack: {
         flexDirection: 'row',
-        backgroundColor: Colors.shared.surface,
         borderRadius: 12,
         padding: 4,
     },
