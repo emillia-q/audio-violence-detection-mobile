@@ -3,6 +3,7 @@ import {Colors} from "@/src/constants/theme";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
+import DeviceList from "@/src/components/dashboard/user/DeviceList";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
@@ -21,7 +22,7 @@ export default function UserDashboard() {
 
     return (
         <View style={styles.container}>
-
+            <DeviceList devices={devices}/>
         </View>
     );
 }
