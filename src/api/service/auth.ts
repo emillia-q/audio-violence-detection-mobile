@@ -15,4 +15,4 @@ export const authService = {
         const response = await apiClient.post<AuthResponse>(`${PATH}/register`, data);
         return response.data;
     }
-}
+};
