@@ -1,5 +1,5 @@
-import {StyleProp, StyleSheet, ViewStyle} from "react-native";
-import {Colors} from "@/src/constants/theme";
+import {StyleProp, StyleSheet, Text, TouchableOpacity, ViewStyle} from "react-native";
+import {useTheme} from "@/src/context/ModeContext";
 
 interface NavigationCardProps {
     title: string;
@@ -7,26 +7,63 @@ interface NavigationCardProps {
     style: StyleProp<ViewStyle>;
 }
 
+export default function NavigationCard({title, onPress, style}: NavigationCardProps) {
+    const theme = useTheme();
+
+    return (
+        <TouchableOpacity
+            activeOpacity={0.7}
+            style={[
+                styles.cardContainer,
+                {
+                    backgroundColor: theme.surface,
+                    borderColor: theme.border
+                },
+                style
+            ]}
+            onPress={onPress}
+        >
+            <Text
+                style={[
+                    styles.title,
+                    {
+                        color: theme.text
+                    }
+                ]}
+                numberOfLines={1}
+            >
+                {title}
+            </Text>
+            <Text
+                style={[
+                    styles.chevronIcon,
+                    {
+                        color: theme.muted
+                    }
+                ]}
+            >
+                ›
+            </Text>
+        </TouchableOpacity>
+    );
+}
+
 const styles = StyleSheet.create({
     cardContainer: {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        backgroundColor: Colors.user.surface,
-        borderColor: Colors.user.border,
         borderWidth: 1,
         borderRadius: 16,
         padding: 16,
         marginBottom: 12,
     },
-    deviceName: {
+    title: {
         fontSize: 16,
         fontWeight: '600',
-        color: Colors.user.text,
     },
     chevronIcon: {
         fontSize: 24,
-        color: Colors.user.muted,
         paddingLeft: 8,
     },
 });
