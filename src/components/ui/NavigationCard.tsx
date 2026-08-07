@@ -1,6 +1,11 @@
-import {StyleSheet} from "react-native";
+import {StyleProp, StyleSheet, ViewStyle} from "react-native";
 import {Colors} from "@/src/constants/theme";
 
+interface NavigationCardProps {
+    title: string;
+    onPress: () => void;
+    style: StyleProp<ViewStyle>;
+}
 
 const styles = StyleSheet.create({
     cardContainer: {
