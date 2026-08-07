@@ -1,5 +1,5 @@
 import {StyleSheet, Text, View} from "react-native";
-import DeviceCard from "@/src/components/dashboard/user/DeviceCard";
+import DeviceCard from "@/src/components/dashboard/user/devices/DeviceCard";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {Colors} from "@/src/constants/theme";
 

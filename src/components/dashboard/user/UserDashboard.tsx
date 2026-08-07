@@ -2,7 +2,7 @@ import {StyleSheet, View} from "react-native";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
-import DeviceList from "@/src/components/dashboard/user/DeviceList";
+import DeviceList from "@/src/components/dashboard/user/devices/DeviceList";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
