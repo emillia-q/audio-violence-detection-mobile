@@ -1,0 +1,4 @@
+interface EmptyListViewProps {
+    title: string;
+}
+
