@@ -1,7 +1,7 @@
 import {StyleSheet, Text, View} from "react-native";
-import DeviceCard from "@/src/components/dashboard/user/devices/DeviceCard";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {Colors} from "@/src/constants/theme";
+import NavigationCard from "@/src/components/ui/NavigationCard";
 
 interface DeviceListProps {
     devices: DeviceListResponse[];
@@ -21,11 +21,10 @@ export default function DeviceList({devices}: DeviceListProps) {
     return (
         <View style={styles.listContainer}>
             {devices.map((device) => (
-                <DeviceCard
+                <NavigationCard
                     key={device.id}
-                    id={device.id}
-                    name={device.name}
-                    onPress={() => console.log("jeszcze nic nie robie")}
+                    title={device.name}
+                    onPress={() => console.log(`Device with id: ${device.id}`)}
                 />
             ))}
         </View>
