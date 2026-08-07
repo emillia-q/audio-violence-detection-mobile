@@ -15,12 +15,19 @@ export default function UserDashboard() {
         const fetchDashboardData = async () => {
             try {
                 // Execute requests concurrently to optimize loading time
-                const [fetchedDevices, fetchedTrustedUsers] = await Promise.all([
+                const [devicesResult, trustedUsersResult] = await Promise.allSettled([
                     deviceService.getUserDevices(),
                     userService.getListOfTrustedUsers()
                 ]);
-                setDevices(fetchedDevices);
-                setTrustedUsers(fetchedTrustedUsers);
+                if (devicesResult.status === 'fulfilled')
+                    setDevices(devicesResult.value);
+                else
+                    console.error('Could not load devices: ', devicesResult.reason);
+
+                if (trustedUsersResult.status === 'fulfilled')
+                    setTrustedUsers(trustedUsersResult.value);
+                else
+                    console.error('Could not load devices: ', trustedUsersResult.reason);
             } catch (error) {
                 alert(error);
             }
