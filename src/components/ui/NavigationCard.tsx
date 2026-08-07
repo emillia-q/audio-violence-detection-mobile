@@ -4,7 +4,7 @@ import {useTheme} from "@/src/context/ModeContext";
 interface NavigationCardProps {
     title: string;
     onPress: () => void;
-    style: StyleProp<ViewStyle>;
+    style?: StyleProp<ViewStyle>;
 }
 
 export default function NavigationCard({title, onPress, style}: NavigationCardProps) {
