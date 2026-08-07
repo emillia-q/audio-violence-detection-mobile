@@ -1,12 +1,12 @@
 import {StyleSheet, Text, TouchableOpacity, TouchableOpacityProps} from "react-native";
-import {Colors} from "@/src/constants/theme";
+import {useTheme} from "@/src/context/ModeContext";
 
 interface CustomButtonProps extends TouchableOpacityProps {
     title: string;
 }
 
 export function CustomButton({style, title, ...rest}: CustomButtonProps) {
-    const activeColors = Colors.default;
+    const theme = useTheme();
 
     return (
         <TouchableOpacity
@@ -15,13 +15,13 @@ export function CustomButton({style, title, ...rest}: CustomButtonProps) {
             style={[
                 styles.button,
                 {
-                    backgroundColor: activeColors.primaryButton,
-                    shadowColor: activeColors.primaryButton, // Better than black on a dark bg
+                    backgroundColor: theme.primaryButton,
+                    shadowColor: theme.primaryButton, // Better than black on a dark bg
                 },
                 style
             ]}
         >
-            <Text style={[styles.text, {color: activeColors.primaryButtonText}]}>
+            <Text style={[styles.text, {color: theme.primaryButtonText}]}>
                 {title}
             </Text>
         </TouchableOpacity>
