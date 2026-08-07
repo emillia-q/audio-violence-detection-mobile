@@ -2,24 +2,23 @@ import { DarkTheme, ThemeProvider } from '@react-navigation/native';
 import {Stack, useRouter, useSegments} from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import 'react-native-reanimated';
-import { Colors } from '@/src/constants/theme';
 import {AuthProvider, useAuth} from "@/src/context/AuthContext";
-import {useEffect} from "react";
-import {ModeProvider} from "@/src/context/ModeContext";
-
-const CustomDarkTheme = {
-    ...DarkTheme,
-    colors: {
-        ...DarkTheme.colors,
-        background: Colors.default.background,
-        card: Colors.default.background,
-        text: Colors.default.text,
-        border: Colors.default.border,
-    },
-};
+import {useEffect, useMemo} from "react";
+import {ModeProvider, useTheme} from "@/src/context/ModeContext";
 
 function RootLayoutNav() {
     const {token, loading} = useAuth();
+    const theme = useTheme();
+    const navigationTheme = useMemo(() => ({
+        ...DarkTheme,
+        colors: {
+            ...DarkTheme.colors,
+            background: theme.background,
+            card: theme.background,
+            text: theme.text,
+            border: theme.border,
+        },
+    }), [theme]); // Only when theme has changed
 
     // Init expo router tools
     const router = useRouter();
@@ -40,7 +39,7 @@ function RootLayoutNav() {
     }, [token, loading, segments]);
 
     return (
-        <ThemeProvider value={CustomDarkTheme}>
+        <ThemeProvider value={navigationTheme}>
             <Stack>
                 <Stack.Screen name="(auth)" options={{ headerShown: false }} />
                 <Stack.Screen name="(main)" options={{ headerShown: false }} />

@@ -1,5 +1,4 @@
-import {StyleSheet, Text, View} from "react-native";
-import {Colors} from "@/src/constants/theme";
+import {StyleSheet, View} from "react-native";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
@@ -32,11 +31,5 @@ const styles = StyleSheet.create({
       flex: 1,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: Colors.user.background,
-    },
-    title: {
-        color: Colors.user.text,
-        fontSize: 20,
-        fontWeight: 'bold',
     },
 });

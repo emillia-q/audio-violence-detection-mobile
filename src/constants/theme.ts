@@ -1,58 +1,78 @@
 import { Platform } from 'react-native';
 
-const backgroundDark = '#0B1121'; // Main bg
-const surfaceDark = '#1E293B'; // Inputs
-const textSilver = '#F8FAFC'; // Headers
-const textGray = '#94A3B8'; // Descriptions & labels
-const borderGray = '#334155';
 const textWhite = '#FFFFFF';
+
+const commonColors = {
+  textActive: textWhite,
+  danger: '#FB7185',
+};
 
 export const Colors = {
   default: {
-    background: backgroundDark,
-    surface: surfaceDark,
-    text: textSilver,
-    muted: textGray,
-    textActive: textWhite,
-    textInactive: textGray,
-    border: borderGray,
-    placeholder: '#64748B',
+    ...commonColors,
+    background: '#101A2D',
+    surface: '#1A2940',
+    text: '#F1F6FC',
+    muted: '#A8B8CC',
+    textInactive: '#A8B8CC',
+    border: '#32455F',
+    placeholder: '#71839C',
     primaryButton: '#4F46E5',
     primaryButtonText: textWhite,
     link: '#818CF8',
     tint: '#4F46E5',
+    surfaceElevated: '#243752',
+    success: '#34D399',
+    warning: '#FBBF24',
+    disabled: '#52657D',
   },
 
   user: {
-    background: backgroundDark,
-    surface: surfaceDark,
-    text: textSilver,
-    muted: textGray,
-    textActive: textWhite,
-    textInactive: textGray,
-    border: borderGray,
-    placeholder: '#64748B',
-    primaryButton: '#0284C7',
+    ...commonColors,
+    background: '#102842',
+    surface: '#193958',
+    surfaceElevated: '#234665',
+    text: '#EAF4FF',
+    muted: '#A9C4DB',
+    textInactive: '#A9C4DB',
+    border: '#2C5579',
+    placeholder: '#7FA4C2',
+    primaryButton: '#237DB5',
     primaryButtonText: textWhite,
-    link: '#38BDF8',
-    tint: '#0284C7',
+    link: '#7DCDFF',
+    tint: '#47A7E3',
+    success: '#42D3A4',
+    warning: '#F5C451',
+    disabled: '#496982',
   },
 
   trustedUser: {
-    background: backgroundDark,
-    surface: surfaceDark,
-    text: textSilver,
-    muted: textGray,
-    textActive: textWhite,
-    textInactive: textGray,
-    border: borderGray,
-    placeholder: '#64748B',
-    primaryButton: '#1E3A8A',
+    ...commonColors,
+    background: '#07162D',
+    surface: '#0D2748',
+    surfaceElevated: '#133657',
+    text: '#EAF2FF',
+    muted: '#A3BDD9',
+    textInactive: '#A3BDD9',
+    border: '#1C456E',
+    placeholder: '#7298BF',
+    primaryButton: '#164E8C',
     primaryButtonText: textWhite,
-    link: '#93C5FD',
-    tint: '#1E3A8A',
+    link: '#9DD6FF',
+    tint: '#519FDD',
+    success: '#32C995',
+    warning: '#EFBF4A',
+    disabled: '#345371',
   },
 };
+
+export type ThemeName = 'default' | 'user' | 'trustedUser';
+export type AppTheme = (typeof Colors)[ThemeName];
+
+export function getTheme(name: ThemeName): AppTheme {
+  return Colors[name];
+}
+
 
 export const Fonts = Platform.select({
   ios: {
