@@ -1,7 +1,7 @@
 import {createContext, useContext, useMemo, useState} from "react";
-import {getTheme, type AppTheme} from "@/src/constants/theme";
+import {getTheme, type AppTheme, ThemeName} from "@/src/constants/theme";
 
-export type AppMode = 'user' | 'trustedUser'
+export type AppMode = ThemeName;
 
 interface ModeContextData {
     mode: AppMode;
@@ -11,8 +11,15 @@ interface ModeContextData {
 
 const ModeContext = createContext<ModeContextData | undefined>(undefined);
 
-export function ModeProvider({children}: {children: React.ReactNode}) {
-    const [mode, setMode] = useState<AppMode>('user'); // Load user as domain
+export function ModeProvider({
+     children,
+     initialMode = 'user',
+ }:
+ {
+     children: React.ReactNode;
+     initialMode?:AppMode;
+ }) {
+    const [mode, setMode] = useState<AppMode>(initialMode); // Load user as domain
 
     const theme = useMemo(() => getTheme(mode), [mode]);
 
