@@ -2,26 +2,43 @@ import {StyleSheet, View} from "react-native";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
-import DeviceList from "@/src/components/dashboard/user/DeviceList";
+import DeviceList from "@/src/components/dashboard/user/devices/DeviceList";
+import {TrustedUserListResponse} from "@/src/api/dto/response/TrustedUserListResponse";
+import {userService} from "@/src/api/service/user";
+import TrustedUserList from "@/src/components/dashboard/user/trusted-users/TrustedUserList";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
+    const [trustedUsers, setTrustedUsers] = useState<TrustedUserListResponse[]>([]);
 
     useEffect(() => {
-        const fetchDevices = async () => {
+        const fetchDashboardData = async () => {
             try {
-                const data = await deviceService.getUserDevices();
-                setDevices(data);
+                // Execute requests concurrently to optimize loading time
+                const [devicesResult, trustedUsersResult] = await Promise.allSettled([
+                    deviceService.getUserDevices(),
+                    userService.getListOfTrustedUsers()
+                ]);
+                if (devicesResult.status === 'fulfilled')
+                    setDevices(devicesResult.value);
+                else
+                    console.error('Could not load devices: ', devicesResult.reason);
+
+                if (trustedUsersResult.status === 'fulfilled')
+                    setTrustedUsers(trustedUsersResult.value);
+                else
+                    console.error('Could not load devices: ', trustedUsersResult.reason);
             } catch (error) {
                 alert(error);
             }
         };
-        fetchDevices();
+        fetchDashboardData();
     }, []);
 
     return (
         <View style={styles.container}>
             <DeviceList devices={devices}/>
+            <TrustedUserList trustedUsers={trustedUsers}/>
         </View>
     );
 }
@@ -29,7 +46,7 @@ export default function UserDashboard() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      padding: 16,
+      gap: 24,
     },
 });

@@ -1,16 +1,11 @@
 import {Stack} from 'expo-router';
 import React from 'react';
-import { Colors } from '@/src/constants/theme';
+import {ModeProvider} from "@/src/context/ModeContext";
 
 export default function AuthLayout() {
     return (
-        <Stack
-            screenOptions={{
-                headerShown: false,
-                contentStyle: { backgroundColor: Colors.default.background }
-            }}
-        >
-            <Stack.Screen name="index" />
-        </Stack>
+        <ModeProvider initialMode={'default'}>
+            <Stack screenOptions={{headerShown: false}}/>
+        </ModeProvider>
     );
 }

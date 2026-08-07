@@ -1,12 +1,12 @@
 import {StyleSheet, TextInput, TextInputProps, TouchableOpacity, View} from "react-native";
-import {Colors} from "@/src/constants/theme";
 import {useState} from "react";
 import {Ionicons} from "@expo/vector-icons";
+import {useTheme} from "@/src/context/ModeContext";
 
 interface CustomInputProps extends TextInputProps {}
 
 export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}: CustomInputProps) {
-    const activeColors = Colors.default;
+    const theme = useTheme()
 
     const [isFocused, setIsFocused] = useState(false);
     const [isPasswordVisible, setIsPasswordVisible] = useState(false);
@@ -18,14 +18,14 @@ export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}:
         <View style={[
             styles.container,
             {
-                backgroundColor: activeColors.surface,
-                borderColor: isFocused ? activeColors.tint : activeColors.border,
+                backgroundColor: theme.surface,
+                borderColor: isFocused ? theme.tint : theme.border,
             },
             style
         ]}>
             <TextInput
                 {...rest}
-                placeholderTextColor={activeColors.placeholder}
+                placeholderTextColor={theme.placeholder}
 
                 // Password uncover
                 secureTextEntry={isPasswordField && !isPasswordVisible}
@@ -41,7 +41,7 @@ export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}:
                 }}
                 style={[
                     styles.input,
-                    {color: activeColors.text}
+                    {color: theme.text}
                 ]}
             />
 
@@ -54,7 +54,7 @@ export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}:
                     <Ionicons
                         name={isPasswordVisible ? "eye-off" : "eye"}
                         size={22}
-                        color={activeColors.placeholder}
+                        color={theme.placeholder}
                     />
                 </TouchableOpacity>
             )}
