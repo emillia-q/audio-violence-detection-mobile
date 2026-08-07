@@ -3,25 +3,35 @@ import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
 import DeviceList from "@/src/components/dashboard/user/devices/DeviceList";
+import {TrustedUserListResponse} from "@/src/api/dto/response/TrustedUserListResponse";
+import {userService} from "@/src/api/service/user";
+import TrustedUserList from "@/src/components/dashboard/user/trusted-users/TrustedUserList";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
+    const [trustedUsers, setTrustedUsers] = useState<TrustedUserListResponse[]>([]);
 
     useEffect(() => {
-        const fetchDevices = async () => {
+        const fetchDashboardData = async () => {
             try {
-                const data = await deviceService.getUserDevices();
-                setDevices(data);
+                // Execute requests concurrently to optimize loading time
+                const [fetchedDevices, fetchedTrustedUsers] = await Promise.all([
+                    deviceService.getUserDevices(),
+                    userService.getListOfTrustedUsers()
+                ]);
+                setDevices(fetchedDevices);
+                setTrustedUsers(fetchedTrustedUsers);
             } catch (error) {
                 alert(error);
             }
         };
-        fetchDevices();
+        fetchDashboardData();
     }, []);
 
     return (
         <View style={styles.container}>
             <DeviceList devices={devices}/>
+            <TrustedUserList trustedUsers={trustedUsers}/>
         </View>
     );
 }
@@ -29,7 +39,7 @@ export default function UserDashboard() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
+      padding: 16,
+      gap: 24,
     },
 });
