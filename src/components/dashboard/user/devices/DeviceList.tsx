@@ -2,6 +2,7 @@ import {StyleSheet, Text, View} from "react-native";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {Colors} from "@/src/constants/theme";
 import NavigationCard from "@/src/components/ui/NavigationCard";
+import EmptyListView from "@/src/components/ui/EmptyListView";
 
 interface DeviceListProps {
     devices: DeviceListResponse[];
@@ -11,9 +12,7 @@ export default function DeviceList({devices}: DeviceListProps) {
     // 204 - empty list
     if (devices.length === 0) {
         return (
-            <View style={styles.emptyContainer}>
-                <Text style={styles.emptyTitle}>No devices</Text>
-            </View>
+            <EmptyListView title={'No devices'}/>
         );
     }
 
@@ -32,20 +31,6 @@ export default function DeviceList({devices}: DeviceListProps) {
 }
 
 const styles = StyleSheet.create({
-    emptyContainer: {
-        alignItems: 'center',
-        padding: 24,
-        backgroundColor: Colors.user.surface,
-        borderColor: Colors.user.border,
-        borderWidth: 1,
-        borderRadius: 16,
-        borderStyle: 'dashed',
-    },
-    emptyTitle: {
-        color: Colors.user.text,
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
     listContainer: {
         width: '100%',
     },
