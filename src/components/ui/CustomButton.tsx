@@ -6,7 +6,7 @@ interface CustomButtonProps extends TouchableOpacityProps {
 }
 
 export function CustomButton({style, title, ...rest}: CustomButtonProps) {
-    const activeColors = Colors.shared;
+    const activeColors = Colors.default;
 
     return (
         <TouchableOpacity
