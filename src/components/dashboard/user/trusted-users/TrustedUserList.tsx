@@ -1,6 +1,5 @@
 import {TrustedUserListResponse} from "@/src/api/dto/response/TrustedUserListResponse";
-import {StyleSheet, Text, View} from "react-native";
-import {Colors} from "@/src/constants/theme";
+import {StyleSheet, View} from "react-native";
 import NavigationCard from "@/src/components/ui/NavigationCard";
 import EmptyListView from "@/src/components/ui/EmptyListView";
 

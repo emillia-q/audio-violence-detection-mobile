@@ -1,6 +1,5 @@
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
-import {Colors} from "@/src/constants/theme";
 import NavigationCard from "@/src/components/ui/NavigationCard";
 import EmptyListView from "@/src/components/ui/EmptyListView";
 
