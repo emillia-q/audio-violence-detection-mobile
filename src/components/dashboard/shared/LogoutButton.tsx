@@ -1,5 +1,6 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {Alert} from "react-native";
+import {Alert, StyleSheet, TouchableOpacity} from "react-native";
+import {Ionicons} from "@expo/vector-icons";
 
 interface LogoutButtonProps {
     onLogout: () => void;
@@ -23,6 +24,22 @@ export default function LogoutButton({onLogout}: LogoutButtonProps) {
                     onPress: onLogout
                 }
             ]
-        )
-    }
+        );
+    };
+
+    return (
+        <TouchableOpacity
+            onPress={handlePress}
+            style={styles.container}
+            activeOpacity={0.7}
+        >
+            <Ionicons name={"log-out-outline"} size={28} color={theme.text}/>
+        </TouchableOpacity>
+    );
 }
+
+const styles = StyleSheet.create({
+   container: {
+       padding: 8,
+   },
+});
