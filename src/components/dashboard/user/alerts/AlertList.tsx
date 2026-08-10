@@ -15,6 +15,14 @@ export default function AlertList({alerts}: AlertListProps) {
         );
     }
 
+    // Format date
+    const formatDateTime = (isoString: string) => {
+        const date = new Date(isoString);
+        const day = date.toLocaleDateString([], {day: '2-digit', month: '2-digit', year: 'numeric'});
+        const time = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+        return `${day}, ${time}`;
+    };
+
     // 200 - list of alerts
     return (
         <View style={styles.listContainer}>
@@ -22,7 +30,7 @@ export default function AlertList({alerts}: AlertListProps) {
                 <NavigationCard
                     key={alert.id}
                     title={alert.deviceName}
-                    subtitle={alert.createdAt}
+                    subtitle={formatDateTime(alert.createdAt)}
                     isRead={alert.isRead}
                     onPress={() => console.log(`Alert with id: ${alert.id}`)}
                 />
