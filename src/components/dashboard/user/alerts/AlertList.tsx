@@ -22,6 +22,7 @@ export default function AlertList({alerts}: AlertListProps) {
                 <NavigationCard
                     key={alert.id}
                     title={alert.deviceName}
+                    isRead={alert.isRead}
                     onPress={() => console.log(`Alert with id: ${alert.id}`)}
                 />
             ))}
