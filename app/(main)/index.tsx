@@ -6,10 +6,16 @@ import ModeSwitcher from "@/src/components/dashboard/shared/ModeSwitcher";
 import UserDashboard from "@/src/components/dashboard/user/UserDashboard";
 import TrustedUserDashboard from "@/src/components/dashboard/trusted-user/TrustedUserDashboard";
 import {useMode} from "@/src/context/ModeContext";
+import LogoutButton from "@/src/components/dashboard/shared/LogoutButton";
+import {useAuth} from "@/src/context/AuthContext";
 
 export default function DashboardScreen() {
+  // Navigation
   const pagerRef = useRef<PagerView>(null);
   const {mode, setMode} = useMode();
+
+  // Logout
+  const {logout} = useAuth();
 
   // Mode switcher
   useEffect(() => {
@@ -28,7 +34,10 @@ export default function DashboardScreen() {
 
   return (
       <SafeAreaView style={styles.safeArea}>
-        <ModeSwitcher/>
+        <View style={styles.container}>
+          <ModeSwitcher/>
+          <LogoutButton onLogout={logout}/>
+        </View>
 
         {/* Swipe mode change */}
         <PagerView
@@ -51,6 +60,11 @@ export default function DashboardScreen() {
 const styles = StyleSheet.create({
   safeArea: {
     flex: 1,
+  },
+  container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingRight: 16,
   },
   pageView: {
     flex: 1,
