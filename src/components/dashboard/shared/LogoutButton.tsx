@@ -33,7 +33,7 @@ export default function LogoutButton({onLogout}: LogoutButtonProps) {
             style={styles.container}
             activeOpacity={0.7}
         >
-            <Ionicons name={"log-out-outline"} size={28} color={theme.text}/>
+            <Ionicons name={"log-out-outline"} size={32} color={theme.text}/>
         </TouchableOpacity>
     );
 }
