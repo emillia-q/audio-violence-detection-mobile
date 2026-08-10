@@ -18,9 +18,20 @@ export default function AlertList({alerts}: AlertListProps) {
     // Format date
     const formatDateTime = (isoString: string) => {
         const date = new Date(isoString);
-        const day = date.toLocaleDateString([], {day: '2-digit', month: '2-digit', year: 'numeric'});
+        const today = new Date();
+        const yesterday = new Date(today);
+        yesterday.setDate(yesterday.getDate() - 1);
+
         const time = date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-        return `${day}, ${time}`;
+
+        if (date.toDateString() === today.toDateString())
+            return `Today, ${time}`;
+        else if (date.toDateString() === yesterday.toDateString())
+            return `Yesterday, ${time}`;
+        else {
+            const day = date.toLocaleDateString([], {day: '2-digit', month: '2-digit', year: 'numeric'});
+            return `${day}, ${time}`;
+        }
     };
 
     // 200 - list of alerts
