@@ -27,7 +27,7 @@ export default function UserDashboard() {
                 if (trustedUsersResult.status === 'fulfilled')
                     setTrustedUsers(trustedUsersResult.value);
                 else
-                    console.error('Could not load devices: ', trustedUsersResult.reason);
+                    console.error('Could not load trusted users: ', trustedUsersResult.reason);
             } catch (error) {
                 alert(error);
             }
