@@ -1,0 +1,4 @@
+interface LogoutButtonProps {
+    onLogout: () => void;
+}
+
