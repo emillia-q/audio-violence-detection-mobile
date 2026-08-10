@@ -41,6 +41,18 @@ export default function NavigationCard({title, subtitle, isRead, onPress, style}
                     {/* Dot for unread notifications */}
                     {isRead === false && <View style={styles.unreadDot}/>}
                 </View>
+                {/* Optional subtitle */}
+                {subtitle && (
+                    <Text
+                        style={[
+                            styles.subtitle,
+                            {color: theme.muted}
+                        ]}
+                        numberOfLines={1}
+                    >
+                        {subtitle}
+                    </Text>
+                )}
             </View>
 
             <Text
@@ -79,6 +91,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 16,
         fontWeight: '600',
+    },
+    subtitle: {
+        fontSize: 13,
+        marginTop: 4,
     },
     unreadDot: {
         width: 10,
