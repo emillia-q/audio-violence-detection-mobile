@@ -1,5 +1,6 @@
 import {TrustedUserListResponse} from "@/src/api/dto/response/TrustedUserListResponse";
 import {apiClient} from "@/src/api/client";
+import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserListResponse";
 
 const PATH = '/users'
 
@@ -8,6 +9,16 @@ export const userService = {
         const response = await apiClient.get(`${PATH}/trusted-users`);
 
         // 204 support
+        if (response.status === 204)
+            return [];
+
+        return response.data;
+    },
+
+    getListOfProtectedUsers: async (): Promise<ProtectedUserListResponse[]> => {
+        const response = await apiClient.get(`${PATH}/protected-users`);
+
+        // 204
         if (response.status === 204)
             return [];
 
