@@ -23,7 +23,7 @@ export default function DashboardSection({title, children, actionButton}: Dashbo
             </Text>
 
             {/* Main content */}
-            <View>
+            <View style={styles.content}>
                 {children}
             </View>
 
@@ -39,14 +39,17 @@ export default function DashboardSection({title, children, actionButton}: Dashbo
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 8,
+        marginBottom: 24,
     },
     title: {
-        fontSize: 12,
+        fontSize: 14,
         fontWeight: '700',
+        textTransform: 'uppercase',
         letterSpacing: 1.2,
         marginBottom: 12,
         marginLeft: 4,
+    },
+    content: {
     },
     actionContainer: {
         marginTop: 12,
