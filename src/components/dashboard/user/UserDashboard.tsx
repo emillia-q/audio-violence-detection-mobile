@@ -10,6 +10,7 @@ import {AlertListResponse} from "@/src/api/dto/response/AlertListResponse";
 import {alertService} from "@/src/api/service/alert";
 import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
 import DashboardSection from "@/src/components/dashboard/shared/DashboardSection";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
@@ -57,9 +58,19 @@ export default function UserDashboard() {
             showsVerticalScrollIndicator={false} // Hide scroll bar
         >
             <DashboardSection title={"My devices"}>
+                <CustomButton
+                    title={"+ Add new device"}
+                    variant={"text"}
+                    onPress={() => console.log('Add device')}
+                />
                 <DeviceList devices={devices}/>
             </DashboardSection>
             <DashboardSection title={"Trusted users"}>
+                <CustomButton
+                    title={"+ Add new trusted user"}
+                    variant={"text"}
+                    onPress={() => console.log('Add device')}
+                />
                 <TrustedUserList trustedUsers={trustedUsers}/>
             </DashboardSection>
             <DashboardSection title={"Recent alerts"}>
