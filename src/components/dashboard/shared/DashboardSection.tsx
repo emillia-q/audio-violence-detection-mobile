@@ -53,5 +53,6 @@ const styles = StyleSheet.create({
     },
     actionContainer: {
         marginTop: 12,
+        alignItems: 'flex-start',
     },
 });
