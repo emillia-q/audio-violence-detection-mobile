@@ -11,7 +11,12 @@ export default function DeviceList({devices}: DeviceListProps) {
     // 204 - empty list
     if (devices.length === 0) {
         return (
-            <EmptyListView title={'No devices'}/>
+            <EmptyListView
+                title={'No devices'}
+                iconName={"hardware-chip-outline"}
+                buttonTitle={"+ Add device"}
+                onButtonPress={() => console.log('Add device')}
+            />
         );
     }
 
