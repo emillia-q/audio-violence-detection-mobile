@@ -57,20 +57,28 @@ export default function UserDashboard() {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false} // Hide scroll bar
         >
-            <DashboardSection title={"My devices"}>
-                <CustomButton
-                    title={"+ Add new device"}
-                    variant={"text"}
-                    onPress={() => console.log('Add device')}
-                />
+            <DashboardSection
+                title={"My devices"}
+                actionButton={
+                    <CustomButton
+                        title={"+ Add new device"}
+                        variant={"text"}
+                        onPress={() => console.log('Add device')}
+                    />
+                }
+            >
                 <DeviceList devices={devices}/>
             </DashboardSection>
-            <DashboardSection title={"Trusted users"}>
-                <CustomButton
-                    title={"+ Add new trusted user"}
-                    variant={"text"}
-                    onPress={() => console.log('Add trusted user')}
-                />
+            <DashboardSection
+                title={"Trusted users"}
+                actionButton={
+                    <CustomButton
+                        title={"+ Add new trusted user"}
+                        variant={"text"}
+                        onPress={() => console.log('Add trusted user')}
+                    />
+                }
+            >
                 <TrustedUserList trustedUsers={trustedUsers}/>
             </DashboardSection>
             <DashboardSection title={"Recent alerts"}>
