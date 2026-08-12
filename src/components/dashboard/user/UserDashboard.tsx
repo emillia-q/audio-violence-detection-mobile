@@ -60,11 +60,13 @@ export default function UserDashboard() {
             <DashboardSection
                 title={"My devices"}
                 actionButton={
-                    <CustomButton
-                        title={"+ Add device"}
-                        variant={"text"}
-                        onPress={() => console.log('Add device')}
-                    />
+                    devices.length > 0 && (
+                        <CustomButton
+                            title={"+ Add device"}
+                            variant={"text"}
+                            onPress={() => console.log('Add device')}
+                        />
+                    )
                 }
             >
                 <DeviceList devices={devices}/>
@@ -72,11 +74,13 @@ export default function UserDashboard() {
             <DashboardSection
                 title={"Trusted users"}
                 actionButton={
-                    <CustomButton
-                        title={"+ Add trusted user"}
-                        variant={"text"}
-                        onPress={() => console.log('Add trusted user')}
-                    />
+                    devices.length > 0 && (
+                        <CustomButton
+                            title={"+ Add trusted user"}
+                            variant={"text"}
+                            onPress={() => console.log('Add trusted user')}
+                        />
+                    )
                 }
             >
                 <TrustedUserList trustedUsers={trustedUsers}/>
