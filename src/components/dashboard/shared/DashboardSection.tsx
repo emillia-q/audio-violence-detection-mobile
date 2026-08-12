@@ -13,6 +13,7 @@ export default function DashboardSection({title, children, actionButton}: Dashbo
 
     return (
         <View style={styles.container}>
+            {/* Section title */}
             <Text style={[
                 styles.title,
                 {color: theme.muted}
@@ -20,6 +21,18 @@ export default function DashboardSection({title, children, actionButton}: Dashbo
             >
                 {title}
             </Text>
+
+            {/* Main content */}
+            <View>
+                {children}
+            </View>
+
+            {/* Optional button */}
+            {actionButton && (
+                <View style={styles.actionContainer}>
+                    {actionButton}
+                </View>
+            )}
         </View>
     );
 }
@@ -34,5 +47,8 @@ const styles = StyleSheet.create({
         letterSpacing: 1.2,
         marginBottom: 12,
         marginLeft: 4,
+    },
+    actionContainer: {
+        marginTop: 12,
     },
 });
