@@ -1,4 +1,4 @@
-import {StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet, View} from "react-native";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
@@ -9,6 +9,7 @@ import TrustedUserList from "@/src/components/dashboard/user/trusted-users/Trust
 import {AlertListResponse} from "@/src/api/dto/response/AlertListResponse";
 import {alertService} from "@/src/api/service/alert";
 import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
+import DashboardSection from "@/src/components/dashboard/shared/DashboardSection";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
@@ -50,18 +51,31 @@ export default function UserDashboard() {
     }, []);
 
     return (
-        <View style={styles.container}>
-            <DeviceList devices={devices}/>
-            <TrustedUserList trustedUsers={trustedUsers}/>
-            <AlertList alerts={alerts}/>
-        </View>
+        <ScrollView
+            style={styles.container}
+            contentContainerStyle={styles.scrollContent}
+            showsVerticalScrollIndicator={false} // Hide scroll bar
+        >
+            <DashboardSection title={"My devices"}>
+                <DeviceList devices={devices}/>
+            </DashboardSection>
+            <DashboardSection title={"Trusted users"}>
+                <TrustedUserList trustedUsers={trustedUsers}/>
+            </DashboardSection>
+            <DashboardSection title={"Recent alerts"}>
+                <AlertList alerts={alerts}/>
+            </DashboardSection>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 16,
-      gap: 24,
     },
+    scrollContent: {
+        padding: 16,
+        gap: 24,
+        paddingBottom: 40,
+    }
 });
