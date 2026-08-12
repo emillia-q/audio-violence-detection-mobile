@@ -11,7 +11,12 @@ export default function TrustedUserList({trustedUsers}: TrustedUserListProps) {
     // 204 - empty list
     if (trustedUsers.length === 0) {
         return (
-            <EmptyListView title={'No trusted users'}/>
+            <EmptyListView
+                title={'No trusted users'}
+                iconName={"person-add-outline"}
+                buttonTitle={"+ Add trusted user"}
+                onButtonPress={() => console.log('Add trusted user')}
+            />
         );
     }
 

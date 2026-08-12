@@ -3,9 +3,10 @@ import {useTheme} from "@/src/context/ModeContext";
 
 interface CustomButtonProps extends TouchableOpacityProps {
     title: string;
+    variant?: 'solid' | 'outline' | 'text';
 }
 
-export function CustomButton({style, title, ...rest}: CustomButtonProps) {
+export function CustomButton({style, title, variant = 'solid',  ...rest}: CustomButtonProps) {
     const theme = useTheme();
 
     return (
@@ -13,15 +14,36 @@ export function CustomButton({style, title, ...rest}: CustomButtonProps) {
             activeOpacity={0.85} // Smoother click
             {...rest}
             style={[
-                styles.button,
-                {
+                styles.baseButton,
+                // solid
+                variant === 'solid' && {
                     backgroundColor: theme.primaryButton,
-                    shadowColor: theme.primaryButton, // Better than black on a dark bg
+                    shadowColor: theme.primaryButton,
+                    elevation: 4,
+                    shadowOffset: {width: 0, height: 4},
+                    shadowOpacity: 0.25,
+                    shadowRadius: 8,
+                },
+
+                // outline
+                variant === 'outline' && {
+                    backgroundColor: 'transparent',
+                    borderWidth: 1.5,
+                    borderColor: theme.tint,
+                },
+
+                // text
+                variant === 'text' && {
+                    paddingVertical: 8,
+                    paddingHorizontal: 8,
                 },
                 style
             ]}
         >
-            <Text style={[styles.text, {color: theme.primaryButtonText}]}>
+            <Text style={[
+                styles.text,
+                {color: variant === 'solid' ? theme.primaryButtonText : theme.tint}
+            ]}>
                 {title}
             </Text>
         </TouchableOpacity>
@@ -29,16 +51,12 @@ export function CustomButton({style, title, ...rest}: CustomButtonProps) {
 }
 
 const styles = StyleSheet.create({
-    button: {
+    baseButton: {
         paddingVertical: 16,
         paddingHorizontal: 24,
         borderRadius: 14,
         alignItems: 'center',
         justifyContent: 'center',
-        shadowOffset: { width: 0, height: 4 },
-        shadowOpacity: 0.25,
-        shadowRadius: 8,
-        elevation: 4,
     },
     text: {
         fontSize: 17,

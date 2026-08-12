@@ -11,7 +11,10 @@ export default function ProtectedUserList({protectedUsers}: ProtectedUserListPro
     // 204
     if (protectedUsers.length === 0) {
         return (
-            <EmptyListView title={"No protected users"}/>
+            <EmptyListView
+                title={'No protected users'}
+                iconName={"people-outline"}
+            />
         );
     }
 
