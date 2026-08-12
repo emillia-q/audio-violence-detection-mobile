@@ -11,7 +11,10 @@ export default function AlertList({alerts}: AlertListProps) {
     // 204 - empty list
     if (alerts.length === 0) {
         return (
-            <EmptyListView title={'No recent alerts'}/>
+            <EmptyListView
+                title={'No recent alerts'}
+                iconName={"notifications-off-outline"}
+            />
         );
     }
 
