@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet, View} from "react-native";
+import {ScrollView, StyleSheet} from "react-native";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
