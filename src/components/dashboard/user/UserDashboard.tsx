@@ -69,7 +69,7 @@ export default function UserDashboard() {
                 <CustomButton
                     title={"+ Add new trusted user"}
                     variant={"text"}
-                    onPress={() => console.log('Add device')}
+                    onPress={() => console.log('Add trusted user')}
                 />
                 <TrustedUserList trustedUsers={trustedUsers}/>
             </DashboardSection>
