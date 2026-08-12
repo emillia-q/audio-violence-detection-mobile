@@ -61,7 +61,7 @@ export default function UserDashboard() {
                 title={"My devices"}
                 actionButton={
                     <CustomButton
-                        title={"+ Add new device"}
+                        title={"+ Add device"}
                         variant={"text"}
                         onPress={() => console.log('Add device')}
                     />
@@ -73,7 +73,7 @@ export default function UserDashboard() {
                 title={"Trusted users"}
                 actionButton={
                     <CustomButton
-                        title={"+ Add new trusted user"}
+                        title={"+ Add trusted user"}
                         variant={"text"}
                         onPress={() => console.log('Add trusted user')}
                     />
