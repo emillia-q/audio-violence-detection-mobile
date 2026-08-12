@@ -13,15 +13,15 @@ export default function EmptyListView({title}: EmptyListViewProps) {
         <View style={[
             styles.container,
             {
-                backgroundColor: theme.surface,
-                borderColor: theme.border
+                backgroundColor: theme.background,
+                borderColor: theme.muted
             }
         ]}
         >
             <Text style={[
                 styles.title,
                 {
-                    color: theme.text
+                    color: theme.muted
                 }
             ]}
             >
@@ -33,15 +33,15 @@ export default function EmptyListView({title}: EmptyListViewProps) {
 
 const styles = StyleSheet.create({
     container: {
+        width: '100%',
         alignItems: 'center',
-        padding: 24,
+        paddingVertical: 32,
         borderWidth: 1,
         borderRadius: 16,
         borderStyle: 'dashed',
     },
     title: {
-        color: Colors.user.text,
-        fontSize: 16,
-        fontWeight: 'bold',
+        fontSize: 15,
+        fontWeight: '500',
     },
 });
