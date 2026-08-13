@@ -54,6 +54,17 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                 behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
                 style={styles.sheetContainer}
             >
+
+                {/* Drag indicator */}
+                <View style={styles.dragIndicator}/>
+
+                <View style={styles.content}>
+
+                    {/* Title */}
+                    <Text style={styles.title}>Add Trusted User</Text>
+
+
+                </View>
             </KeyboardAvoidingView>
         </Modal>
     );
@@ -77,5 +88,22 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 10,
         elevation: 20,
+    },
+    dragIndicator: {
+        width: 36,
+        height: 5,
+        borderRadius: 3,
+        alignSelf: 'center',
+        marginTop: 12,
+        backgroundColor: Colors.user.border,
+    },
+    content: {
+        padding: 24,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: '700',
+        marginBottom: 20,
+        color: Colors.user.text,
     }
 });
