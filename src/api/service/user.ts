@@ -1,6 +1,8 @@
 import {TrustedUserListResponse} from "@/src/api/dto/response/TrustedUserListResponse";
 import {apiClient} from "@/src/api/client";
 import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserListResponse";
+import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
+import {AddTrustedUserRequest} from "@/src/api/dto/request/AddTrustedUserRequest";
 
 const PATH = '/users'
 
@@ -22,6 +24,11 @@ export const userService = {
         if (response.status === 204)
             return [];
 
+        return response.data;
+    },
+
+    addTrustedUser: async (data: AddTrustedUserRequest): Promise<TrustedUserDetailsResponse> => {
+        const response = await apiClient.post<TrustedUserDetailsResponse>(`${PATH}/trusted-users`, data);
         return response.data;
     }
 };
