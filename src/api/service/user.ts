@@ -28,7 +28,7 @@ export const userService = {
     },
 
     addTrustedUser: async (data: AddTrustedUserRequest): Promise<TrustedUserDetailsResponse> => {
-        const response = await apiClient.post<TrustedUserDetailsResponse>(`${PATH}/trusted-users`);
+        const response = await apiClient.post<TrustedUserDetailsResponse>(`${PATH}/trusted-users`, data);
         return response.data;
     }
 };
