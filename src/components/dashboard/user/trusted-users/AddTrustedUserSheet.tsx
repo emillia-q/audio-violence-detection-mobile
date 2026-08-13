@@ -20,4 +20,10 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
         setEmail("");
         setNickname("");
     }
+
+    const handleClose = () => {
+        setEmail("");
+        setNickname("");
+        onClose();
+    }
 }
