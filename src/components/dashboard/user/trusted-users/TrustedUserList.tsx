@@ -5,9 +5,10 @@ import EmptyListView from "@/src/components/ui/EmptyListView";
 
 interface TrustedUserListProps {
     trustedUsers: TrustedUserListResponse[];
+    onAddTrustedUser: () => void;
 }
 
-export default function TrustedUserList({trustedUsers}: TrustedUserListProps) {
+export default function TrustedUserList({trustedUsers, onAddTrustedUser}: TrustedUserListProps) {
     // 204 - empty list
     if (trustedUsers.length === 0) {
         return (
@@ -15,7 +16,7 @@ export default function TrustedUserList({trustedUsers}: TrustedUserListProps) {
                 title={'No trusted users'}
                 iconName={"person-add-outline"}
                 buttonTitle={"+ Add trusted user"}
-                onButtonPress={() => console.log('Add trusted user')}
+                onButtonPress={onAddTrustedUser}
             />
         );
     }
