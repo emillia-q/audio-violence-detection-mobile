@@ -11,6 +11,7 @@ import {
 import {Colors} from "@/src/constants/theme";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 interface AddTrustedUserSheetProps {
     isVisible: boolean;
@@ -69,7 +70,7 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                     {/* Email */}
                     <AboveInputLabel title={"E-mail"}/>
                     <CustomInput
-                        style={styles.inputGroup}
+                        style={styles.input}
                         placeholder={"Enter trusted user e-mail"}
                         placeholderTextColor={Colors.user.placeholder}
                         value={email}
@@ -84,6 +85,12 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                         placeholderTextColor={Colors.user.placeholder}
                         value={nickname}
                         onChangeText={setNickname}
+                    />
+
+                    {/* Add button */}
+                    <CustomButton
+                        style={styles.addButton}
+                        title={"Add trusted user"}
                     />
                 </View>
             </KeyboardAvoidingView>
@@ -127,10 +134,10 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         color: Colors.user.text,
     },
-    inputGroup: {
+    input: {
         marginBottom: 24,
     },
-    input: {
-        marginBottom: 12,
-    },
+    addButton: {
+        alignSelf: 'flex-end',
+    }
 });
