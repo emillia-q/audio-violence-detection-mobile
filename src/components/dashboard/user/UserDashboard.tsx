@@ -11,12 +11,15 @@ import {alertService} from "@/src/api/service/alert";
 import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
 import DashboardSection from "@/src/components/dashboard/shared/DashboardSection";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/AddTrustedUserSheet";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
     const [trustedUsers, setTrustedUsers] = useState<TrustedUserListResponse[]>([]);
     const [alerts, setAlerts] = useState<AlertListResponse[]>([]);
+    const [isAddUserVisible, setIsAddUserVisible] = useState(false);
 
+    // Fetch api data
     useEffect(() => {
         const fetchDashboardData = async () => {
             try {
@@ -51,44 +54,59 @@ export default function UserDashboard() {
         fetchDashboardData();
     }, []);
 
+    // Add new trusted user
+    const handleAddTrustedUser = (email: string, nickname: string) => {
+        console.log("Data:", email, nickname);
+        setIsAddUserVisible(false);
+    }
+
     return (
-        <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false} // Hide scroll bar
-        >
-            <DashboardSection
-                title={"My devices"}
-                actionButton={
-                    devices.length > 0 && (
-                        <CustomButton
-                            title={"+ Add device"}
-                            variant={"text"}
-                            onPress={() => console.log('Add device')}
-                        />
-                    )
-                }
+        <>
+            <ScrollView
+                style={styles.container}
+                contentContainerStyle={styles.scrollContent}
+                showsVerticalScrollIndicator={false} // Hide scroll bar
             >
-                <DeviceList devices={devices}/>
-            </DashboardSection>
-            <DashboardSection
-                title={"Trusted users"}
-                actionButton={
-                    devices.length > 0 && (
-                        <CustomButton
-                            title={"+ Add trusted user"}
-                            variant={"text"}
-                            onPress={() => console.log('Add trusted user')}
-                        />
-                    )
-                }
-            >
-                <TrustedUserList trustedUsers={trustedUsers}/>
-            </DashboardSection>
-            <DashboardSection title={"Recent alerts"}>
-                <AlertList alerts={alerts}/>
-            </DashboardSection>
-        </ScrollView>
+                <DashboardSection
+                    title={"My devices"}
+                    actionButton={
+                        devices.length > 0 && (
+                            <CustomButton
+                                title={"+ Add device"}
+                                variant={"text"}
+                                onPress={() => console.log('Add device')}
+                            />
+                        )
+                    }
+                >
+                    <DeviceList devices={devices}/>
+                </DashboardSection>
+                <DashboardSection
+                    title={"Trusted users"}
+                    actionButton={
+                        trustedUsers.length > 0 && (
+                            <CustomButton
+                                title={"+ Add trusted user"}
+                                variant={"text"}
+                                onPress={() => setIsAddUserVisible(true)}
+                            />
+                        )
+                    }
+                >
+                    <TrustedUserList trustedUsers={trustedUsers}/>
+                </DashboardSection>
+                <DashboardSection title={"Recent alerts"}>
+                    <AlertList alerts={alerts}/>
+                </DashboardSection>
+            </ScrollView>
+
+            {/* Modal */}
+            <AddTrustedUserSheet
+                isVisible={isAddUserVisible}
+                onClose={() => setIsAddUserVisible(false)}
+                onSubmit={handleAddTrustedUser}
+            />
+        </>
     );
 }
 
