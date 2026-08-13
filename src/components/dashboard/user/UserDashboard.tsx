@@ -93,7 +93,10 @@ export default function UserDashboard() {
                         )
                     }
                 >
-                    <TrustedUserList trustedUsers={trustedUsers}/>
+                    <TrustedUserList
+                        trustedUsers={trustedUsers}
+                        onAddTrustedUser={() => setIsAddUserVisible(true)}
+                    />
                 </DashboardSection>
                 <DashboardSection title={"Recent alerts"}>
                     <AlertList alerts={alerts}/>
