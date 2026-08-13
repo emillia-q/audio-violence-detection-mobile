@@ -9,6 +9,8 @@ import {
     View
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
+import {CustomInput} from "@/src/components/ui/CustomInput";
+import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 
 interface AddTrustedUserSheetProps {
     isVisible: boolean;
@@ -63,7 +65,26 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                     {/* Title */}
                     <Text style={styles.title}>Add Trusted User</Text>
 
+                    {/* Inputs */}
+                    {/* Email */}
+                    <AboveInputLabel title={"E-mail"}/>
+                    <CustomInput
+                        style={styles.inputGroup}
+                        placeholder={"Enter trusted user e-mail"}
+                        placeholderTextColor={Colors.user.placeholder}
+                        value={email}
+                        onChangeText={setEmail}
+                    />
 
+                    {/* Nickname */}
+                    <AboveInputLabel title={"Nickname (optional)"}/>
+                    <CustomInput
+                        style={styles.input}
+                        placeholder={"Enter trusted user nickname"}
+                        placeholderTextColor={Colors.user.placeholder}
+                        value={nickname}
+                        onChangeText={setNickname}
+                    />
                 </View>
             </KeyboardAvoidingView>
         </Modal>
@@ -105,5 +126,11 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginBottom: 20,
         color: Colors.user.text,
-    }
+    },
+    inputGroup: {
+        marginBottom: 24,
+    },
+    input: {
+        marginBottom: 12,
+    },
 });
