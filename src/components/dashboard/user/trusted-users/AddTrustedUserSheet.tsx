@@ -1,4 +1,5 @@
 import {useState} from "react";
+import {Keyboard, Modal, StyleSheet, TouchableWithoutFeedback, View} from "react-native";
 
 interface AddTrustedUserSheetProps {
     isVisible: boolean;
@@ -26,4 +27,25 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
         setNickname("");
         onClose();
     }
+
+    return (
+        <Modal
+            visible={isVisible}
+            animationType={"slide"}
+            transparent={true}
+            onRequestClose={onClose}
+        >
+            {/* Background - click closes the modal and hides the keyboard */}
+            <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); handleClose();}}>
+                <View style={styles.overlay}/>
+            </TouchableWithoutFeedback>
+        </Modal>
+    );
 }
+
+const styles = StyleSheet.create({
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.6)', // Dark half transparent bg
+    }
+});
