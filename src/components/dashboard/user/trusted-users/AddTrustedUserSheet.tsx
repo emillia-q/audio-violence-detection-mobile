@@ -91,6 +91,7 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                     <CustomButton
                         style={styles.addButton}
                         title={"Add trusted user"}
+                        onPress={handleSubmit}
                     />
                 </View>
             </KeyboardAvoidingView>
