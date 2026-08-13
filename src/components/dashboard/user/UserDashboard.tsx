@@ -55,9 +55,22 @@ export default function UserDashboard() {
     }, []);
 
     // Add new trusted user
-    const handleAddTrustedUser = (email: string, nickname: string) => {
-        console.log("Data:", email, nickname);
-        setIsAddUserVisible(false);
+    const handleAddTrustedUser = async (email: string, nickname: string) => {
+        try {
+            await userService.addTrustedUser({
+                email: email,
+                customNickname: nickname.length > 0 ? nickname : undefined
+            });
+
+            // After successful operation -> refresh the list
+            const updatedList = await userService.getListOfTrustedUsers();
+            setTrustedUsers(updatedList);
+
+            // Hide bottom sheet
+            setIsAddUserVisible(false);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return (
