@@ -15,6 +15,7 @@ import {CustomButton} from "@/src/components/ui/CustomButton";
 import {Link} from "expo-router";
 import {authService} from "@/src/api/service/auth";
 import {useAuth} from "@/src/context/AuthContext";
+import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 
 export default function Register() {
     const {login} = useAuth();
@@ -63,9 +64,7 @@ export default function Register() {
 
                 {/* Inputs */}
                 {/* First & last name */}
-                <Text style={styles.label}>
-                    First name
-                </Text>
+                <AboveInputLabel title={"First name"}/>
                 <CustomInput
                     style={[styles.input]}
                     placeholder={"e.g. Anna"}
@@ -73,9 +72,7 @@ export default function Register() {
                     value={firstName}
                     onChangeText={setFirstName}
                 />
-                <Text style={styles.label}>
-                    Last name
-                </Text>
+                <AboveInputLabel title={"Last name"}/>
                 <CustomInput
                     style={[styles.inputGroup]}
                     placeholder={"e.g. Nowak"}
@@ -84,9 +81,7 @@ export default function Register() {
                     onChangeText={setLastName}
                 />
                 {/* E-mail */}
-                <Text style={styles.label}>
-                    E-mail
-                </Text>
+                <AboveInputLabel title={"E-mail"}/>
                 <CustomInput
                     style={[styles.inputGroup]}
                     placeholder={"e.g. anna@example.com"}
@@ -97,9 +92,7 @@ export default function Register() {
                     autoCapitalize={"none"}
                 />
                 {/* Password */}
-                <Text style={styles.label}>
-                    Password
-                </Text>
+                <AboveInputLabel title={"Password"}/>
                 <CustomInput
                     style={[styles.input]}
                     placeholder={"Password"}
@@ -108,9 +101,7 @@ export default function Register() {
                     onChangeText={setPassword}
                     secureTextEntry
                 />
-                <Text style={styles.label}>
-                    Confirm password
-                </Text>
+                <AboveInputLabel title={"Confirm password"}/>
                 <CustomInput
                     style={[styles.input]}
                     placeholder={"Repeat your password"}
@@ -164,15 +155,6 @@ const styles = StyleSheet.create({
         marginBottom: 35,
         letterSpacing: 0.5,
         color: Colors.default.text,
-    },
-    label: {
-        fontSize: 14,
-        fontWeight: '600',
-        marginLeft: 4,
-        marginBottom: 12,
-        textTransform: 'uppercase',
-        letterSpacing: 0.5,
-        color: Colors.default.muted,
     },
     input: {
         marginBottom: 12,
