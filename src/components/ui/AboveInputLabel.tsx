@@ -1,6 +1,5 @@
 import {useTheme} from "@/src/context/ModeContext";
 import {StyleSheet, Text} from "react-native";
-import {Colors} from "@/src/constants/theme";
 
 interface AboveInputLabelProps {
     title: string;
