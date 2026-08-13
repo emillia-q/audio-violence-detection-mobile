@@ -75,6 +75,8 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                         placeholderTextColor={Colors.user.placeholder}
                         value={email}
                         onChangeText={setEmail}
+                        keyboardType={"email-address"}
+                        autoCapitalize={"none"}
                     />
 
                     {/* Nickname */}
