@@ -14,6 +14,7 @@ import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {authService} from "@/src/api/service/auth";
 import {useAuth} from "@/src/context/AuthContext";
+import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 
 export default function Login() {
     const {login} = useAuth();
@@ -53,9 +54,7 @@ export default function Login() {
                 </View>
 
                 {/* Inputs */}
-                <Text style={styles.label}>
-                    E-mail
-                </Text>
+                <AboveInputLabel title={"E-mail"}/>
                 <CustomInput
                     style={styles.inputGroup}
                     placeholder={"e.g. anna@example.com"}
@@ -65,9 +64,7 @@ export default function Login() {
                     keyboardType={"email-address"}
                     autoCapitalize={"none"}
                 />
-                <Text style={styles.label}>
-                    Password
-                </Text>
+                <AboveInputLabel title={"Password"}/>
                 <CustomInput
                     style={styles.input}
                     placeholder={"Enter your password"}
@@ -131,15 +128,6 @@ const styles = StyleSheet.create({
         lineHeight: 22,
         textAlign: 'center',
         paddingHorizontal: 10,
-        color: Colors.default.muted,
-    },
-    label: {
-        fontSize: 13,
-        fontWeight: '700',
-        marginLeft: 4,
-        marginBottom: 8,
-        textTransform: 'uppercase',
-        letterSpacing: 0.8,
         color: Colors.default.muted,
     },
     input: {
