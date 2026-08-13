@@ -71,7 +71,7 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                     <AboveInputLabel title={"E-mail"}/>
                     <CustomInput
                         style={styles.input}
-                        placeholder={"Enter trusted user e-mail"}
+                        placeholder={"e.g. anna@example.com"}
                         placeholderTextColor={Colors.user.placeholder}
                         value={email}
                         onChangeText={setEmail}
@@ -83,7 +83,7 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                     <AboveInputLabel title={"Nickname (optional)"}/>
                     <CustomInput
                         style={styles.input}
-                        placeholder={"Enter trusted user nickname"}
+                        placeholder={"e.g. Ania"}
                         placeholderTextColor={Colors.user.placeholder}
                         value={nickname}
                         onChangeText={setNickname}
@@ -92,7 +92,7 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                     {/* Add button */}
                     <CustomButton
                         style={styles.addButton}
-                        title={"Add trusted user"}
+                        title={"Save"}
                         onPress={handleSubmit}
                     />
                 </View>
