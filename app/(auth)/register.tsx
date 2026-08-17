@@ -16,6 +16,29 @@ import {Link} from "expo-router";
 import {authService} from "@/src/api/service/auth";
 import {useAuth} from "@/src/context/AuthContext";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
+import {z} from "zod";
+
+const registerSchema = z.object({
+    firstName: z.string()
+        .min(2, "First name must be between 2 and 100 characters")
+        .max(100, "First name must be between 2 and 100 characters")
+        .regex(/^[\p{L} \-']+$/u, "First name can only contain letters, spaces, hyphens and apostrophes"),
+    lastName: z.string()
+        .min(2, "Last name must be between 2 and 100 characters")
+        .max(100, "Last name must be between 2 and 100 characters")
+        .regex(/^[\p{L} \-']+$/u, "Last name can only contain letters, spaces, hyphens and apostrophes"),
+    email: z.string()
+        .min(1, "E-mail is required")
+        .email("Invalid email format"),
+    password: z.string()
+        .min(8, "Password must be at least 8 characters long")
+        .max(60, "Password cannot be longer than 60 characters")
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/, "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
+    confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"]
+});
 
 export default function Register() {
     const {login} = useAuth();
