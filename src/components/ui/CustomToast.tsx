@@ -14,7 +14,7 @@ const CustomErrorToast = ({text1,text2}: ToastConfigParams<any>) => {
                 borderColor: theme.danger,
             }
         ]}>
-            <Ionicons name={"alert-circle"} size={28} color={theme.danger} style={styles.icon}/>
+            <Ionicons name={"alert-circle-outline"} size={28} color={theme.danger} style={styles.icon}/>
 
             {/* Text */}
             <View style={styles.textContainer}>
