@@ -3,7 +3,15 @@ import {useTheme} from "@/src/context/ModeContext";
 import {StyleSheet, Text, View} from "react-native";
 import {Ionicons} from "@expo/vector-icons";
 
-const CustomErrorToast = ({text1,text2}: ToastConfigParams<any>) => {
+// Base toast
+interface BaseToastProps {
+    text1?: string;
+    text2?: string;
+    color: string;
+    iconName: keyof typeof Ionicons.glyphMap;
+}
+
+const BaseToast = ({ text1, text2, color, iconName }: BaseToastProps) => {
     const theme = useTheme();
 
     return (
@@ -11,37 +19,29 @@ const CustomErrorToast = ({text1,text2}: ToastConfigParams<any>) => {
             styles.toastContainer,
             {
                 backgroundColor: theme.surfaceElevated,
-                borderColor: theme.danger,
+                borderColor: color,
             }
         ]}>
-            <Ionicons name={"alert-circle-outline"} size={28} color={theme.danger} style={styles.icon}/>
-
-            {/* Text */}
+            <Ionicons name={iconName} size={28} color={color} style={styles.icon} />
             <View style={styles.textContainer}>
-                <Text style={[
-                    styles.text1,
-                    {
-                        color: theme.text,
-                    }
-                ]}>
-                    {text1}
-                </Text>
-                <Text style={[
-                    styles.text2,
-                    {
-                        color: theme.muted,
-                    }
-                ]}>
-                    {text2}
-                </Text>
+                <Text style={[styles.text1, { color: theme.text }]}>{text1}</Text>
+                {text2 && <Text style={[styles.text2, { color: theme.muted }]}>{text2}</Text>}
             </View>
         </View>
     );
-}
+};
 
+// Toast configuration
 export const toastConfig = {
-    error: (props: ToastConfigParams<any>) => <CustomErrorToast {...props}/>,
-}
+    error: ({ text1, text2 }: ToastConfigParams<any>) => {
+        const theme = useTheme();
+        return <BaseToast text1={text1} text2={text2} color={theme.danger} iconName="alert-circle-outline" />;
+    },
+    success: ({ text1, text2 }: ToastConfigParams<any>) => {
+        const theme = useTheme();
+        return <BaseToast text1={text1} text2={text2} color={theme.success} iconName="checkmark-circle-outline" />;
+    },
+};
 
 const styles = StyleSheet.create({
     toastContainer: {
