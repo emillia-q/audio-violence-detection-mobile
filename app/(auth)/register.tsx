@@ -47,7 +47,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 export default function Register() {
     const {login} = useAuth();
 
-    const {control, handleSubmit} = useForm<RegisterFormValues>({
+    const {control, handleSubmit, setError} = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema),
         mode: "onTouched",
         defaultValues: {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""}
@@ -68,10 +68,10 @@ export default function Register() {
             const status = error?.response?.status;
 
             if (status === 409) {
-                Alert.alert(
-                    "Email Already in Use",
-                    "An account with this email address already exists. Please log in or use a different email."
-                );
+                setError('email', {
+                    type: 'server',
+                    message: 'An account with this email address already exists'
+                });
             }
         }
     }
