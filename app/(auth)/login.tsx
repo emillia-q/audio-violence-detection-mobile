@@ -15,6 +15,15 @@ import {CustomButton} from "@/src/components/ui/CustomButton";
 import {authService} from "@/src/api/service/auth";
 import {useAuth} from "@/src/context/AuthContext";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
+import {z} from "zod";
+
+const loginSchema = z.object({
+    email: z.string()
+        .min(1, "E-mail is required")
+        .email("Invalid email format"),
+    password: z.string()
+        .min(1, "Password is required")
+});
 
 export default function Login() {
     const {login} = useAuth();
