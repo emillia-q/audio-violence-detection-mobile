@@ -39,6 +39,10 @@ const CustomErrorToast = ({text1,text2}: ToastConfigParams<any>) => {
     );
 }
 
+export const toastConfig = {
+    error: (props: ToastConfigParams<any>) => <CustomErrorToast {...props}/>,
+}
+
 const styles = StyleSheet.create({
     toastContainer: {
         flexDirection: 'row',
