@@ -92,7 +92,6 @@ export default function Register() {
                     name={"firstName"}
                     render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
                         <CustomInput
-                            style={styles.input}
                             placeholder={"e.g. Anna"}
                             placeholderTextColor={Colors.default.placeholder}
                             value={value}
@@ -108,7 +107,6 @@ export default function Register() {
                     name={"lastName"}
                     render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
                         <CustomInput
-                            style={styles.inputGroup}
                             placeholder={"e.g. Nowak"}
                             placeholderTextColor={Colors.default.placeholder}
                             value={value}
@@ -125,7 +123,6 @@ export default function Register() {
                     name={"email"}
                     render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
                         <CustomInput
-                            style={styles.inputGroup}
                             placeholder={"e.g. anna@example.com"}
                             placeholderTextColor={Colors.default.placeholder}
                             value={value}
@@ -144,7 +141,6 @@ export default function Register() {
                     name={"password"}
                     render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
                         <CustomInput
-                            style={styles.input}
                             placeholder={"Password"}
                             placeholderTextColor={Colors.default.placeholder}
                             value={value}
@@ -161,7 +157,6 @@ export default function Register() {
                     name={"confirmPassword"}
                     render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
                         <CustomInput
-                            style={styles.input}
                             placeholder={"Repeat your password"}
                             placeholderTextColor={Colors.default.placeholder}
                             value={value}
@@ -217,12 +212,6 @@ const styles = StyleSheet.create({
         marginBottom: 35,
         letterSpacing: 0.5,
         color: Colors.default.text,
-    },
-    input: {
-        marginBottom: 12,
-    },
-    inputGroup: {
-      marginBottom: 24,
     },
     registerButton: {
         marginTop: 15,
