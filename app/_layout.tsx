@@ -5,6 +5,7 @@ import 'react-native-reanimated';
 import {AuthProvider, useAuth} from "@/src/context/AuthContext";
 import {useEffect, useMemo} from "react";
 import {ModeProvider, useTheme} from "@/src/context/ModeContext";
+import Toast from "react-native-toast-message";
 
 function RootLayoutNav() {
     const {token, loading} = useAuth();
@@ -51,10 +52,13 @@ function RootLayoutNav() {
 
 export default function RootLayout() {
     return (
-        <AuthProvider>
-            <ModeProvider>
-                <RootLayoutNav/>
-            </ModeProvider>
-        </AuthProvider>
+        <>
+            <AuthProvider>
+                <ModeProvider>
+                    <RootLayoutNav/>
+                </ModeProvider>
+            </AuthProvider>
+            <Toast/>
+        </>
     );
 }
