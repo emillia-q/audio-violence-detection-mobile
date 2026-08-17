@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet} from "react-native";
+import {Alert, ScrollView, StyleSheet} from "react-native";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
@@ -22,33 +22,39 @@ export default function UserDashboard() {
     // Fetch api data
     useEffect(() => {
         const fetchDashboardData = async () => {
-            try {
-                // Execute requests concurrently to optimize loading time
-                const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
-                    deviceService.getUserDevices(),
-                    userService.getListOfTrustedUsers(),
-                    alertService.getListOfAlerts()
-                ]);
+            // Execute requests concurrently to optimize loading time
+            const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
+                deviceService.getUserDevices(),
+                userService.getListOfTrustedUsers(),
+                alertService.getListOfAlerts()
+            ]);
 
-                // Devices
-                if (devicesResult.status === 'fulfilled')
-                    setDevices(devicesResult.value);
-                else
-                    console.error('Could not load devices: ', devicesResult.reason);
+            let hasErrors = false;
 
-                // Trusted Users
-                if (trustedUsersResult.status === 'fulfilled')
-                    setTrustedUsers(trustedUsersResult.value);
-                else
-                    console.error('Could not load trusted users: ', trustedUsersResult.reason);
+            // Devices
+            if (devicesResult.status === 'fulfilled')
+                setDevices(devicesResult.value);
+            else
+                hasErrors = true;
 
-                // Alerts
-                if (alertsResult.status === 'fulfilled')
-                    setAlerts(alertsResult.value);
-                else
-                    console.error('Could not load alerts: ', alertsResult.reason);
-            } catch (error) {
-                alert(error);
+            // Trusted Users
+            if (trustedUsersResult.status === 'fulfilled')
+                setTrustedUsers(trustedUsersResult.value);
+            else
+                hasErrors = true;
+
+            // Alerts
+            if (alertsResult.status === 'fulfilled')
+                setAlerts(alertsResult.value);
+            else
+                hasErrors = true;
+
+            if (hasErrors) {
+                Alert.alert(
+                    "Sync Issue",
+                    "Some dashboard data could not be loaded. " +
+                    "Please check your internet connection."
+                );
             }
         };
         fetchDashboardData();
@@ -68,8 +74,8 @@ export default function UserDashboard() {
 
             // Hide bottom sheet
             setIsAddUserVisible(false);
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+
         }
     }
 
