@@ -29,20 +29,37 @@ type FormValues = z.infer<typeof formSchema>;
 interface AddTrustedUserSheetProps {
     isVisible: boolean;
     onClose: () => void;
-    onSubmit: (email: string, nickname: string) => void;
+    onSubmit: (email: string, nickname: string) => Promise<{ success: boolean; status?: number }>;
 }
 
 export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddTrustedUserSheetProps) {
 
-    const {control, handleSubmit, reset} = useForm<FormValues>({
+    const {control, handleSubmit, reset, setError} = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         mode: "onTouched",
         defaultValues: {email: "", nickname: ""}
     });
 
-    const onValidSubmit = (data: FormValues) => {
-        onSubmit(data.email.trim(), data.nickname?.trim() || "");
-        reset();
+    const onValidSubmit = async (data: FormValues) => {
+        const result = await onSubmit(data.email.trim(), data.nickname?.trim() || "");
+
+        if (result.success) {
+            // Clean the form
+            reset();
+        } else {
+            if (result.status === 404) {
+                setError('email', {
+                    type: 'server',
+                    message: 'No account found with this email'
+                });
+            } else if (result.status === 409) {
+                setError('email', {
+                    type: 'server',
+                    message: 'This user is already assigned'
+                });
+            }
+        }
+
     };
 
     const handleClose = () => {
