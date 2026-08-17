@@ -16,6 +16,8 @@ import {authService} from "@/src/api/service/auth";
 import {useAuth} from "@/src/context/AuthContext";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {z} from "zod";
+import {Controller, useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 const loginSchema = z.object({
     email: z.string()
@@ -30,12 +32,18 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function Login() {
     const {login} = useAuth();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const {control, handleSubmit, reset, formState: {isValid}} = useForm<LoginFormValues>({
+        resolver: zodResolver(loginSchema),
+        mode: "onTouched",
+        defaultValues: {email: "", password: ""}
+    });
 
-    const handleLogin = async () => {
+    const onValidSubmit = async (data: LoginFormValues) => {
         try {
-            const response = await authService.login({email, password});
+            const response = await authService.login({
+                email: data.email.trim(),
+                password: data.password
+            });
 
             // Pass token from backend to context
             await login(response.token);
@@ -66,30 +74,45 @@ export default function Login() {
 
                 {/* Inputs */}
                 <AboveInputLabel title={"E-mail"}/>
-                <CustomInput
-                    style={styles.inputGroup}
-                    placeholder={"e.g. anna@example.com"}
-                    placeholderTextColor={Colors.default.placeholder}
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType={"email-address"}
-                    autoCapitalize={"none"}
+                <Controller
+                    control={control}
+                    name={"email"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"e.g. anna@example.com"}
+                            placeholderTextColor={Colors.default.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            keyboardType={"email-address"}
+                            autoCapitalize={"none"}
+                            errorMessage={error?.message}
+                        />
+                    )}
                 />
+
                 <AboveInputLabel title={"Password"}/>
-                <CustomInput
-                    style={styles.input}
-                    placeholder={"Enter your password"}
-                    placeholderTextColor={Colors.default.placeholder}
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
+                <Controller
+                    control={control}
+                    name={"password"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"Enter your password"}
+                            placeholderTextColor={Colors.default.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            secureTextEntry
+                            errorMessage={error?.message}
+                        />
+                    )}
                 />
 
                 {/* Log in btn */}
                 <CustomButton
                     style={styles.loginButton}
                     title={"Log in"}
-                    onPress={handleLogin}
+                    onPress={handleSubmit(onValidSubmit)}
                 />
 
                 {/* Sign in when have no account */}
@@ -140,12 +163,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         paddingHorizontal: 10,
         color: Colors.default.muted,
-    },
-    input: {
-        marginBottom: 12,
-    },
-    inputGroup: {
-        marginBottom: 24,
     },
     loginButton: {
         marginTop: 20,
