@@ -1,5 +1,6 @@
 import axios from "axios";
 import * as SecureStore from 'expo-secure-store'
+import Toast from "react-native-toast-message";
 
 const BASE_URL = process.env.EXPO_PUBLIC_API_URL;
 const TOKEN_KEY = 'token';
@@ -40,7 +41,23 @@ export const setLogoutHandler = (callback: () => void) => {
 apiClient.interceptors.response.use(
     (response) => response,
     async (error) => {
-        if (error.response && error.response.status === 401) {
+        if (!error.response) {
+            Toast.show({
+                type: 'error',
+                text1: 'Connection Error',
+                text2: 'Please check your internet connection.',
+                position: 'top',
+                visibilityTime: 4000,
+            });
+        } else if (error.response.status >= 500) {
+            Toast.show({
+                type: 'error',
+                text1: 'Server Error',
+                text2: 'An unexpected error occurred. Please try again later.',
+                position: 'top',
+                visibilityTime: 4000,
+            });
+        } else if (error.response.status === 401) {
             try {
                 await SecureStore.deleteItemAsync(TOKEN_KEY);
 
@@ -50,6 +67,7 @@ apiClient.interceptors.response.use(
                 console.error("Error while deleting expired token", error);
             }
         }
+        // Pass the error on so that the component can catch its local errors
         return Promise.reject(error);
     }
 );

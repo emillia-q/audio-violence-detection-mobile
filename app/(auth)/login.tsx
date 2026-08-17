@@ -5,7 +5,7 @@ import {
     Platform,
     TouchableOpacity,
     View,
-    StatusBar, ScrollView, Alert
+    StatusBar, ScrollView
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
@@ -31,7 +31,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function Login() {
     const {login} = useAuth();
 
-    const {control, handleSubmit} = useForm<LoginFormValues>({
+    const {control, handleSubmit, setError, formState: {errors}} = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         mode: "onTouched",
         defaultValues: {email: "", password: ""}
@@ -47,17 +47,13 @@ export default function Login() {
             // Pass token from backend to context
             await login(response.token);
         } catch (error: any) {
-            // Early return
-            if (!error.response) {
-                Alert.alert("Connection Error", "Please check your internet connection.");
-                return;
-            }
             const status = error?.response?.status;
 
             if (status === 401) {
-                Alert.alert("Login Failed", "Invalid email or password");
-            } else {
-                Alert.alert("Error", "An unexpected error occurred. Please try again later.");
+                setError('root', {
+                    type: 'server',
+                    message: 'Invalid email or password'
+                });
             }
         }
     }
@@ -118,6 +114,12 @@ export default function Login() {
                     )}
                 />
 
+                {/* Global error */}
+                {errors.root && (
+                    <Text style={styles.rootErrorText}>
+                        {errors.root.message}
+                    </Text>
+                )}
                 {/* Log in btn */}
                 <CustomButton
                     style={styles.loginButton}
@@ -174,6 +176,13 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         color: Colors.default.muted,
     },
+    rootErrorText: {
+        color: Colors.default.danger,
+        textAlign: 'center',
+        marginTop: 10,
+        marginBottom: -10,
+        fontWeight: '500',
+    },
     loginButton: {
         marginTop: 20,
         marginBottom: 30,
@@ -190,5 +199,5 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
         color: Colors.default.link,
-    }
+    },
 });
