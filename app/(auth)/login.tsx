@@ -5,7 +5,7 @@ import {
     Platform,
     TouchableOpacity,
     View,
-    StatusBar, ScrollView, Alert
+    StatusBar, ScrollView
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
