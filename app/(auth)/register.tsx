@@ -17,6 +17,8 @@ import {authService} from "@/src/api/service/auth";
 import {useAuth} from "@/src/context/AuthContext";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {z} from "zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 const registerSchema = z.object({
     firstName: z.string()
@@ -40,8 +42,16 @@ const registerSchema = z.object({
     path: ["confirmPassword"]
 });
 
+type RegisterFormValues = z.infer<typeof registerSchema>;
+
 export default function Register() {
     const {login} = useAuth();
+
+    const {control, handleSubmit, reset, formState: {isValid}} = useForm<RegisterFormValues>({
+        resolver: zodResolver(registerSchema),
+        mode: "onTouched",
+        defaultValues: {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""}
+    });
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
