@@ -25,6 +25,8 @@ const loginSchema = z.object({
         .min(1, "Password is required")
 });
 
+type LoginFormValues = z.infer<typeof loginSchema>;
+
 export default function Login() {
     const {login} = useAuth();
 
