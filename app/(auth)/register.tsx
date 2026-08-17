@@ -1,5 +1,5 @@
-import {useState} from "react";
 import {
+    Alert,
     KeyboardAvoidingView,
     Platform,
     ScrollView,
@@ -16,34 +16,70 @@ import {Link} from "expo-router";
 import {authService} from "@/src/api/service/auth";
 import {useAuth} from "@/src/context/AuthContext";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
+import {z} from "zod";
+import {Controller, useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+
+const registerSchema = z.object({
+    firstName: z.string()
+        .min(2, "First name must be between 2 and 100 characters")
+        .max(100, "First name must be between 2 and 100 characters")
+        .regex(/^[\p{L} \-']+$/u, "First name can only contain letters, spaces, hyphens and apostrophes"),
+    lastName: z.string()
+        .min(2, "Last name must be between 2 and 100 characters")
+        .max(100, "Last name must be between 2 and 100 characters")
+        .regex(/^[\p{L} \-']+$/u, "Last name can only contain letters, spaces, hyphens and apostrophes"),
+    email: z.string()
+        .min(1, "E-mail is required")
+        .email("Invalid email format"),
+    password: z.string()
+        .min(8, "Password must be at least 8 characters long")
+        .max(60, "Password cannot be longer than 60 characters")
+        .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).{8,}$/, "Password must contain at least one uppercase letter, one lowercase letter, one number and one special character"),
+    confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords do not match",
+    path: ["confirmPassword"]
+});
+
+type RegisterFormValues = z.infer<typeof registerSchema>;
 
 export default function Register() {
     const {login} = useAuth();
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const {control, handleSubmit} = useForm<RegisterFormValues>({
+        resolver: zodResolver(registerSchema),
+        mode: "onTouched",
+        defaultValues: {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""}
+    });
 
-    const handleRegister = async () => {
-        if (password != confirmPassword) {
-            console.log("Error: passwords are different")
-            return
-        }
-
+    const onValidSubmit = async (data: RegisterFormValues) => {
         try {
             const response = await authService.register({
-                firstName,
-                lastName,
-                email,
-                password
+                firstName: data.firstName.trim(),
+                lastName: data.lastName.trim(),
+                email: data.email.trim(),
+                password: data.password // Doesn't trim the password
             });
 
             // Pass token from backend to context -> log in immediately upon registration
             await login(response.token);
-        } catch (error) {
-            alert(error);
+        } catch (error: any) {
+            // Early return
+            if (!error.response) {
+                Alert.alert("Connection Error", "Please check your internet connection.");
+                return;
+            }
+            const status = error?.response?.status;
+
+            if (status === 409) {
+                Alert.alert(
+                    "Email Already in Use",
+                    "An account with this email address already exists. Please log in or use a different email."
+                );
+            } else {
+                Alert.alert("Error", "An unexpected error occurred. Please try again later.");
+            }
         }
     }
 
@@ -65,57 +101,92 @@ export default function Register() {
                 {/* Inputs */}
                 {/* First & last name */}
                 <AboveInputLabel title={"First name"}/>
-                <CustomInput
-                    style={[styles.input]}
-                    placeholder={"e.g. Anna"}
-                    placeholderTextColor={Colors.default.placeholder}
-                    value={firstName}
-                    onChangeText={setFirstName}
+                <Controller
+                    control={control}
+                    name={"firstName"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"e.g. Anna"}
+                            placeholderTextColor={Colors.default.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            errorMessage={error?.message}
+                        />
+                    )}
                 />
                 <AboveInputLabel title={"Last name"}/>
-                <CustomInput
-                    style={[styles.inputGroup]}
-                    placeholder={"e.g. Nowak"}
-                    placeholderTextColor={Colors.default.placeholder}
-                    value={lastName}
-                    onChangeText={setLastName}
+                <Controller
+                    control={control}
+                    name={"lastName"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"e.g. Nowak"}
+                            placeholderTextColor={Colors.default.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            errorMessage={error?.message}
+                        />
+                    )}
                 />
                 {/* E-mail */}
                 <AboveInputLabel title={"E-mail"}/>
-                <CustomInput
-                    style={[styles.inputGroup]}
-                    placeholder={"e.g. anna@example.com"}
-                    placeholderTextColor={Colors.default.placeholder}
-                    value={email}
-                    onChangeText={setEmail}
-                    keyboardType={"email-address"}
-                    autoCapitalize={"none"}
+                <Controller
+                    control={control}
+                    name={"email"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"e.g. anna@example.com"}
+                            placeholderTextColor={Colors.default.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            keyboardType={"email-address"}
+                            autoCapitalize={"none"}
+                            errorMessage={error?.message}
+                        />
+                    )}
                 />
                 {/* Password */}
                 <AboveInputLabel title={"Password"}/>
-                <CustomInput
-                    style={[styles.input]}
-                    placeholder={"Password"}
-                    placeholderTextColor={Colors.default.placeholder}
-                    value={password}
-                    onChangeText={setPassword}
-                    secureTextEntry
+                <Controller
+                    control={control}
+                    name={"password"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"Password"}
+                            placeholderTextColor={Colors.default.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            secureTextEntry
+                            errorMessage={error?.message}
+                        />
+                    )}
                 />
                 <AboveInputLabel title={"Confirm password"}/>
-                <CustomInput
-                    style={[styles.input]}
-                    placeholder={"Repeat your password"}
-                    placeholderTextColor={Colors.default.placeholder}
-                    value={confirmPassword}
-                    onChangeText={setConfirmPassword}
-                    secureTextEntry
+                <Controller
+                    control={control}
+                    name={"confirmPassword"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"Repeat your password"}
+                            placeholderTextColor={Colors.default.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            secureTextEntry
+                            errorMessage={error?.message}
+                        />
+                    )}
                 />
 
                 {/* Register btn */}
                 <CustomButton
                     style={styles.registerButton}
                     title={"Sign up"}
-                    onPress={handleRegister}
+                    onPress={handleSubmit(onValidSubmit)}
                 />
 
                 {/* Log in when already have account */}
@@ -155,12 +226,6 @@ const styles = StyleSheet.create({
         marginBottom: 35,
         letterSpacing: 0.5,
         color: Colors.default.text,
-    },
-    input: {
-        marginBottom: 12,
-    },
-    inputGroup: {
-      marginBottom: 24,
     },
     registerButton: {
         marginTop: 15,

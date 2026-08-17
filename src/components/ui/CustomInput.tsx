@@ -1,11 +1,13 @@
-import {StyleSheet, TextInput, TextInputProps, TouchableOpacity, View} from "react-native";
+import {StyleSheet, Text, TextInput, TextInputProps, TouchableOpacity, View} from "react-native";
 import {useState} from "react";
 import {Ionicons} from "@expo/vector-icons";
 import {useTheme} from "@/src/context/ModeContext";
 
-interface CustomInputProps extends TextInputProps {}
+interface CustomInputProps extends TextInputProps {
+    errorMessage?: string; // Receives validation errors
+}
 
-export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}: CustomInputProps) {
+export function CustomInput({style, secureTextEntry, onFocus, onBlur, errorMessage,  ...rest}: CustomInputProps) {
     const theme = useTheme()
 
     const [isFocused, setIsFocused] = useState(false);
@@ -14,55 +16,75 @@ export function CustomInput({style, secureTextEntry, onFocus, onBlur,  ...rest}:
     // If field is set as password add eye icon
     const isPasswordField = secureTextEntry !== undefined;
 
+    const borderColor = errorMessage ? theme.danger : (isFocused ? theme.tint : theme.border)
+
     return (
-        <View style={[
-            styles.container,
-            {
-                backgroundColor: theme.surface,
-                borderColor: isFocused ? theme.tint : theme.border,
-            },
-            style
-        ]}>
-            <TextInput
-                {...rest}
-                placeholderTextColor={theme.placeholder}
+        <View style={styles.wrapper}>
+            <View style={[
+                styles.container,
+                {
+                    backgroundColor: theme.surface,
+                    borderColor: borderColor,
+                },
+                style
+            ]}>
+                <TextInput
+                    {...rest}
+                    placeholderTextColor={theme.placeholder}
 
-                // Password uncover
-                secureTextEntry={isPasswordField && !isPasswordVisible}
+                    // Password uncover
+                    secureTextEntry={isPasswordField && !isPasswordVisible}
 
-                // Toggle focus
-                onFocus={(e) => {
-                    setIsFocused(true);
-                    if (onFocus) onFocus(e);
-                }}
-                onBlur={(e) => {
-                    setIsFocused(false);
-                    if (onBlur) onBlur(e);
-                }}
-                style={[
-                    styles.input,
-                    {color: theme.text}
+                    // Toggle focus
+                    onFocus={(e) => {
+                        setIsFocused(true);
+                        if (onFocus) onFocus(e);
+                    }}
+                    onBlur={(e) => {
+                        setIsFocused(false);
+                        if (onBlur) onBlur(e);
+                    }}
+                    style={[
+                        styles.input,
+                        {color: theme.text}
+                    ]}
+                />
+
+                {/* Password eye */}
+                {isPasswordField && (
+                    <TouchableOpacity
+                        style={styles.iconContainer}
+                        onPress={() => setIsPasswordVisible(!isPasswordVisible)}
+                    >
+                        <Ionicons
+                            name={isPasswordVisible ? "eye-off" : "eye"}
+                            size={22}
+                            color={theme.placeholder}
+                        />
+                    </TouchableOpacity>
+                )}
+            </View>
+
+            {/* Error message below the input */}
+            {errorMessage && (
+                <Text style={[
+                    styles.errorText,
+                    {
+                        color: theme.danger
+                    }
                 ]}
-            />
-
-            {/* Password eye */}
-            {isPasswordField && (
-                <TouchableOpacity
-                    style={styles.iconContainer}
-                    onPress={() => setIsPasswordVisible(!isPasswordVisible)}
                 >
-                    <Ionicons
-                        name={isPasswordVisible ? "eye-off" : "eye"}
-                        size={22}
-                        color={theme.placeholder}
-                    />
-                </TouchableOpacity>
+                    {errorMessage}
+                </Text>
             )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
+    wrapper: {
+        marginBottom: 16,
+    },
     container: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -81,4 +103,10 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    errorText: {
+        fontSize: 12,
+        marginTop: 4,
+        marginLeft: 4,
+        fontWeight: '600',
+    }
 })

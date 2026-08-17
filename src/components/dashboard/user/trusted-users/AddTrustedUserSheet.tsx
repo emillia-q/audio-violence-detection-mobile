@@ -1,4 +1,3 @@
-import {useState} from "react";
 import {
     Keyboard,
     KeyboardAvoidingView,
@@ -12,6 +11,20 @@ import {Colors} from "@/src/constants/theme";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import {z} from "zod";
+import {Controller, useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+    email: z.string().min(1, "E-mail is required").email("Invalid email format"),
+    nickname: z.string()
+        .max(100, "Nickname cannot be longer than 100 characters")
+        .regex(/^(?=.*\S)[a-zA-Z0-9ąęćłńóśźżĄĘĆŁŃÓŚŹŻ ]*$/, "Only letters, numbers, and spaces allowed")
+        .optional()
+        .or(z.literal('')) // Allows empty field
+});
+
+type FormValues = z.infer<typeof formSchema>;
 
 interface AddTrustedUserSheetProps {
     isVisible: boolean;
@@ -20,23 +33,20 @@ interface AddTrustedUserSheetProps {
 }
 
 export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddTrustedUserSheetProps) {
-    const [email, setEmail] = useState("");
-    const [nickname, setNickname] = useState("");
 
-    const handleSubmit = () => {
-        const trimmedEmail = email.trim();
-        const trimmedNickname = nickname.trim();
+    const {control, handleSubmit, reset} = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        mode: "onTouched",
+        defaultValues: {email: "", nickname: ""}
+    });
 
-        onSubmit(trimmedEmail, trimmedNickname);
-
-        // Clear form after data are sent
-        setEmail("");
-        setNickname("");
-    }
+    const onValidSubmit = (data: FormValues) => {
+        onSubmit(data.email.trim(), data.nickname?.trim() || "");
+        reset();
+    };
 
     const handleClose = () => {
-        setEmail("");
-        setNickname("");
+        reset();
         onClose();
     }
 
@@ -69,31 +79,45 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
                     {/* Inputs */}
                     {/* Email */}
                     <AboveInputLabel title={"E-mail"}/>
-                    <CustomInput
-                        style={styles.input}
-                        placeholder={"e.g. anna@example.com"}
-                        placeholderTextColor={Colors.user.placeholder}
-                        value={email}
-                        onChangeText={setEmail}
-                        keyboardType={"email-address"}
-                        autoCapitalize={"none"}
+                    <Controller
+                        control={control}
+                        name={"email"}
+                        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                            <CustomInput
+                                placeholder={"e.g. anna@example.com"}
+                                placeholderTextColor={Colors.user.placeholder}
+                                value={value}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                keyboardType={"email-address"}
+                                autoCapitalize={"none"}
+                                errorMessage={error?.message}
+                            />
+                        )}
                     />
 
                     {/* Nickname */}
                     <AboveInputLabel title={"Nickname (optional)"}/>
-                    <CustomInput
-                        style={styles.input}
-                        placeholder={"e.g. Ania"}
-                        placeholderTextColor={Colors.user.placeholder}
-                        value={nickname}
-                        onChangeText={setNickname}
+                    <Controller
+                        control={control}
+                        name={"nickname"}
+                        render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                            <CustomInput
+                                placeholder={"e.g. Ania"}
+                                placeholderTextColor={Colors.user.placeholder}
+                                value={value}
+                                onChangeText={onChange}
+                                onBlur={onBlur}
+                                errorMessage={error?.message}
+                            />
+                        )}
                     />
 
                     {/* Add button */}
                     <CustomButton
                         style={styles.addButton}
                         title={"Save"}
-                        onPress={handleSubmit}
+                        onPress={handleSubmit(onValidSubmit)}
                     />
                 </View>
             </KeyboardAvoidingView>
@@ -136,9 +160,6 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginBottom: 20,
         color: Colors.user.text,
-    },
-    input: {
-        marginBottom: 24,
     },
     addButton: {
         alignSelf: 'flex-end',
