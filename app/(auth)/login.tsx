@@ -47,17 +47,10 @@ export default function Login() {
             // Pass token from backend to context
             await login(response.token);
         } catch (error: any) {
-            // Early return
-            if (!error.response) {
-                Alert.alert("Connection Error", "Please check your internet connection.");
-                return;
-            }
             const status = error?.response?.status;
 
             if (status === 401) {
                 Alert.alert("Login Failed", "Invalid email or password");
-            } else {
-                Alert.alert("Error", "An unexpected error occurred. Please try again later.");
             }
         }
     }

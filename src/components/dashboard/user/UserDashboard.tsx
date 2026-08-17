@@ -75,11 +75,6 @@ export default function UserDashboard() {
             // Hide bottom sheet
             setIsAddUserVisible(false);
         } catch (error: any) {
-            // Early return
-            if (!error.response) {
-                Alert.alert("Connection Error", "Please check your internet connection.");
-                return;
-            }
             const status = error?.response?.status;
 
             if (status === 404) {
@@ -92,11 +87,6 @@ export default function UserDashboard() {
                 Alert.alert(
                     "Already Assigned",
                     "This user is already in your trusted users list."
-                );
-            } else {
-                Alert.alert(
-                    "Error",
-                    "An unexpected error occurred. Please try again later."
                 );
             }
         }
