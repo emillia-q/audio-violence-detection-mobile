@@ -1,4 +1,4 @@
-import {ScrollView, StyleSheet} from "react-native";
+import {Alert, ScrollView, StyleSheet} from "react-native";
 import {useEffect, useState} from "react";
 import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserListResponse";
 import {userService} from "@/src/api/service/user";
@@ -10,18 +10,24 @@ export default function TrustedUserDashboard() {
 
     useEffect(() => {
         const fetchDashboardData = async () => {
-            try {
-                const [protectedUsersResult] = await Promise.allSettled([
-                    userService.getListOfProtectedUsers()
-                ]);
+            const [protectedUsersResult] = await Promise.allSettled([
+                userService.getListOfProtectedUsers()
+            ]);
 
-                // Protected Users
-                if (protectedUsersResult.status === 'fulfilled')
-                    setProtectedUsers(protectedUsersResult.value);
-                else
-                    console.error('Could not load protected users: ', protectedUsersResult.reason);
-            } catch (error) {
-                alert(error);
+            let hasErrors = false;
+
+            // Protected Users
+            if (protectedUsersResult.status === 'fulfilled')
+                setProtectedUsers(protectedUsersResult.value);
+            else
+                hasErrors = true;
+
+            if (hasErrors) {
+                Alert.alert(
+                    "Sync Issue",
+                    "Some dashboard data could not be loaded. " +
+                    "Please check your internet connection."
+                );
             }
         };
         fetchDashboardData();
