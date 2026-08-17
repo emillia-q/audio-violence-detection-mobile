@@ -46,7 +46,7 @@ type RegisterFormValues = z.infer<typeof registerSchema>;
 export default function Register() {
     const {login} = useAuth();
 
-    const {control, handleSubmit, reset, formState: {isValid}} = useForm<RegisterFormValues>({
+    const {control, handleSubmit} = useForm<RegisterFormValues>({
         resolver: zodResolver(registerSchema),
         mode: "onTouched",
         defaultValues: {firstName: "", lastName: "", email: "", password: "", confirmPassword: ""}

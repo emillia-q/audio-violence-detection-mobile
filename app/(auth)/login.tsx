@@ -31,7 +31,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function Login() {
     const {login} = useAuth();
 
-    const {control, handleSubmit, reset, formState: {isValid}} = useForm<LoginFormValues>({
+    const {control, handleSubmit} = useForm<LoginFormValues>({
         resolver: zodResolver(loginSchema),
         mode: "onTouched",
         defaultValues: {email: "", password: ""}

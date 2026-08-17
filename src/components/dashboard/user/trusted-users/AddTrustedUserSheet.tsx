@@ -35,7 +35,7 @@ interface AddTrustedUserSheetProps {
 
 export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddTrustedUserSheetProps) {
 
-    const {control, handleSubmit, reset, formState: {isValid}} = useForm<FormValues>({
+    const {control, handleSubmit, reset} = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         mode: "onTouched",
         defaultValues: {email: "", nickname: ""}
