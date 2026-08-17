@@ -12,6 +12,7 @@ import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
 import DashboardSection from "@/src/components/dashboard/shared/DashboardSection";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/AddTrustedUserSheet";
+import Toast from "react-native-toast-message";
 
 export default function UserDashboard() {
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
@@ -68,12 +69,20 @@ export default function UserDashboard() {
                 customNickname: nickname.length > 0 ? nickname : undefined
             });
 
+            // Hide bottom sheet
+            setIsAddUserVisible(false);
+
+            // Toast success
+            Toast.show({
+                type: 'success',
+                text1: 'Trusted user added',
+                position: 'top',
+                visibilityTime: 4000,
+            });
+
             // After successful operation -> refresh the list
             const updatedList = await userService.getListOfTrustedUsers();
             setTrustedUsers(updatedList);
-
-            // Hide bottom sheet
-            setIsAddUserVisible(false);
         } catch (error: any) {
             const status = error?.response?.status;
 
