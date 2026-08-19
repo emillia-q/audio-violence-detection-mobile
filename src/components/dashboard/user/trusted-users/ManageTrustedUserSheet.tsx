@@ -39,7 +39,7 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
     const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | null>(null);
 
     // Form
-    const {control, handleSubmit, reset} = useForm<FormValues>({
+    const {control, handleSubmit, reset, formState: {isDirty, isSubmitting}} = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         mode: "onTouched",
         defaultValues: {nickname: ""}
@@ -190,6 +190,7 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
                             <CustomButton
                                 title={"Save"}
                                 onPress={handleSubmit(onValidSubmit)}
+                                disabled={!isDirty || isSubmitting}
                             />
                         </View>
                     </>
