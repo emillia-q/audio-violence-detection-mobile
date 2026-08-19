@@ -5,6 +5,8 @@ import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDeta
 import {Colors} from "@/src/constants/theme";
 import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 import BottomSheet from "@/src/components/ui/BottomSheet";
+import {userService} from "@/src/api/service/user";
+import Toast from "react-native-toast-message";
 
 const formSchema = z.object({
     nickname: z.string()
@@ -31,6 +33,23 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
 
     // Api data
     const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | null>(null);
+
+    // Fetch api data
+    const fetchUserDetails = async (id: number) => {
+        setIsLoading(true);
+        try {
+            const data = await userService.getTrustedUser(id);
+            setUserDetails(data);
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Could not load user details'
+            });
+            onClose();
+        } finally {
+            setIsLoading(false);
+        }
+    };
 
     return (
         <BottomSheet
