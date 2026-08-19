@@ -34,6 +34,10 @@ export const userService = {
         return response.data;
     },
 
+    deleteTrustedUser: async (id: number): Promise<void> => {
+        await apiClient.delete(`${PATH}/trusted-users/${id}`);
+    },
+
     // Protected users
     getListOfProtectedUsers: async (): Promise<ProtectedUserListResponse[]> => {
         const response = await apiClient.get(`${PATH}/protected-users`);
