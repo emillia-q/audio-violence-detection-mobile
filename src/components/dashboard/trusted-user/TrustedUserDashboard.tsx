@@ -62,6 +62,7 @@ export default function TrustedUserDashboard() {
         fetchDashboardData();
     }, []);
 
+    // Loading screen at first
     if (isLoading) {
         return (
             <View style={[styles.container, styles.centered]}>

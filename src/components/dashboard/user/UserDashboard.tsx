@@ -112,7 +112,7 @@ export default function UserDashboard() {
         }
     }
 
-    // Loading screen
+    // Loading screen at first
     if (isLoading) {
         return (
             <View style={[styles.container, styles.centered]}>
