@@ -14,6 +14,7 @@ import {CustomButton} from "@/src/components/ui/CustomButton";
 import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/AddTrustedUserSheet";
 import Toast from "react-native-toast-message";
 import {useTheme} from "@/src/context/ModeContext";
+import ManageTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/ManageTrustedUserSheet";
 
 export default function UserDashboard() {
     const theme = useTheme();
@@ -31,7 +32,7 @@ export default function UserDashboard() {
     const [isAddUserVisible, setIsAddUserVisible] = useState(false);
     const [isManageUserVisible, setIsManageUserVisible] = useState(false);
 
-    const [selectedTrustedUser, setSelectedTrustedUser] = useState<number | null>(null);
+    const [selectedTrustedUserId, setSelectedTrustedUserId] = useState<number | null>(null);
 
     // Fetch api data
     const fetchDashboardData = async (isRefresh = false) => {
@@ -171,7 +172,7 @@ export default function UserDashboard() {
                         trustedUsers={trustedUsers}
                         onAddTrustedUser={() => setIsAddUserVisible(true)}
                         onUserPress={(id) => {
-                            setSelectedTrustedUser(id);
+                            setSelectedTrustedUserId(id);
                             setIsManageUserVisible(true);
                         }}
                     />
@@ -181,11 +182,21 @@ export default function UserDashboard() {
                 </DashboardSection>
             </ScrollView>
 
-            {/* Modal */}
+            {/* Modals */}
             <AddTrustedUserSheet
                 isVisible={isAddUserVisible}
                 onClose={() => setIsAddUserVisible(false)}
                 onSubmit={handleAddTrustedUser}
+            />
+
+            <ManageTrustedUserSheet
+                isVisible={isManageUserVisible}
+                trustedUserId={selectedTrustedUserId}
+                onClose={() => {
+                    setIsManageUserVisible(false);
+                    setSelectedTrustedUserId(null);
+                }}
+                onSuccess={() => fetchDashboardData(true)}
             />
         </>
     );
