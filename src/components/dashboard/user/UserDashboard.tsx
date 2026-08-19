@@ -1,4 +1,4 @@
-import {Alert, ScrollView, StyleSheet} from "react-native";
+import {ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {useEffect, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
@@ -13,51 +13,68 @@ import DashboardSection from "@/src/components/dashboard/shared/DashboardSection
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/AddTrustedUserSheet";
 import Toast from "react-native-toast-message";
+import {useTheme} from "@/src/context/ModeContext";
 
 export default function UserDashboard() {
+    const theme = useTheme();
+
+    // Api data
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
     const [trustedUsers, setTrustedUsers] = useState<TrustedUserListResponse[]>([]);
     const [alerts, setAlerts] = useState<AlertListResponse[]>([]);
     const [isAddUserVisible, setIsAddUserVisible] = useState(false);
 
+    // Load/refresh
+    const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
     // Fetch api data
+    const fetchDashboardData = async (isRefresh = false) => {
+        if (isRefresh)
+            setIsRefreshing(true);
+
+        // Execute requests concurrently to optimize loading time
+        const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
+            deviceService.getUserDevices(),
+            userService.getListOfTrustedUsers(),
+            alertService.getListOfAlerts()
+        ]);
+
+        let hasErrors = false;
+
+        // Devices
+        if (devicesResult.status === 'fulfilled')
+            setDevices(devicesResult.value);
+        else
+            hasErrors = true;
+
+        // Trusted Users
+        if (trustedUsersResult.status === 'fulfilled')
+            setTrustedUsers(trustedUsersResult.value);
+        else
+            hasErrors = true;
+
+        // Alerts
+        if (alertsResult.status === 'fulfilled')
+            setAlerts(alertsResult.value);
+        else
+            hasErrors = true;
+
+        if (hasErrors) {
+            Alert.alert(
+                "Sync Issue",
+                "Some dashboard data could not be loaded. " +
+                "Please check your internet connection."
+            );
+        }
+
+        // Remove loading flags
+        if (isRefresh)
+            setIsRefreshing(false);
+        else
+            setIsLoading(false);
+    };
     useEffect(() => {
-        const fetchDashboardData = async () => {
-            // Execute requests concurrently to optimize loading time
-            const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
-                deviceService.getUserDevices(),
-                userService.getListOfTrustedUsers(),
-                alertService.getListOfAlerts()
-            ]);
-
-            let hasErrors = false;
-
-            // Devices
-            if (devicesResult.status === 'fulfilled')
-                setDevices(devicesResult.value);
-            else
-                hasErrors = true;
-
-            // Trusted Users
-            if (trustedUsersResult.status === 'fulfilled')
-                setTrustedUsers(trustedUsersResult.value);
-            else
-                hasErrors = true;
-
-            // Alerts
-            if (alertsResult.status === 'fulfilled')
-                setAlerts(alertsResult.value);
-            else
-                hasErrors = true;
-
-            if (hasErrors) {
-                Alert.alert(
-                    "Sync Issue",
-                    "Some dashboard data could not be loaded. " +
-                    "Please check your internet connection."
-                );
-            }
-        };
         fetchDashboardData();
     }, []);
 
@@ -95,12 +112,29 @@ export default function UserDashboard() {
         }
     }
 
+    // Loading screen at first
+    if (isLoading) {
+        return (
+            <View style={[styles.container, styles.centered]}>
+                <ActivityIndicator size={"large"} color={theme.tint} />
+            </View>
+        );
+    }
+
     return (
         <>
             <ScrollView
                 style={styles.container}
                 contentContainerStyle={styles.scrollContent}
                 showsVerticalScrollIndicator={false} // Hide scroll bar
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing}
+                        onRefresh={() => fetchDashboardData(true)}
+                        tintColor={theme.tint} // iOS
+                        colors={[theme.tint]} // Android
+                    />
+                }
             >
                 <DashboardSection
                     title={"My devices"}
@@ -156,5 +190,9 @@ const styles = StyleSheet.create({
         padding: 16,
         gap: 24,
         paddingBottom: 40,
-    }
+    },
+    centered: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
 });
