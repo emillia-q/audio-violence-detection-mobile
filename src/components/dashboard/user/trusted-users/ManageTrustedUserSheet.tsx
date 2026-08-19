@@ -7,6 +7,10 @@ import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {userService} from "@/src/api/service/user";
 import Toast from "react-native-toast-message";
+import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
+import {Controller, useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {CustomInput} from "@/src/components/ui/CustomInput";
 
 const formSchema = z.object({
     nickname: z.string()
@@ -34,12 +38,22 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
     // Api data
     const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | null>(null);
 
+    // Form
+    const {control, reset} = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        mode: "onTouched",
+        defaultValues: {nickname: ""}
+    });
+
     // Fetch api data
     const fetchUserDetails = async (id: number) => {
         setIsLoading(true);
         try {
             const data = await userService.getTrustedUser(id);
             setUserDetails(data);
+
+            // Set nickname in input
+            reset({nickname: data.customNickname || ""});
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -73,12 +87,29 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
                 ) : (
                     // Target form
                     <>
-                        <Text style={styles.title}>Manage User</Text>
+                        <Text style={[styles.title, {color: theme.text}]}>Manage User</Text>
 
                         {/* First & last name */}
                         <Text style={[styles.userName, {color: theme.muted}]}>
                             {userDetails.firstName} {userDetails.lastName}
                         </Text>
+
+                        {/* Nickname */}
+                        <AboveInputLabel title={"Nickname (optional)"}/>
+                        <Controller
+                            control={control}
+                            name={"nickname"}
+                            render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                                <CustomInput
+                                    placeholder={"e.g. Ania"}
+                                    placeholderTextColor={theme.placeholder}
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    errorMessage={error?.message}
+                                />
+                            )}
+                        />
                     </>
                 )}
             </View>
@@ -99,7 +130,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         marginBottom: 8,
-        color: Colors.user.text,
     },
     userName: {
         fontSize: 16,
