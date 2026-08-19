@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {useTheme} from "@/src/context/ModeContext";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
 import {Colors} from "@/src/constants/theme";
 import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
@@ -51,6 +51,14 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
         }
     };
 
+    useEffect(() => {
+        if (isVisible && trustedUserId)
+            fetchUserDetails(trustedUserId);
+        else {
+            setUserDetails(null);
+        }
+    }, [isVisible, trustedUserId]);
+
     return (
         <BottomSheet
             isVisible={isVisible}
@@ -66,6 +74,11 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
                     // Target form
                     <>
                         <Text style={styles.title}>Manage User</Text>
+
+                        {/* First & last name */}
+                        <Text style={[styles.userName, {color: theme.muted}]}>
+                            {userDetails.firstName} {userDetails.lastName}
+                        </Text>
                     </>
                 )}
             </View>
@@ -87,5 +100,9 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginBottom: 8,
         color: Colors.user.text,
+    },
+    userName: {
+        fontSize: 16,
+        marginBottom: 24,
     },
 });
