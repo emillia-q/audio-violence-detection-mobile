@@ -4,17 +4,28 @@ import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserLis
 import {userService} from "@/src/api/service/user";
 import ProtectedUserList from "@/src/components/dashboard/trusted-user/protected-users/ProtectedUserList";
 import DashboardSection from "@/src/components/dashboard/shared/DashboardSection";
+import NotificationList from "@/src/components/dashboard/trusted-user/notifications/NotificationList";
+import {NotificationListResponse} from "@/src/api/dto/response/NotificationListResponse";
+import {notificationService} from "@/src/api/service/notification";
 
 export default function TrustedUserDashboard() {
+    const [notifications, setNotifications] = useState<NotificationListResponse[]>([]);
     const [protectedUsers, setProtectedUsers] = useState<ProtectedUserListResponse[]>([]);
 
     useEffect(() => {
         const fetchDashboardData = async () => {
-            const [protectedUsersResult] = await Promise.allSettled([
+            const [notificationsResult, protectedUsersResult] = await Promise.allSettled([
+                notificationService.getProtectedUsersNotifications(),
                 userService.getListOfProtectedUsers()
             ]);
 
             let hasErrors = false;
+
+            // Notifications
+            if (notificationsResult.status === 'fulfilled')
+                setNotifications(notificationsResult.value);
+            else
+                hasErrors = true;
 
             // Protected Users
             if (protectedUsersResult.status === 'fulfilled')
@@ -39,6 +50,9 @@ export default function TrustedUserDashboard() {
             contentContainerStyle={styles.scrollContent}
             showsVerticalScrollIndicator={false} // Hide scroll bar
         >
+            <DashboardSection title={"Notifications"}>
+                <NotificationList notifications={notifications}/>
+            </DashboardSection>
             <DashboardSection title={"Protected users"}>
                 <ProtectedUserList protectedUsers={protectedUsers}/>
             </DashboardSection>
