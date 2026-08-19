@@ -32,6 +32,7 @@ export default function UserDashboard() {
     const fetchDashboardData = async (isRefresh = false) => {
         if (isRefresh)
             setIsRefreshing(true);
+
         // Execute requests concurrently to optimize loading time
         const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
             deviceService.getUserDevices(),
@@ -115,7 +116,7 @@ export default function UserDashboard() {
     if (isLoading) {
         return (
             <View style={[styles.container, styles.centered]}>
-                <ActivityIndicator size="large" color={theme.tint} />
+                <ActivityIndicator size={"large"} color={theme.tint} />
             </View>
         );
     }
