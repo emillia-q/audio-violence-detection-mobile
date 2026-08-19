@@ -2,7 +2,7 @@ import {z} from "zod";
 import {useTheme} from "@/src/context/ModeContext";
 import {useEffect, useState} from "react";
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
-import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, Alert, StyleSheet, Text, View} from "react-native";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {userService} from "@/src/api/service/user";
 import Toast from "react-native-toast-message";
@@ -70,6 +70,41 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
         }
     };
 
+    // Delete trusted user
+    const handleDeleteTrustedUser = () => {
+        Alert.alert(
+            "Remove Trusted User",
+            "Are you sure you want to remove this user from your trusted list?",
+            [
+                {text: "Cancel", style: "cancel"},
+                {
+                    text: "Remove",
+                    style: "destructive",
+                    onPress: async () => {
+                        if (!trustedUserId)
+                            return;
+
+                        try {
+                            await userService.deleteTrustedUser(trustedUserId);
+                            Toast.show({
+                                type: 'success',
+                                text1: 'User removed'
+                            });
+
+                            onSuccess();
+                            onClose();
+                        } catch (error) {
+                            Toast.show({
+                                type: 'error',
+                                text1: 'Failed to remove user'
+                            });
+                        }
+                    }
+                }
+            ]
+        )
+    }
+
     // Fetch api data
     const fetchUserDetails = async (id: number) => {
         setIsLoading(true);
@@ -135,10 +170,20 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
                                 />
                             )}
                         />
-                        <CustomButton
-                            title={"Save"}
-                            onPress={handleSubmit(onValidSubmit)}
-                        />
+
+                        <View style={styles.buttonRow}>
+                            {/* Delete trusted user btn */}
+                            <CustomButton
+                                title={"Remove user"}
+                                variant={"text"}
+                                onPress={handleDeleteTrustedUser}
+                            />
+                            {/* Change nickname btn */}
+                            <CustomButton
+                                title={"Save"}
+                                onPress={handleSubmit(onValidSubmit)}
+                            />
+                        </View>
                     </>
                 )}
             </View>
@@ -164,4 +209,10 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginBottom: 24,
     },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 16,
+    }
 });
