@@ -3,6 +3,7 @@ import {apiClient} from "@/src/api/client";
 import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserListResponse";
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
 import {AddTrustedUserRequest} from "@/src/api/dto/request/AddTrustedUserRequest";
+import {ChangeNicknameRequest} from "@/src/api/dto/request/ChangeNicknameRequest";
 
 const PATH = '/users'
 
@@ -28,9 +29,8 @@ export const userService = {
         return response.data;
     },
 
-    changeTrustedUserNickname: async (id: number, customNickname: string): Promise<TrustedUserDetailsResponse> => {
-        const response = await apiClient.patch<TrustedUserDetailsResponse>(`${PATH}/trusted-users/${id}`,
-            {customNickname: customNickname});
+    changeTrustedUserNickname: async (id: number, data: ChangeNicknameRequest): Promise<TrustedUserDetailsResponse> => {
+        const response = await apiClient.patch<TrustedUserDetailsResponse>(`${PATH}/trusted-users/${id}`, data);
         return response.data;
     },
 
