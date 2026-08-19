@@ -83,7 +83,7 @@ export default function UserDashboard() {
         fetchDashboardData();
     }, []);
 
-    // Add new trusted user
+    // Add new trusted user modal
     const handleAddTrustedUser = async (email: string, nickname: string) => {
         try {
             await userService.addTrustedUser({
@@ -170,6 +170,10 @@ export default function UserDashboard() {
                     <TrustedUserList
                         trustedUsers={trustedUsers}
                         onAddTrustedUser={() => setIsAddUserVisible(true)}
+                        onUserPress={(id) => {
+                            setSelectedTrustedUser(id);
+                            setIsManageUserVisible(true);
+                        }}
                     />
                 </DashboardSection>
                 <DashboardSection title={"Recent alerts"}>
