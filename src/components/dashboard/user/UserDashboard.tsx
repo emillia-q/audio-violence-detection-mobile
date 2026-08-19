@@ -18,15 +18,20 @@ import {useTheme} from "@/src/context/ModeContext";
 export default function UserDashboard() {
     const theme = useTheme();
 
+    // Load/refresh
+    const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
+
     // Api data
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
     const [trustedUsers, setTrustedUsers] = useState<TrustedUserListResponse[]>([]);
     const [alerts, setAlerts] = useState<AlertListResponse[]>([]);
-    const [isAddUserVisible, setIsAddUserVisible] = useState(false);
 
-    // Load/refresh
-    const [isLoading, setIsLoading] = useState(true);
-    const [isRefreshing, setIsRefreshing] = useState(false);
+    // Modals
+    const [isAddUserVisible, setIsAddUserVisible] = useState(false);
+    const [isManageUserVisible, setIsManageUserVisible] = useState(false);
+
+    const [selectedTrustedUser, setSelectedTrustedUser] = useState<number | null>(null);
 
     // Fetch api data
     const fetchDashboardData = async (isRefresh = false) => {
