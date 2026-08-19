@@ -62,11 +62,16 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
 
             onSuccess();
             onClose();
-        } catch (error) {
-            Toast.show({
-                type: 'error',
-                text1: 'Failed to update nickname'
-            });
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({type: 'error', text1: 'User not found'});
+            } else if (status === 400) {
+                Toast.show({type: 'error', text1: 'Invalid nickname format'});
+            } else {
+                Toast.show({type: 'error', text1: 'Failed to update nickname'});
+            }
         }
     };
 
@@ -93,11 +98,14 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
 
                             onSuccess();
                             onClose();
-                        } catch (error) {
-                            Toast.show({
-                                type: 'error',
-                                text1: 'Failed to remove user'
-                            });
+                        } catch (error: any) {
+                            const status = error?.response?.status;
+
+                            if (status === 404) {
+                                Toast.show({type: 'error', text1: 'User not found'});
+                            } else {
+                                Toast.show({type: 'error', text1: 'Failed to remove user'});
+                            }
                         }
                     }
                 }
