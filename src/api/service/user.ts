@@ -20,12 +20,17 @@ export const userService = {
 
     getTrustedUser: async (id: number): Promise<TrustedUserDetailsResponse> => {
         const response = await apiClient.get(`${PATH}/trusted-users/${id}`);
-
         return response.data;
     },
 
     addTrustedUser: async (data: AddTrustedUserRequest): Promise<TrustedUserDetailsResponse> => {
         const response = await apiClient.post<TrustedUserDetailsResponse>(`${PATH}/trusted-users`, data);
+        return response.data;
+    },
+
+    changeTrustedUserNickname: async (id: number, customNickname: string): Promise<TrustedUserDetailsResponse> => {
+        const response = await apiClient.patch<TrustedUserDetailsResponse>(`${PATH}/trusted-users/${id}`,
+            {customNickname: customNickname});
         return response.data;
     },
 
