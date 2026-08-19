@@ -14,19 +14,25 @@ import {CustomButton} from "@/src/components/ui/CustomButton";
 import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/AddTrustedUserSheet";
 import Toast from "react-native-toast-message";
 import {useTheme} from "@/src/context/ModeContext";
+import ManageTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/ManageTrustedUserSheet";
 
 export default function UserDashboard() {
     const theme = useTheme();
+
+    // Load/refresh
+    const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     // Api data
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
     const [trustedUsers, setTrustedUsers] = useState<TrustedUserListResponse[]>([]);
     const [alerts, setAlerts] = useState<AlertListResponse[]>([]);
-    const [isAddUserVisible, setIsAddUserVisible] = useState(false);
 
-    // Load/refresh
-    const [isLoading, setIsLoading] = useState(true);
-    const [isRefreshing, setIsRefreshing] = useState(false);
+    // Modals
+    const [isAddUserVisible, setIsAddUserVisible] = useState(false);
+    const [isManageUserVisible, setIsManageUserVisible] = useState(false);
+
+    const [selectedTrustedUserId, setSelectedTrustedUserId] = useState<number | null>(null);
 
     // Fetch api data
     const fetchDashboardData = async (isRefresh = false) => {
@@ -78,7 +84,7 @@ export default function UserDashboard() {
         fetchDashboardData();
     }, []);
 
-    // Add new trusted user
+    // Add new trusted user modal
     const handleAddTrustedUser = async (email: string, nickname: string) => {
         try {
             await userService.addTrustedUser({
@@ -165,6 +171,10 @@ export default function UserDashboard() {
                     <TrustedUserList
                         trustedUsers={trustedUsers}
                         onAddTrustedUser={() => setIsAddUserVisible(true)}
+                        onUserPress={(id) => {
+                            setSelectedTrustedUserId(id);
+                            setIsManageUserVisible(true);
+                        }}
                     />
                 </DashboardSection>
                 <DashboardSection title={"Recent alerts"}>
@@ -172,11 +182,21 @@ export default function UserDashboard() {
                 </DashboardSection>
             </ScrollView>
 
-            {/* Modal */}
+            {/* Modals */}
             <AddTrustedUserSheet
                 isVisible={isAddUserVisible}
                 onClose={() => setIsAddUserVisible(false)}
                 onSubmit={handleAddTrustedUser}
+            />
+
+            <ManageTrustedUserSheet
+                isVisible={isManageUserVisible}
+                trustedUserId={selectedTrustedUserId}
+                onClose={() => {
+                    setIsManageUserVisible(false);
+                    setSelectedTrustedUserId(null);
+                }}
+                onSuccess={() => fetchDashboardData(true)}
             />
         </>
     );
