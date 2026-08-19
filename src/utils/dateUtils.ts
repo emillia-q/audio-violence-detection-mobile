@@ -1,4 +1,4 @@
-const formatDateTime = (isoString: string) => {
+export const formatDateTime = (isoString: string) => {
     const date = new Date(isoString);
     const today = new Date();
     const yesterday = new Date(today);
