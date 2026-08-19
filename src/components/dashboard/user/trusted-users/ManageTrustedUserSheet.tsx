@@ -2,7 +2,6 @@ import {z} from "zod";
 import {useTheme} from "@/src/context/ModeContext";
 import {useEffect, useState} from "react";
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
-import {Colors} from "@/src/constants/theme";
 import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {userService} from "@/src/api/service/user";
@@ -11,6 +10,7 @@ import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CustomInput} from "@/src/components/ui/CustomInput";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 const formSchema = z.object({
     nickname: z.string()
@@ -39,11 +39,36 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
     const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | null>(null);
 
     // Form
-    const {control, reset} = useForm<FormValues>({
+    const {control, handleSubmit, reset} = useForm<FormValues>({
         resolver: zodResolver(formSchema),
         mode: "onTouched",
         defaultValues: {nickname: ""}
     });
+
+    // Nickname change
+    const onValidSubmit = async (data: FormValues) => {
+        if (!trustedUserId)
+            return;
+
+        try {
+            await userService.changeTrustedUserNickname(trustedUserId, {
+                customNickname: data.nickname?.trim() || ""
+            });
+
+            Toast.show({
+                type: 'success',
+                text1: 'Nickname updated'
+            });
+
+            onSuccess();
+            onClose();
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: 'Failed to update nickname'
+            });
+        }
+    };
 
     // Fetch api data
     const fetchUserDetails = async (id: number) => {
@@ -109,6 +134,10 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
                                     errorMessage={error?.message}
                                 />
                             )}
+                        />
+                        <CustomButton
+                            title={"Save"}
+                            onPress={handleSubmit(onValidSubmit)}
                         />
                     </>
                 )}
