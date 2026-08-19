@@ -6,9 +6,10 @@ import EmptyListView from "@/src/components/ui/EmptyListView";
 interface TrustedUserListProps {
     trustedUsers: TrustedUserListResponse[];
     onAddTrustedUser: () => void;
+    onUserPress: (id: number) => void;
 }
 
-export default function TrustedUserList({trustedUsers, onAddTrustedUser}: TrustedUserListProps) {
+export default function TrustedUserList({trustedUsers, onAddTrustedUser, onUserPress}: TrustedUserListProps) {
     // 204 - empty list
     if (trustedUsers.length === 0) {
         return (
@@ -28,7 +29,7 @@ export default function TrustedUserList({trustedUsers, onAddTrustedUser}: Truste
                 <NavigationCard
                     key={trustedUser.trustedUserId}
                     title={trustedUser.trustedUserNickname}
-                    onPress={() => console.log(`Trusted user with id: ${trustedUser.trustedUserId}`)}
+                    onPress={() => onUserPress(trustedUser.trustedUserId)}
                 />
             ))}
         </View>
