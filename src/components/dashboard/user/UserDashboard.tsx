@@ -15,10 +15,15 @@ import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/A
 import Toast from "react-native-toast-message";
 
 export default function UserDashboard() {
+    // Api data
     const [devices, setDevices] = useState<DeviceListResponse[]>([]);
     const [trustedUsers, setTrustedUsers] = useState<TrustedUserListResponse[]>([]);
     const [alerts, setAlerts] = useState<AlertListResponse[]>([]);
     const [isAddUserVisible, setIsAddUserVisible] = useState(false);
+
+    // Load/refresh
+    const [isLoading, setIsLoading] = useState(true);
+    const [isRefreshing, setIsRefreshing] = useState(false);
 
     // Fetch api data
     useEffect(() => {
