@@ -50,7 +50,7 @@ export const userService = {
         return response.data;
     },
 
-    getProtectedUser: async (id: number, data: ProtectedUserDetailsResponse): Promise<ProtectedUserDetailsResponse> => {
+    getProtectedUser: async (id: number): Promise<ProtectedUserDetailsResponse> => {
         const response = await apiClient.get(`${PATH}/protected-users/${id}`);
         return response.data;
     },
