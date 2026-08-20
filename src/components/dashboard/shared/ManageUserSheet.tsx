@@ -29,7 +29,7 @@ interface ManageTrustedUserSheetProps {
     onSuccess: () => void;
 }
 
-export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClose, onSuccess}: ManageTrustedUserSheetProps) {
+export default function ManageUserSheet({isVisible, trustedUserId, onClose, onSuccess}: ManageTrustedUserSheetProps) {
     const theme = useTheme();
 
     // Load

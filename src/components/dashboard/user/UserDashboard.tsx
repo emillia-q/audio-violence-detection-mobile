@@ -14,7 +14,7 @@ import {CustomButton} from "@/src/components/ui/CustomButton";
 import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/AddTrustedUserSheet";
 import Toast from "react-native-toast-message";
 import {useTheme} from "@/src/context/ModeContext";
-import ManageTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/ManageTrustedUserSheet";
+import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 
 export default function UserDashboard() {
     const theme = useTheme();
@@ -189,7 +189,7 @@ export default function UserDashboard() {
                 onSubmit={handleAddTrustedUser}
             />
 
-            <ManageTrustedUserSheet
+            <ManageUserSheet
                 isVisible={isManageUserVisible}
                 trustedUserId={selectedTrustedUserId}
                 onClose={() => {
