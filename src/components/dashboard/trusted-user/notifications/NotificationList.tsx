@@ -6,9 +6,10 @@ import {formatDateTime} from "@/src/utils/dateUtils";
 
 interface NotificationListProps {
     notifications: NotificationListResponse[];
+    onManage?: (id: number, isRead: boolean) => void;
 }
 
-export default function NotificationList({notifications}: NotificationListProps) {
+export default function NotificationList({notifications, onManage}: NotificationListProps) {
     // 204 - empty list
     if (notifications.length === 0) {
         return (
@@ -29,6 +30,7 @@ export default function NotificationList({notifications}: NotificationListProps)
                     subtitle={formatDateTime(notification.createdAt)}
                     isRead={notification.isRead}
                     onPress={() => console.log(`Notification with id: ${notification.notificationId}`)}
+                    onMorePress={() => onManage && onManage(notification.notificationId, notification.isRead)}
                 />
             ))}
         </View>
