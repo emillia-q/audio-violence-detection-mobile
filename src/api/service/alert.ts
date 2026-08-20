@@ -12,5 +12,9 @@ export const alertService = {
             return [];
 
         return response.data;
+    },
+
+    deleteFalseAlert: async (id: number): Promise<void> => {
+        await apiClient.delete(`${PATH}/${id}`);
     }
 };
