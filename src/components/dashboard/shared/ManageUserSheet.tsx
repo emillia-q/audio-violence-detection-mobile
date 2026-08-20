@@ -24,12 +24,13 @@ type FormValues = z.infer<typeof formSchema>;
 
 interface ManageTrustedUserSheetProps {
     isVisible: boolean;
-    trustedUserId: number | null;
+    userId: number | null;
+    userType: "trusted" | "protected";
     onClose: () => void;
     onSuccess: () => void;
 }
 
-export default function ManageUserSheet({isVisible, trustedUserId, onClose, onSuccess}: ManageTrustedUserSheetProps) {
+export default function ManageUserSheet({isVisible, userId, onClose, onSuccess}: ManageTrustedUserSheetProps) {
     const theme = useTheme();
 
     // Load
@@ -47,11 +48,11 @@ export default function ManageUserSheet({isVisible, trustedUserId, onClose, onSu
 
     // Nickname change
     const onValidSubmit = async (data: FormValues) => {
-        if (!trustedUserId)
+        if (!userId)
             return;
 
         try {
-            await userService.changeTrustedUserNickname(trustedUserId, {
+            await userService.changeTrustedUserNickname(userId, {
                 customNickname: data.nickname?.trim() || ""
             });
 
@@ -86,11 +87,11 @@ export default function ManageUserSheet({isVisible, trustedUserId, onClose, onSu
                     text: "Remove",
                     style: "destructive",
                     onPress: async () => {
-                        if (!trustedUserId)
+                        if (!userId)
                             return;
 
                         try {
-                            await userService.deleteTrustedUser(trustedUserId);
+                            await userService.deleteTrustedUser(userId);
                             Toast.show({
                                 type: 'success',
                                 text1: 'User removed'
@@ -134,12 +135,12 @@ export default function ManageUserSheet({isVisible, trustedUserId, onClose, onSu
     };
 
     useEffect(() => {
-        if (isVisible && trustedUserId)
-            fetchUserDetails(trustedUserId);
+        if (isVisible && userId)
+            fetchUserDetails(userId);
         else {
             setUserDetails(null);
         }
-    }, [isVisible, trustedUserId]);
+    }, [isVisible, userId]);
 
     return (
         <BottomSheet
