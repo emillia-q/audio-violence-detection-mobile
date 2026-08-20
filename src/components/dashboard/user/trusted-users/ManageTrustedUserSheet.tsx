@@ -183,7 +183,7 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
                             {/* Delete trusted user btn */}
                             <CustomButton
                                 title={"Remove user"}
-                                variant={"text"}
+                                isDanger={true}
                                 onPress={handleDeleteTrustedUser}
                             />
                             {/* Change nickname btn */}
