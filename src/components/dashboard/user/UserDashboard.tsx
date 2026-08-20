@@ -43,7 +43,7 @@ export default function UserDashboard() {
         const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
             deviceService.getUserDevices(),
             userService.getListOfTrustedUsers(),
-            alertService.getListOfAlerts()
+            alertService.getListOfAlerts(0, 3)
         ]);
 
         let hasErrors = false;
@@ -177,7 +177,18 @@ export default function UserDashboard() {
                         }}
                     />
                 </DashboardSection>
-                <DashboardSection title={"Recent alerts"}>
+                <DashboardSection
+                    title={"Recent alerts"}
+                    actionButton={
+                        alerts.length > 0 && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => console.log("full alert history")}
+                            />
+                        )
+                    }
+                >
                     <AlertList alerts={alerts}/>
                 </DashboardSection>
             </ScrollView>
