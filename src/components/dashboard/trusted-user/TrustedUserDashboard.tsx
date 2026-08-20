@@ -8,6 +8,7 @@ import NotificationList from "@/src/components/dashboard/trusted-user/notificati
 import {NotificationListResponse} from "@/src/api/dto/response/NotificationListResponse";
 import {notificationService} from "@/src/api/service/notification";
 import {useTheme} from "@/src/context/ModeContext";
+import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 
 export default function TrustedUserDashboard() {
     const theme = useTheme();
@@ -19,6 +20,11 @@ export default function TrustedUserDashboard() {
     // Load/refresh
     const [isLoading, setIsLoading] = useState(true);
     const [isRefreshing, setIsRefreshing] = useState(false);
+
+    // Modals
+    const [isManageUserVisible, setIsManageUserVisible] = useState(false);
+
+    const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
 
     const fetchDashboardData = async (isRefresh = false) => {
@@ -72,26 +78,46 @@ export default function TrustedUserDashboard() {
     }
 
     return (
-        <ScrollView
-            style={styles.container}
-            contentContainerStyle={styles.scrollContent}
-            showsVerticalScrollIndicator={false} // Hide scroll bar
-            refreshControl={
-                <RefreshControl
-                    refreshing={isRefreshing}
-                    onRefresh={() => fetchDashboardData(true)}
-                    tintColor={theme.tint} // iOS
-                    colors={[theme.tint]} // Android
-                />
-            }
-        >
-            <DashboardSection title={"Notifications"}>
-                <NotificationList notifications={notifications}/>
-            </DashboardSection>
-            <DashboardSection title={"Protected users"}>
-                <ProtectedUserList protectedUsers={protectedUsers}/>
-            </DashboardSection>
-        </ScrollView>
+        <>
+            <ScrollView
+                style={styles.container}
+                contentContainerStyle={styles.scrollContent}
+                showsVerticalScrollIndicator={false} // Hide scroll bar
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isRefreshing}
+                        onRefresh={() => fetchDashboardData(true)}
+                        tintColor={theme.tint} // iOS
+                        colors={[theme.tint]} // Android
+                    />
+                }
+            >
+                <DashboardSection title={"Notifications"}>
+                    <NotificationList notifications={notifications}/>
+                </DashboardSection>
+                <DashboardSection title={"Protected users"}>
+                    <ProtectedUserList
+                        protectedUsers={protectedUsers}
+                        onUserPress={(id) => {
+                            setSelectedUserId(id);
+                            setIsManageUserVisible(true)
+                        }}
+                    />
+                </DashboardSection>
+            </ScrollView>
+
+            {/* Modals */}
+            <ManageUserSheet
+                isVisible={isManageUserVisible}
+                userId={selectedUserId}
+                userType={"protected"}
+                onClose={() => {
+                    setSelectedUserId(null);
+                    setIsManageUserVisible(false)
+                }}
+                onSuccess={() => fetchDashboardData(true)}
+            />
+        </>
     );
 }
 
