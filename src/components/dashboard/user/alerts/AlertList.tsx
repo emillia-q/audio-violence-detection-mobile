@@ -6,9 +6,10 @@ import {formatDateTime} from "@/src/utils/dateUtils";
 
 interface AlertListProps {
     alerts: AlertListResponse[];
+    onManage?: (id: number) => void;
 }
 
-export default function AlertList({alerts}: AlertListProps) {
+export default function AlertList({alerts, onManage}: AlertListProps) {
     // 204 - empty list
     if (alerts.length === 0) {
         return (
@@ -29,6 +30,7 @@ export default function AlertList({alerts}: AlertListProps) {
                     subtitle={formatDateTime(alert.createdAt)}
                     isRead={alert.isRead}
                     onPress={() => console.log(`Alert with id: ${alert.id}`)}
+                    onMorePress={() => onManage && onManage(alert.id)}
                 />
             ))}
         </View>
