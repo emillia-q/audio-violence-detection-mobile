@@ -9,6 +9,7 @@ import {NotificationListResponse} from "@/src/api/dto/response/NotificationListR
 import {notificationService} from "@/src/api/service/notification";
 import {useTheme} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 export default function TrustedUserDashboard() {
     const theme = useTheme();
@@ -32,7 +33,7 @@ export default function TrustedUserDashboard() {
             setIsRefreshing(true);
 
         const [notificationsResult, protectedUsersResult] = await Promise.allSettled([
-            notificationService.getProtectedUsersNotifications(),
+            notificationService.getProtectedUsersNotifications(0, 3),
             userService.getListOfProtectedUsers()
         ]);
 
@@ -92,7 +93,18 @@ export default function TrustedUserDashboard() {
                     />
                 }
             >
-                <DashboardSection title={"Notifications"}>
+                <DashboardSection
+                    title={"Notifications"}
+                    actionButton={
+                        notifications.length > 0 && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => console.log("full notification history")}
+                            />
+                        )
+                    }
+                >
                     <NotificationList notifications={notifications}/>
                 </DashboardSection>
                 <DashboardSection title={"Protected users"}>
