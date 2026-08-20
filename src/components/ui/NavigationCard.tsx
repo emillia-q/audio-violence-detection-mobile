@@ -66,16 +66,9 @@ export default function NavigationCard({title, subtitle, isRead, onPress, onMore
                     <Ionicons name={"ellipsis-vertical"} size={20} color={theme.muted}/>
                 </TouchableOpacity>
             ) : (
-                <Text
-                    style={[
-                        styles.chevronIcon,
-                        {
-                            color: theme.muted
-                        }
-                    ]}
-                >
-                    ›
-                </Text>
+                <View style={styles.chevronIcon}>
+                    <Ionicons name="chevron-forward" size={20} color={theme.muted} />
+                </View>
             )}
         </TouchableOpacity>
     );
@@ -115,7 +108,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ef4444',
     },
     chevronIcon: {
-        fontSize: 24,
         paddingLeft: 8,
     },
     moreButton: {
