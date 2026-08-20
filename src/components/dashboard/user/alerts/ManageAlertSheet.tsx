@@ -1,7 +1,9 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {Alert, StyleSheet} from "react-native";
+import {Alert, StyleSheet, Text, View} from "react-native";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
+import BottomSheet from "@/src/components/ui/BottomSheet";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 interface ManageAlertSheetProps {
     isVisible: boolean;
@@ -50,7 +52,29 @@ export default function ManageAlertSheet({isVisible, alertId, onClose, onSuccess
                 }
             ]
         )
-    }
+    };
+
+    return (
+        <BottomSheet
+            isVisible={isVisible}
+            onClose={onClose}
+        >
+            <View style={styles.content}>
+                <Text style={[styles.title, {color: theme.text}]}>Manage Alert</Text>
+                <Text style={[styles.subtitle, {color: theme.muted}]}>Did your device trigger a false alert?</Text>
+
+                {/* Delete button */}
+                <View style={styles.button}>
+                    <CustomButton
+                        title={"Delete false alert"}
+                        variant={"outline"}
+                        isDanger={true}
+                        onPress={handleDelete}
+                    />
+                </View>
+            </View>
+        </BottomSheet>
+    );
 }
 
 const styles = StyleSheet.create({
