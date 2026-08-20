@@ -11,6 +11,7 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import {ProtectedUserDetailsResponse} from "@/src/api/dto/response/ProtectedUserDetailsResponse";
 
 const formSchema = z.object({
     nickname: z.string()
@@ -22,21 +23,22 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-interface ManageTrustedUserSheetProps {
+interface ManageUserSheetProps {
     isVisible: boolean;
-    trustedUserId: number | null;
+    userId: number | null;
+    userType: "trusted" | "protected";
     onClose: () => void;
     onSuccess: () => void;
 }
 
-export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClose, onSuccess}: ManageTrustedUserSheetProps) {
+export default function ManageUserSheet({isVisible, userId, userType, onClose, onSuccess}: ManageUserSheetProps) {
     const theme = useTheme();
 
     // Load
     const [isLoading, setIsLoading] = useState(false);
 
     // Api data
-    const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | null>(null);
+    const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | ProtectedUserDetailsResponse | null>(null);
 
     // Form
     const {control, handleSubmit, reset, formState: {isDirty, isSubmitting}} = useForm<FormValues>({
@@ -47,13 +49,19 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
 
     // Nickname change
     const onValidSubmit = async (data: FormValues) => {
-        if (!trustedUserId)
+        if (!userId)
             return;
 
         try {
-            await userService.changeTrustedUserNickname(trustedUserId, {
-                customNickname: data.nickname?.trim() || ""
-            });
+            if (userType === "trusted") {
+                await userService.changeTrustedUserNickname(userId, {
+                    customNickname: data.nickname?.trim() || ""
+                });
+            } else {
+                await userService.changeProtectedUserNickname(userId, {
+                    customNickname: data.nickname?.trim() || ""
+                });
+            }
 
             Toast.show({
                 type: 'success',
@@ -76,21 +84,32 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
     };
 
     // Delete trusted user
-    const handleDeleteTrustedUser = () => {
+    const handleDeleteUser = () => {
+        // Text based on user type
+        const title = userType === "trusted" ? "Remove Trusted User"
+            : "Remove Protected User";
+        const message = userType === "trusted" ? "Are you sure you want to remove this user from your trusted list?"
+            : "Are you sure you want to remove this user from your protected list?"
+
         Alert.alert(
-            "Remove Trusted User",
-            "Are you sure you want to remove this user from your trusted list?",
+            title,
+            message,
             [
                 {text: "Cancel", style: "cancel"},
                 {
                     text: "Remove",
                     style: "destructive",
                     onPress: async () => {
-                        if (!trustedUserId)
+                        if (!userId)
                             return;
 
                         try {
-                            await userService.deleteTrustedUser(trustedUserId);
+                            if (userType === "trusted") {
+                                await userService.deleteTrustedUser(userId);
+                            } else {
+                                await userService.deleteProtectedUser(userId);
+                            }
+
                             Toast.show({
                                 type: 'success',
                                 text1: 'User removed'
@@ -117,7 +136,12 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
     const fetchUserDetails = async (id: number) => {
         setIsLoading(true);
         try {
-            const data = await userService.getTrustedUser(id);
+            let data: TrustedUserDetailsResponse | ProtectedUserDetailsResponse;
+            if (userType === "trusted") {
+                data = await userService.getTrustedUser(id);
+            } else {
+                data = await userService.getProtectedUser(id);
+            }
             setUserDetails(data);
 
             // Set nickname in input
@@ -134,12 +158,12 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
     };
 
     useEffect(() => {
-        if (isVisible && trustedUserId)
-            fetchUserDetails(trustedUserId);
+        if (isVisible && userId)
+            fetchUserDetails(userId);
         else {
             setUserDetails(null);
         }
-    }, [isVisible, trustedUserId]);
+    }, [isVisible, userId]);
 
     return (
         <BottomSheet
@@ -183,8 +207,8 @@ export default function ManageTrustedUserSheet({isVisible, trustedUserId, onClos
                             {/* Delete trusted user btn */}
                             <CustomButton
                                 title={"Remove user"}
-                                variant={"text"}
-                                onPress={handleDeleteTrustedUser}
+                                isDanger={true}
+                                onPress={handleDeleteUser}
                             />
                             {/* Change nickname btn */}
                             <CustomButton

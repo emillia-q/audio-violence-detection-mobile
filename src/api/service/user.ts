@@ -4,6 +4,7 @@ import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserLis
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
 import {AddTrustedUserRequest} from "@/src/api/dto/request/AddTrustedUserRequest";
 import {ChangeNicknameRequest} from "@/src/api/dto/request/ChangeNicknameRequest";
+import {ProtectedUserDetailsResponse} from "@/src/api/dto/response/ProtectedUserDetailsResponse";
 
 const PATH = '/users'
 
@@ -48,4 +49,18 @@ export const userService = {
 
         return response.data;
     },
+
+    getProtectedUser: async (id: number): Promise<ProtectedUserDetailsResponse> => {
+        const response = await apiClient.get(`${PATH}/protected-users/${id}`);
+        return response.data;
+    },
+
+    changeProtectedUserNickname: async (id: number, data: ChangeNicknameRequest): Promise<ProtectedUserDetailsResponse> => {
+        const response = await apiClient.patch(`${PATH}/protected-users/${id}`, data);
+        return response.data;
+    },
+
+    deleteProtectedUser: async (id: number): Promise<void> => {
+        await apiClient.delete(`${PATH}/protected-users/${id}`);
+    }
 };
