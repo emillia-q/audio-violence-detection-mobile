@@ -1,7 +1,9 @@
-import {StyleSheet} from "react-native";
+import {Alert, StyleSheet, Text, View} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
 import {notificationService} from "@/src/api/service/notification";
 import Toast from "react-native-toast-message";
+import BottomSheet from "@/src/components/ui/BottomSheet";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 interface ManageNotificationSheetProps {
     isVisible: boolean;
@@ -33,6 +35,35 @@ export default function ManageNotificationSheet({isVisible, notificationId, isRe
             }
         }
     };
+
+    // Delete notification
+    const handleDelete = () => {
+        Alert.alert()
+    };
+
+    return (
+        <BottomSheet
+            isVisible={isVisible}
+            onClose={onClose}
+        >
+            <View style={styles.content}>
+                <Text style={[styles.title, {color: theme.text}]}>Manage Notification</Text>
+                <View style={styles.button}>
+                    <CustomButton
+                        title={isRead ? "Mark as unread" : "Mark as read"}
+                        variant={"outline"}
+                        onPress={handleToggle}
+                    />
+                    <CustomButton
+                        title={"Delete notification"}
+                        variant={"text"}
+                        isDanger={true}
+                        onPress={handleDelete}
+                    />
+                </View>
+            </View>
+        </BottomSheet>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -43,10 +74,6 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         marginBottom: 4,
-    },
-    subtitle: {
-        fontSize: 14,
-        marginBottom: 24,
     },
     button: {
         gap: 16,
