@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: '700',
-        marginBottom: 4,
+        marginBottom: 24,
     },
     button: {
         gap: 16,
