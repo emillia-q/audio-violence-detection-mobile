@@ -61,12 +61,12 @@ export default function ManageAlertSheet({isVisible, alertId, onClose, onSuccess
         >
             <View style={styles.content}>
                 <Text style={[styles.title, {color: theme.text}]}>Manage Alert</Text>
-                <Text style={[styles.subtitle, {color: theme.muted}]}>Did your device trigger a false alert?</Text>
+                <Text style={[styles.subtitle, {color: theme.muted}]}>Did your device trigger a false alarm?</Text>
 
                 {/* Delete button */}
                 <View style={styles.button}>
                     <CustomButton
-                        title={"Delete false alert"}
+                        title={"Delete false alarm"}
                         variant={"outline"}
                         isDanger={true}
                         onPress={handleDelete}
