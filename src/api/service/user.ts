@@ -50,6 +50,11 @@ export const userService = {
         return response.data;
     },
 
+    getProtectedUser: async (id: number, data: ProtectedUserDetailsResponse): Promise<ProtectedUserDetailsResponse> => {
+        const response = await apiClient.get(`${PATH}/protected-users/${id}`);
+        return response.data;
+    },
+
     changeProtectedUserNickname: async (id: number, data: ChangeNicknameRequest): Promise<ProtectedUserDetailsResponse> => {
         const response = await apiClient.patch(`${PATH}/protected-users/${id}`, data);
         return response.data;
