@@ -1,15 +1,17 @@
 import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
+import {Ionicons} from "@expo/vector-icons";
 
 interface NavigationCardProps {
     title: string;
     subtitle?: string;
     isRead?: boolean;
     onPress: () => void;
+    onMorePress?: () => void;
     style?: StyleProp<ViewStyle>;
 }
 
-export default function NavigationCard({title, subtitle, isRead, onPress, style}: NavigationCardProps) {
+export default function NavigationCard({title, subtitle, isRead, onPress, onMorePress, style}: NavigationCardProps) {
     const theme = useTheme();
 
     return (
@@ -55,16 +57,26 @@ export default function NavigationCard({title, subtitle, isRead, onPress, style}
                 )}
             </View>
 
-            <Text
-                style={[
-                    styles.chevronIcon,
-                    {
-                        color: theme.muted
-                    }
-                ]}
-            >
-                ›
-            </Text>
+            {onMorePress ? (
+                <TouchableOpacity
+                    style={styles.moreButton}
+                    onPress={onMorePress}
+                    hitSlop={{top: 10, bottom: 10, left: 10, right: 10}} // Enlarges the click area
+                >
+                    <Ionicons name={"ellipsis-vertical"} size={20} color={theme.muted}/>
+                </TouchableOpacity>
+            ) : (
+                <Text
+                    style={[
+                        styles.chevronIcon,
+                        {
+                            color: theme.muted
+                        }
+                    ]}
+                >
+                    ›
+                </Text>
+            )}
         </TouchableOpacity>
     );
 }
@@ -105,5 +117,9 @@ const styles = StyleSheet.create({
     chevronIcon: {
         fontSize: 24,
         paddingLeft: 8,
+    },
+    moreButton: {
+        paddingLeft: 16,
+        paddingVertical: 4,
     },
 });
