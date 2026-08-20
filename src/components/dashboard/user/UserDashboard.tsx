@@ -32,7 +32,7 @@ export default function UserDashboard() {
     const [isAddUserVisible, setIsAddUserVisible] = useState(false);
     const [isManageUserVisible, setIsManageUserVisible] = useState(false);
 
-    const [selectedUserId, setselectedUserId] = useState<number | null>(null);
+    const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
 
     // Fetch api data
     const fetchDashboardData = async (isRefresh = false) => {
@@ -172,7 +172,7 @@ export default function UserDashboard() {
                         trustedUsers={trustedUsers}
                         onAddTrustedUser={() => setIsAddUserVisible(true)}
                         onUserPress={(id) => {
-                            setselectedUserId(id);
+                            setSelectedUserId(id);
                             setIsManageUserVisible(true);
                         }}
                     />
@@ -195,7 +195,7 @@ export default function UserDashboard() {
                 userType={"trusted"}
                 onClose={() => {
                     setIsManageUserVisible(false);
-                    setselectedUserId(null);
+                    setSelectedUserId(null);
                 }}
                 onSuccess={() => fetchDashboardData(true)}
             />
