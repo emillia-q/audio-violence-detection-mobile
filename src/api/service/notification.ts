@@ -16,5 +16,9 @@ export const notificationService = {
 
     toggleNotificationStatus: async (id: number): Promise<void> => {
         await apiClient.patch(`${PATH}/${id}/toggle-status`);
+    },
+
+    deleteNotification: async (id: number): Promise<void> => {
+        await apiClient.delete(`${PATH}/${id}`);
     }
 };
