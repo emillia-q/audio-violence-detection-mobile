@@ -8,12 +8,31 @@ import {CustomButton} from "@/src/components/ui/CustomButton";
 interface ManageAlertSheetProps {
     isVisible: boolean;
     alertId: number | null;
+    isRead: boolean;
     onClose: () => void;
     onSuccess: () => void;
 }
 
-export default function ManageAlertSheet({isVisible, alertId, onClose, onSuccess}: ManageAlertSheetProps) {
+export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, onSuccess}: ManageAlertSheetProps) {
     const theme = useTheme();
+
+    const handleToggleStatus = async () => {
+        if (!alertId) return;
+
+        try {
+            await alertService.toggleNotificationStatusByAlertId(alertId);
+            onSuccess();
+            onClose();
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({type: 'error', text1: 'Alert not found'});
+            } else {
+                Toast.show({type: 'error', text1: 'Failed to update status'});
+            }
+        }
+    };
 
     const handleDelete = () => {
         Alert.alert(
@@ -61,13 +80,18 @@ export default function ManageAlertSheet({isVisible, alertId, onClose, onSuccess
         >
             <View style={styles.content}>
                 <Text style={[styles.title, {color: theme.text}]}>Manage Alert</Text>
-                <Text style={[styles.subtitle, {color: theme.muted}]}>Did your device trigger a false alarm?</Text>
 
-                {/* Delete button */}
                 <View style={styles.button}>
+                    {/* Status button */}
+                    <CustomButton
+                        title={isRead ? "Mark as unread" : "Mark as read"}
+                        variant={"outline"}
+                        onPress={handleToggleStatus}
+                    />
+                    {/* Delete button */}
                     <CustomButton
                         title={"Delete false alarm"}
-                        variant={"outline"}
+                        variant={"text"}
                         isDanger={true}
                         onPress={handleDelete}
                     />
@@ -84,10 +108,6 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 20,
         fontWeight: '700',
-        marginBottom: 4,
-    },
-    subtitle: {
-        fontSize: 14,
         marginBottom: 24,
     },
     button: {

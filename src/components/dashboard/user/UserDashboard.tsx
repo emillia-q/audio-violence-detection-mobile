@@ -38,6 +38,9 @@ export default function UserDashboard() {
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
     const [selectedAlertId, setSelectedAlertId] = useState<number | null>(null);
 
+    // States
+    const [selectedAlertIsRead, setSelectedAlertIsRead] = useState(false);
+
     // Fetch api data
     const fetchDashboardData = async (isRefresh = false) => {
         if (isRefresh)
@@ -195,8 +198,9 @@ export default function UserDashboard() {
                 >
                     <AlertList
                         alerts={alerts}
-                        onManage={(id) => {
+                        onManage={(id, isRead) => {
                             setSelectedAlertId(id);
+                            setSelectedAlertIsRead(isRead)
                             setIsManageAlertVisible(true);
                         }}
                     />
@@ -224,6 +228,7 @@ export default function UserDashboard() {
             <ManageAlertSheet
                 isVisible={isManageAlertVisible}
                 alertId={selectedAlertId}
+                isRead={selectedAlertIsRead}
                 onClose={() => {
                     setIsManageAlertVisible(false);
                     setSelectedAlertId(null);
