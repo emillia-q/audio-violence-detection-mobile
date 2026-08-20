@@ -14,6 +14,10 @@ export const alertService = {
         return response.data;
     },
 
+    toggleNotificationStatusByAlertId: async (id: number): Promise<void> => {
+        await apiClient.patch(`${PATH}/${id}/toggle-status`);
+    },
+
     deleteFalseAlert: async (id: number): Promise<void> => {
         await apiClient.delete(`${PATH}/${id}`);
     }
