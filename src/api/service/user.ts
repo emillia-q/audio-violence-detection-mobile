@@ -53,5 +53,9 @@ export const userService = {
     changeProtectedUserNickname: async (id: number, data: ChangeNicknameRequest): Promise<ProtectedUserDetailsResponse> => {
         const response = await apiClient.patch(`${PATH}/protected-users/${id}`, data);
         return response.data;
+    },
+
+    deleteProtectedUser: async (id: number): Promise<void> => {
+        await apiClient.delete(`${PATH}/protected-users/${id}`);
     }
 };
