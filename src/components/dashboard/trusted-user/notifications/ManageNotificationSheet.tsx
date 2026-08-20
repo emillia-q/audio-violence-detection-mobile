@@ -31,14 +31,47 @@ export default function ManageNotificationSheet({isVisible, notificationId, isRe
             if (status === 404) {
                 Toast.show({type: 'error', text1: 'Notification not found'});
             } else {
-                Toast.show({type: 'error', text1: 'Failed to delete notification'});
+                Toast.show({type: 'error', text1: 'Failed to update status'});
             }
         }
     };
 
     // Delete notification
     const handleDelete = () => {
-        Alert.alert()
+        Alert.alert(
+            "Delete Notification",
+            "Are you sure you want to remove this notification?",
+            [
+                {text: "Cancel", style: "cancel"},
+                {
+                    text: "Delete",
+                    style: "destructive",
+                    onPress: async () => {
+                        if (!notificationId)
+                            return;
+
+                        try {
+                            await notificationService.deleteNotification(notificationId);
+                            Toast.show({
+                                type: 'success',
+                                text1: 'Notification deleted'
+                            });
+
+                            onSuccess();
+                            onClose();
+                        } catch (error: any) {
+                            const status = error?.response?.status;
+
+                            if (status === 404) {
+                                Toast.show({type: 'error', text1: 'Notification not found'});
+                            } else {
+                                Toast.show({type: 'error', text1: 'Failed to delete notification'});
+                            }
+                        }
+                    }
+                }
+            ]
+        )
     };
 
     return (
