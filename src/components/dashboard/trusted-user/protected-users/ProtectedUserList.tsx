@@ -5,9 +5,10 @@ import NavigationCard from "@/src/components/ui/NavigationCard";
 
 interface ProtectedUserListProps {
     protectedUsers: ProtectedUserListResponse[];
+    onUserPress: (id: number) => void;
 }
 
-export default function ProtectedUserList({protectedUsers}: ProtectedUserListProps) {
+export default function ProtectedUserList({protectedUsers, onUserPress}: ProtectedUserListProps) {
     // 204
     if (protectedUsers.length === 0) {
         return (
@@ -24,7 +25,7 @@ export default function ProtectedUserList({protectedUsers}: ProtectedUserListPro
                 <NavigationCard
                     key={protectedUser.protectedUserId}
                     title={protectedUser.protectedUserNickname}
-                    onPress={() => console.log("Protected user with Id:", protectedUser.protectedUserId)}
+                    onPress={() => onUserPress(protectedUser.protectedUserId)}
                 />
             ))}
         </View>
