@@ -23,7 +23,7 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-interface ManageTrustedUserSheetProps {
+interface ManageUserSheetProps {
     isVisible: boolean;
     userId: number | null;
     userType: "trusted" | "protected";
@@ -31,14 +31,14 @@ interface ManageTrustedUserSheetProps {
     onSuccess: () => void;
 }
 
-export default function ManageUserSheet({isVisible, userId, userType, onClose, onSuccess}: ManageTrustedUserSheetProps) {
+export default function ManageUserSheet({isVisible, userId, userType, onClose, onSuccess}: ManageUserSheetProps) {
     const theme = useTheme();
 
     // Load
     const [isLoading, setIsLoading] = useState(false);
 
     // Api data
-    const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | null>(null);
+    const [userDetails, setUserDetails] = useState<TrustedUserDetailsResponse | ProtectedUserDetailsResponse | null>(null);
 
     // Form
     const {control, handleSubmit, reset, formState: {isDirty, isSubmitting}} = useForm<FormValues>({
@@ -84,7 +84,7 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
     };
 
     // Delete trusted user
-    const handleDeleteTrustedUser = () => {
+    const handleDeleteUser = () => {
         // Text based on user type
         const title = userType === "trusted" ? "Remove Trusted User"
             : "Remove Protected User";
@@ -208,7 +208,7 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
                             <CustomButton
                                 title={"Remove user"}
                                 isDanger={true}
-                                onPress={handleDeleteTrustedUser}
+                                onPress={handleDeleteUser}
                             />
                             {/* Change nickname btn */}
                             <CustomButton
