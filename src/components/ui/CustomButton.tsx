@@ -4,9 +4,10 @@ import {useTheme} from "@/src/context/ModeContext";
 interface CustomButtonProps extends TouchableOpacityProps {
     title: string;
     variant?: 'solid' | 'outline' | 'text';
+    isDanger?: boolean;
 }
 
-export function CustomButton({style, title, variant = 'solid',  ...rest}: CustomButtonProps) {
+export function CustomButton({style, title, variant = 'solid', isDanger = false,  ...rest}: CustomButtonProps) {
     const theme = useTheme();
 
     return (
@@ -17,8 +18,8 @@ export function CustomButton({style, title, variant = 'solid',  ...rest}: Custom
                 styles.baseButton,
                 // solid
                 variant === 'solid' && {
-                    backgroundColor: theme.primaryButton,
-                    shadowColor: theme.primaryButton,
+                    backgroundColor: isDanger ? theme.danger : theme.primaryButton,
+                    shadowColor: isDanger ? theme.danger : theme.primaryButton,
                     elevation: 4,
                     shadowOffset: {width: 0, height: 4},
                     shadowOpacity: 0.25,
@@ -29,7 +30,7 @@ export function CustomButton({style, title, variant = 'solid',  ...rest}: Custom
                 variant === 'outline' && {
                     backgroundColor: 'transparent',
                     borderWidth: 1.5,
-                    borderColor: theme.tint,
+                    borderColor: isDanger ? theme.danger : theme.tint,
                 },
 
                 // text
@@ -42,7 +43,7 @@ export function CustomButton({style, title, variant = 'solid',  ...rest}: Custom
         >
             <Text style={[
                 styles.text,
-                {color: variant === 'solid' ? theme.primaryButtonText : theme.tint}
+                {color: variant === 'solid' ? theme.primaryButtonText : (isDanger ? theme.danger : theme.tint)}
             ]}>
                 {title}
             </Text>
