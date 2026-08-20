@@ -10,6 +10,7 @@ import {notificationService} from "@/src/api/service/notification";
 import {useTheme} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import ManageNotificationSheet from "@/src/components/dashboard/trusted-user/notifications/ManageNotificationSheet";
 
 export default function TrustedUserDashboard() {
     const theme = useTheme();
@@ -24,8 +25,14 @@ export default function TrustedUserDashboard() {
 
     // Modals
     const [isManageUserVisible, setIsManageUserVisible] = useState(false);
+    const [isManageNotificationVisible, setIsManageNotificationVisible] = useState(false);
 
+    // IDs
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+    const [selectedNotificationId, setSelectedNotificationId] = useState<number | null>(null);
+
+    // States
+    const [selectedNotificationIsRead, setSelectedNotificationIsRead] = useState(false);
 
 
     const fetchDashboardData = async (isRefresh = false) => {
@@ -105,7 +112,14 @@ export default function TrustedUserDashboard() {
                         )
                     }
                 >
-                    <NotificationList notifications={notifications}/>
+                    <NotificationList
+                        notifications={notifications}
+                        onManage={(id, isRead) => {
+                            setIsManageNotificationVisible(true);
+                            setSelectedNotificationId(id);
+                            setSelectedNotificationIsRead(isRead);
+                        }}
+                    />
                 </DashboardSection>
                 <DashboardSection title={"Protected users"}>
                     <ProtectedUserList
@@ -119,6 +133,17 @@ export default function TrustedUserDashboard() {
             </ScrollView>
 
             {/* Modals */}
+            <ManageNotificationSheet
+                isVisible={isManageNotificationVisible}
+                notificationId={selectedNotificationId}
+                isRead={selectedNotificationIsRead}
+                onClose={() => {
+                    setIsManageNotificationVisible(false);
+                    setSelectedNotificationId(null);
+                }}
+                onSuccess={() => fetchDashboardData(true)}
+            />
+
             <ManageUserSheet
                 isVisible={isManageUserVisible}
                 userId={selectedUserId}

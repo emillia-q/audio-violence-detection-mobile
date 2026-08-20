@@ -15,6 +15,7 @@ import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/A
 import Toast from "react-native-toast-message";
 import {useTheme} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
+import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
 
 export default function UserDashboard() {
     const theme = useTheme();
@@ -31,8 +32,14 @@ export default function UserDashboard() {
     // Modals
     const [isAddUserVisible, setIsAddUserVisible] = useState(false);
     const [isManageUserVisible, setIsManageUserVisible] = useState(false);
+    const [isManageAlertVisible, setIsManageAlertVisible] = useState(false);
 
+    // IDs
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
+    const [selectedAlertId, setSelectedAlertId] = useState<number | null>(null);
+
+    // States
+    const [selectedAlertIsRead, setSelectedAlertIsRead] = useState(false);
 
     // Fetch api data
     const fetchDashboardData = async (isRefresh = false) => {
@@ -189,7 +196,14 @@ export default function UserDashboard() {
                         )
                     }
                 >
-                    <AlertList alerts={alerts}/>
+                    <AlertList
+                        alerts={alerts}
+                        onManage={(id, isRead) => {
+                            setSelectedAlertId(id);
+                            setSelectedAlertIsRead(isRead)
+                            setIsManageAlertVisible(true);
+                        }}
+                    />
                 </DashboardSection>
             </ScrollView>
 
@@ -207,6 +221,17 @@ export default function UserDashboard() {
                 onClose={() => {
                     setIsManageUserVisible(false);
                     setSelectedUserId(null);
+                }}
+                onSuccess={() => fetchDashboardData(true)}
+            />
+
+            <ManageAlertSheet
+                isVisible={isManageAlertVisible}
+                alertId={selectedAlertId}
+                isRead={selectedAlertIsRead}
+                onClose={() => {
+                    setIsManageAlertVisible(false);
+                    setSelectedAlertId(null);
                 }}
                 onSuccess={() => fetchDashboardData(true)}
             />

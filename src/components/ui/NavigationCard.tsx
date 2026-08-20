@@ -1,15 +1,17 @@
 import {StyleProp, StyleSheet, Text, TouchableOpacity, View, ViewStyle} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
+import {Ionicons} from "@expo/vector-icons";
 
 interface NavigationCardProps {
     title: string;
     subtitle?: string;
     isRead?: boolean;
     onPress: () => void;
+    onMorePress?: () => void;
     style?: StyleProp<ViewStyle>;
 }
 
-export default function NavigationCard({title, subtitle, isRead, onPress, style}: NavigationCardProps) {
+export default function NavigationCard({title, subtitle, isRead, onPress, onMorePress, style}: NavigationCardProps) {
     const theme = useTheme();
 
     return (
@@ -55,16 +57,19 @@ export default function NavigationCard({title, subtitle, isRead, onPress, style}
                 )}
             </View>
 
-            <Text
-                style={[
-                    styles.chevronIcon,
-                    {
-                        color: theme.muted
-                    }
-                ]}
-            >
-                ›
-            </Text>
+            {onMorePress ? (
+                <TouchableOpacity
+                    style={styles.moreButton}
+                    onPress={onMorePress}
+                    hitSlop={{top: 10, bottom: 10, left: 10, right: 10}} // Enlarges the click area
+                >
+                    <Ionicons name={"ellipsis-vertical"} size={20} color={theme.muted}/>
+                </TouchableOpacity>
+            ) : (
+                <View style={styles.chevronIcon}>
+                    <Ionicons name="chevron-forward" size={20} color={theme.muted} />
+                </View>
+            )}
         </TouchableOpacity>
     );
 }
@@ -103,7 +108,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#ef4444',
     },
     chevronIcon: {
-        fontSize: 24,
         paddingLeft: 8,
+    },
+    moreButton: {
+        paddingLeft: 16,
+        paddingVertical: 4,
     },
 });
