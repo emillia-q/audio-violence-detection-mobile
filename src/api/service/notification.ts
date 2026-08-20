@@ -12,5 +12,9 @@ export const notificationService = {
             return [];
 
         return response.data;
+    },
+
+    toggleNotificationStatus: async (id: number): Promise<void> => {
+        await apiClient.patch(`${PATH}/${id}/toggle-status`);
     }
 };
