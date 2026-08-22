@@ -26,34 +26,42 @@ export default function BottomSheet({isVisible, onClose, children}: BottomSheetP
             transparent={true}
             onRequestClose={onClose}
         >
-            {/* Background - click closes the modal and hides the keyboard */}
-            <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); onClose();}}>
-                <View style={styles.overlay}/>
-            </TouchableWithoutFeedback>
+            <View style={styles.modalContainer}>
+                {/* Background - click closes the modal and hides the keyboard */}
+                <TouchableWithoutFeedback onPress={() => {Keyboard.dismiss(); onClose();}}>
+                    <View style={styles.overlay}/>
+                </TouchableWithoutFeedback>
 
-            {/* Bottom sheet */}
-            <KeyboardAvoidingView
-                behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-                style={[styles.sheetContainer, {backgroundColor: theme.background}]}
-            >
+                <KeyboardAvoidingView
+                    behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+                    style={styles.keyboardContainer}
+                >
+                    <View style={[styles.sheetContainer, {backgroundColor: theme.background}]}>
 
-                {/* Drag indicator */}
-                <View style={[styles.dragIndicator, {backgroundColor: theme.border}]}/>
+                    {/* Drag indicator */}
+                    <View style={[styles.dragIndicator, {backgroundColor: theme.border}]}/>
 
-                {children}
-            </KeyboardAvoidingView>
+                    {children}
+                    </View>
+                </KeyboardAvoidingView>
+            </View>
         </Modal>
     );
 }
 
 const styles = StyleSheet.create({
     overlay: {
-        flex: 1,
+        ...StyleSheet.absoluteFillObject,
         backgroundColor: 'rgba(0, 0, 0, 0.6)', // Dark half transparent bg
     },
+    modalContainer: {
+        flex: 1,
+    },
+    keyboardContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
     sheetContainer: {
-        position: 'absolute',
-        bottom: 0,
         width: '100%',
         borderTopLeftRadius: 24,
         borderTopRightRadius: 24,
