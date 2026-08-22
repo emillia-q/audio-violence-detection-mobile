@@ -16,9 +16,11 @@ import Toast from "react-native-toast-message";
 import {useTheme} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
+import {useRouter} from "expo-router";
 
 export default function UserDashboard() {
     const theme = useTheme();
+    const router = useRouter();
 
     // Load/refresh
     const [isLoading, setIsLoading] = useState(true);
@@ -156,12 +158,15 @@ export default function UserDashboard() {
                             <CustomButton
                                 title={"+ Add device"}
                                 variant={"text"}
-                                onPress={() => console.log('Add device')}
+                                onPress={() => router.push('/add-device')}
                             />
                         )
                     }
                 >
-                    <DeviceList devices={devices}/>
+                    <DeviceList
+                        devices={devices}
+                        onAddDevice={() => router.push('/add-device')}
+                    />
                 </DashboardSection>
                 <DashboardSection
                     title={"Trusted users"}
