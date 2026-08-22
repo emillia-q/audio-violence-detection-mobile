@@ -30,15 +30,16 @@ function RootLayoutNav() {
         if (loading)
             return;
 
-        // Check if the user is at login section
+        // Route groups do not appear in the URL, but they appear in segments
         const inAuthGroup = segments[0] === '(auth)';
+        const inMainGroup = segments[0] === '(main)';
 
-        // If user has token -> redirect to his home screen and if not redirect to login screen
+        // Keep the visible route in sync with the restored auth state
         if (!token && !inAuthGroup)
             router.replace('/(auth)/login');
-        else if (token && inAuthGroup)
+        else if (token && !inMainGroup)
             router.replace('/(main)');
-    }, [token, loading, segments]);
+    }, [token, loading, segments, router]);
 
     return (
         <ThemeProvider value={navigationTheme}>
