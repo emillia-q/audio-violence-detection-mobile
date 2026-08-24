@@ -74,6 +74,7 @@ export default function AddDeviceScreen() {
                 <ManualDeviceForm
                     onSubmit={handlePairDevice}
                     onSwitchToScanner={() => setIsManualMode(false)}
+                    onCancel={() => router.back()}
                 />
             ) : (
                 <DeviceScanner

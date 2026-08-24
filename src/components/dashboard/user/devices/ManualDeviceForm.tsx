@@ -20,9 +20,10 @@ type FormValues = z.infer<typeof formSchema>;
 interface ManualDeviceFormProps {
     onSubmit: (data: DeviceCredentialsRequest) => void;
     onSwitchToScanner: () => void;
+    onCancel: () => void;
 }
 
-export default function ManualDeviceForm({onSubmit, onSwitchToScanner}: ManualDeviceFormProps) {
+export default function ManualDeviceForm({onSubmit, onSwitchToScanner, onCancel}: ManualDeviceFormProps) {
     const theme = useTheme();
 
     const {control, handleSubmit} = useForm<FormValues>({
@@ -91,6 +92,12 @@ export default function ManualDeviceForm({onSubmit, onSwitchToScanner}: ManualDe
                     title={"Back to Scanner"}
                     variant={"text"}
                     onPress={onSwitchToScanner}
+                />
+                <CustomButton
+                    title={"Cancel"}
+                    variant={"text"}
+                    isDanger={true}
+                    onPress={onCancel}
                 />
             </View>
         </View>
