@@ -19,6 +19,8 @@ export default function AddDeviceScreen() {
         if (isPairing)
             return;
 
+        setIsPairing(true);
+
         try {
             await deviceService.pairDevice({macAddress, deviceSecret});
 
