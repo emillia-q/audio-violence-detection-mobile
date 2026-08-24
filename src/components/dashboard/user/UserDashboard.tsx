@@ -1,5 +1,5 @@
 import {ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
-import {useEffect, useState} from "react";
+import {useCallback, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
 import DeviceList from "@/src/components/dashboard/user/devices/DeviceList";
@@ -16,7 +16,7 @@ import Toast from "react-native-toast-message";
 import {useTheme} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
-import {useRouter} from "expo-router";
+import {useFocusEffect, useRouter} from "expo-router";
 
 export default function UserDashboard() {
     const theme = useTheme();
@@ -89,9 +89,11 @@ export default function UserDashboard() {
         else
             setIsLoading(false);
     };
-    useEffect(() => {
-        fetchDashboardData();
-    }, []);
+    useFocusEffect(
+        useCallback(() => {
+            fetchDashboardData();
+        }, [])
+    );
 
     // Add new trusted user modal
     const handleAddTrustedUser = async (email: string, nickname: string) => {
