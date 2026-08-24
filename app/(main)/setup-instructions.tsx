@@ -4,6 +4,14 @@ import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 
+const SETUP_STEPS = [
+    "Turn on your audio device.",
+    "Open phone settings and connect to the device's Wi-Fi network.",
+    "A setup page will open automatically.",
+    "Enter your home Wi-Fi details.",
+    "The device will restart and activate."
+];
+
 export default function SetupInstructionsScreen() {
     const {id, macAddress} = useLocalSearchParams();
     const router = useRouter();
