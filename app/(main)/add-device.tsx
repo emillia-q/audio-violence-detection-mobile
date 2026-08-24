@@ -42,7 +42,7 @@ export default function AddDeviceScreen() {
                     text1: 'Device not found',
                     text2: 'Invalid MAC Address'
                 });
-            } else if (status === 401) {
+            } else if (status === 400) {
                 Toast.show({
                     type: 'error',
                     text1: 'Invalid device credentials'
