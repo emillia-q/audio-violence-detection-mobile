@@ -24,15 +24,21 @@ export default function AddDeviceScreen() {
         setIsPairing(true);
 
         try {
-            await deviceService.pairDevice(data);
+            const response = await deviceService.pairDevice(data);
 
             Toast.show({
                 type: 'success',
                 text1: 'Device paired successfully'
             });
 
-            // Back to dashboard
-            router.back();
+            // Display next setup info
+            router.replace({
+                pathname: '/setup-instructions',
+                params: {
+                    id: response.id,
+                    macAddress: response.macAddress
+                }
+            });
         } catch (error: any) {
             const status = error?.response?.status;
 
