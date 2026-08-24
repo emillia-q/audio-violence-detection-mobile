@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
         position: 'absolute',
         top: 40,
         left: 20,
-        zIndex: 10,
     },
     scanFrame: {
         width: 250,
