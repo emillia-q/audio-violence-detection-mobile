@@ -1,7 +1,6 @@
 import {SafeAreaView} from "react-native-safe-area-context";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet} from "react-native";
 import {useRouter} from "expo-router";
-import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useTheme} from "@/src/context/ModeContext";
 import {useState} from "react";
 import {deviceService} from "@/src/api/service/device";
@@ -69,7 +68,7 @@ export default function AddDeviceScreen() {
             {isManualMode ? (
                 <ManualDeviceForm
                     onSubmit={handlePairDevice}
-                    onSwitchToScanner={() => console.log("scanner")}
+                    onSwitchToScanner={() => setIsManualMode(false)}
                 />
             ) : (
                 <DeviceScanner
