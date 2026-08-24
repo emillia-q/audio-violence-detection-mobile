@@ -8,12 +8,14 @@ import {deviceService} from "@/src/api/service/device";
 import Toast from "react-native-toast-message";
 import DeviceScanner from "@/src/components/dashboard/user/devices/DeviceScanner";
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
+import ManualDeviceForm from "@/src/components/dashboard/user/devices/ManualDeviceForm";
 
 export default function AddDeviceScreen() {
     const router = useRouter();
     const theme = useTheme();
 
     const [isPairing, setIsPairing] = useState(false);
+    const [isManualMode, setIsManualMode] = useState(false);
 
     const handlePairDevice = async (data: DeviceCredentialsRequest) => {
         // Double scan protection
@@ -64,10 +66,17 @@ export default function AddDeviceScreen() {
 
     return (
         <SafeAreaView style={[styles.safeArea, {backgroundColor: theme.background}]}>
+            {isManualMode ? (
+                <ManualDeviceForm
+                    onSubmit={handlePairDevice}
+                    onSwitchToScanner={() => console.log("scanner")}
+                />
+            ) : (
                 <DeviceScanner
                     onScan={handlePairDevice}
-                    onSwitchToManual={() => console.log("manual")}
+                    onSwitchToManual={() => setIsManualMode(true)}
                 />
+            )}
         </SafeAreaView>
     );
 }
