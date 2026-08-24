@@ -1,6 +1,6 @@
 import {useTheme} from "@/src/context/ModeContext";
 import {CameraView, useCameraPermissions} from "expo-camera";
-import {StyleSheet, Text, View} from "react-native";
+import {Alert, StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 
 interface DeviceScannerProps {
@@ -39,10 +39,26 @@ export default function DeviceScanner({onScan, onSwitchToManual}: DeviceScannerP
         );
     }
 
+    const handleScanned = ({data}: {data: string}) => {
+        try {
+            // Convert QR text to JSON
+            const parsed = JSON.parse(data);
+
+            if (parsed.macAddress && parsed.deviceSecret)
+                onScan(parsed.macAddress, parsed.deviceSecret);
+        } catch (error) {
+            Alert.alert(
+                "Invalid QR code format",
+                "Invalid QR code format"
+            );
+        }
+    };
+
     return (
         <View style={styles.container}>
             <CameraView
                 style={styles.camera}
+                onBarcodeScanned={handleScanned}
                 barcodeScannerSettings={{
                     barcodeTypes: ["qr"],
                 }}
