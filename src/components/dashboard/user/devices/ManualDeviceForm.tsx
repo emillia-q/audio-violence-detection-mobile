@@ -1,7 +1,9 @@
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 import {useTheme} from "@/src/context/ModeContext";
-import {StyleSheet} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {z} from "zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 const formSchema = z.object({
     macAddress: z.string()
@@ -20,7 +22,17 @@ interface ManualDeviceFormProps {
 export default function ManualDeviceForm({onSubmit, onSwitchToScanner}: ManualDeviceFormProps) {
     const theme = useTheme();
 
+    const {control, handleSubmit} = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        mode: 'onTouched',
+        defaultValues: {macAddress: "", deviceSecret: ""}
+    });
 
+    return (
+        <View style={[styles.container, {backgroundColor: theme.background}]}>
+
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
