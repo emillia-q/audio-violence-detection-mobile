@@ -1,7 +1,7 @@
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {apiClient} from "@/src/api/client";
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
-import {DeviceDetailsResponse} from "@/src/api/dto/request/DeviceDetailsResponse";
+import {DeviceDetailsResponse} from "@/src/api/dto/response/DeviceDetailsResponse";
 
 const PATH = '/devices'
 
