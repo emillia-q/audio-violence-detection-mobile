@@ -55,7 +55,7 @@ export default function DeviceScanner({onScan, onSwitchToManual, onCancel}: Devi
         } catch (error) {
             Alert.alert(
                 "Invalid QR code format",
-                "Invalid QR code format"
+                "Please scan a valid device QR code"
             );
         }
     };

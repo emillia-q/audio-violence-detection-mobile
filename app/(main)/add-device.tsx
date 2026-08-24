@@ -50,7 +50,8 @@ export default function AddDeviceScreen() {
             } else if (status === 400) {
                 Toast.show({
                     type: 'error',
-                    text1: 'Invalid device credentials'
+                    text1: 'Invalid device secret key',
+                    text2: 'Please check for typos'
                 });
             } else if (status === 409) {
                 Toast.show({
@@ -60,7 +61,8 @@ export default function AddDeviceScreen() {
             } else {
                 Toast.show({
                     type: 'error',
-                    text1: 'Failed to pair device'
+                    text1: 'Failed to pair device',
+                    text2: 'Please try again later'
                 });
             }
         } finally {

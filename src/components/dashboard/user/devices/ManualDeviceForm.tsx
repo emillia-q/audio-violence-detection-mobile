@@ -94,6 +94,7 @@ export default function ManualDeviceForm({onSubmit, onSwitchToScanner, onCancel}
                     onPress={onSwitchToScanner}
                 />
                 <CustomButton
+                    style={{marginTop: 16}}
                     title={"Cancel"}
                     variant={"text"}
                     isDanger={true}
