@@ -1,5 +1,5 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {useCameraPermissions} from "expo-camera";
+import {CameraView, useCameraPermissions} from "expo-camera";
 import {StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 
@@ -38,6 +38,27 @@ export default function DeviceScanner({onScan, onSwitchToManual}: DeviceScannerP
             </View>
         );
     }
+
+    return (
+        <View style={styles.container}>
+            <CameraView
+                style={styles.camera}
+                barcodeScannerSettings={{
+                    barcodeTypes: ["qr"],
+                }}
+            >
+                <View style={styles.overlay}>
+                    <View style={styles.scanFrame}/>
+                    <Text style={styles.scanText}>Scan the QR code on your device</Text>
+                    <CustomButton
+                        title="Cannot scan? Enter manually"
+                        variant="text"
+                        onPress={onSwitchToManual}
+                    />
+                </View>
+            </CameraView>
+        </View>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -51,5 +72,33 @@ const styles = StyleSheet.create({
     message: {
         textAlign: 'center',
         fontSize: 16,
+    },
+    container: {
+        flex: 1,
+    },
+    camera: {
+        flex: 1,
+    },
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 24
+    },
+    scanFrame: {
+        width: 250,
+        height: 250,
+        borderWidth: 2,
+        borderColor: '#fff',
+        backgroundColor: 'transparent',
+        marginBottom: 24,
+        borderRadius: 16
+    },
+    scanText: {
+        color: '#fff',
+        fontSize: 16,
+        marginBottom: 40,
+        fontWeight: '600'
     },
 });
