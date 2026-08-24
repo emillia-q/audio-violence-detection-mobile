@@ -1,5 +1,7 @@
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {apiClient} from "@/src/api/client";
+import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
+import {DeviceDetailsResponse} from "@/src/api/dto/request/DeviceDetailsResponse";
 
 const PATH = '/devices'
 
@@ -11,6 +13,11 @@ export const deviceService = {
         if (response.status === 204)
             return [];
 
+        return response.data;
+    },
+
+    pairDevice: async (data: DeviceCredentialsRequest): Promise<DeviceDetailsResponse> => {
+        const response = await apiClient.patch(`${PATH}/pair-device`);
         return response.data;
     }
 };
