@@ -27,11 +27,16 @@ export default function SetupInstructionsScreen() {
 
                 {/* Next steps */}
                 <View style={[styles.card, {backgroundColor: theme.surface, borderColor: theme.border}]}>
-                    <Text style={[styles.step, {color: theme.text}]}>1. Turn on your audio device.</Text>
-                    <Text style={[styles.step, {color: theme.text}]}>2. Open phone settings and connect to the device's Wi-Fi network.</Text>
-                    <Text style={[styles.step, {color: theme.text}]}>3. A setup page will open automatically.</Text>
-                    <Text style={[styles.step, {color: theme.text}]}>4. Enter your home Wi-Fi details.</Text>
-                    <Text style={[styles.step, {color: theme.text}]}>5. The device will restart and activate.</Text>
+                    {SETUP_STEPS.map((step, index) => (
+                        <View key={index} style={styles.stepRow}>
+                            <Text style={[styles.stepNumber, {color: theme.text}]}>
+                                {index+1}.
+                            </Text>
+                            <Text style={[styles.stepText, {color: theme.text}]}>
+                                {step}
+                            </Text>
+                        </View>
+                    ))}
                 </View>
 
                 {/* Button */}
@@ -70,8 +75,20 @@ const styles = StyleSheet.create({
         gap: 16,
         marginBottom: 32,
     },
-    step: {
+    stepRow: {
+        flexDirection: 'row',
+        alignItems: "flex-start",
+    },
+    stepNumber: {
+        fontSize: 16,
+        fontWeight: '700',
+        width: 24,
+        marginTop: 2,
+    },
+    stepText: {
         fontSize: 16,
         fontWeight: '500',
+        lineHeight: 24,
+        flex: 1, // Text takes remaining place
     },
 });
