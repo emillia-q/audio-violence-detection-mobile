@@ -17,7 +17,7 @@ export const deviceService = {
     },
 
     pairDevice: async (data: DeviceCredentialsRequest): Promise<DeviceDetailsResponse> => {
-        const response = await apiClient.patch(`${PATH}/pair-device`);
+        const response = await apiClient.patch(`${PATH}/pair-device`, data);
         return response.data;
     }
 };
