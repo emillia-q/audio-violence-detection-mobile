@@ -6,7 +6,6 @@ import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomInput} from "@/src/components/ui/CustomInput";
-import {Colors} from "@/src/constants/theme";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 
 const formSchema = z.object({
