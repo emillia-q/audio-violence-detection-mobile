@@ -2,9 +2,10 @@ import {useTheme} from "@/src/context/ModeContext";
 import {CameraView, useCameraPermissions} from "expo-camera";
 import {Alert, StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 
 interface DeviceScannerProps {
-    onScan: (macAddress: string, deviceSecret: string) => void;
+    onScan: (data: DeviceCredentialsRequest) => void;
     onSwitchToManual: () => void;
 }
 
@@ -45,7 +46,10 @@ export default function DeviceScanner({onScan, onSwitchToManual}: DeviceScannerP
             const parsed = JSON.parse(data);
 
             if (parsed.macAddress && parsed.deviceSecret)
-                onScan(parsed.macAddress, parsed.deviceSecret);
+                onScan({
+                    macAddress: parsed.macAddress,
+                    deviceSecret: parsed.deviceSecret
+                });
         } catch (error) {
             Alert.alert(
                 "Invalid QR code format",
