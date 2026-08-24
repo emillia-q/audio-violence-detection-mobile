@@ -35,7 +35,6 @@ export default function AddDeviceScreen() {
             router.replace({
                 pathname: '/setup-instructions',
                 params: {
-                    id: response.id,
                     macAddress: response.macAddress
                 }
             });

@@ -13,7 +13,7 @@ const SETUP_STEPS = [
 ];
 
 export default function SetupInstructionsScreen() {
-    const {id, macAddress} = useLocalSearchParams();
+    const {macAddress} = useLocalSearchParams();
     const router = useRouter();
     const theme = useTheme();
 
