@@ -3,13 +3,15 @@ import {CameraView, useCameraPermissions} from "expo-camera";
 import {Alert, StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
+import {Ionicons} from "@expo/vector-icons";
 
 interface DeviceScannerProps {
     onScan: (data: DeviceCredentialsRequest) => void;
     onSwitchToManual: () => void;
+    onCancel: () => void;
 }
 
-export default function DeviceScanner({onScan, onSwitchToManual}: DeviceScannerProps) {
+export default function DeviceScanner({onScan, onSwitchToManual, onCancel}: DeviceScannerProps) {
     const theme = useTheme();
     const [permission, requestPermission] = useCameraPermissions();
 
@@ -68,6 +70,12 @@ export default function DeviceScanner({onScan, onSwitchToManual}: DeviceScannerP
                 }}
             >
                 <View style={styles.overlay}>
+
+                    {/* Cancel button */}
+                    <View style={styles.header}>
+                        <Ionicons name={"close"} size={36} color={theme.text} onPress={onCancel} />
+                    </View>
+
                     <View style={styles.scanFrame}/>
                     <Text style={styles.scanText}>Scan the QR code on your device</Text>
                     <CustomButton
@@ -105,6 +113,12 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 24
+    },
+    header: {
+        position: 'absolute',
+        top: 40,
+        left: 20,
+        zIndex: 10,
     },
     scanFrame: {
         width: 250,
