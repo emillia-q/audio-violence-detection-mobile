@@ -5,9 +5,10 @@ import EmptyListView from "@/src/components/ui/EmptyListView";
 
 interface DeviceListProps {
     devices: DeviceListResponse[];
+    onAddDevice: () => void;
 }
 
-export default function DeviceList({devices}: DeviceListProps) {
+export default function DeviceList({devices, onAddDevice}: DeviceListProps) {
     // 204 - empty list
     if (devices.length === 0) {
         return (
@@ -15,7 +16,7 @@ export default function DeviceList({devices}: DeviceListProps) {
                 title={'No devices'}
                 iconName={"hardware-chip-outline"}
                 buttonTitle={"+ Add device"}
-                onButtonPress={() => console.log('Add device')}
+                onButtonPress={onAddDevice}
             />
         );
     }
