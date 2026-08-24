@@ -7,6 +7,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {Colors} from "@/src/constants/theme";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 const formSchema = z.object({
     macAddress: z.string()
@@ -30,6 +31,13 @@ export default function ManualDeviceForm({onSubmit, onSwitchToScanner}: ManualDe
         mode: 'onTouched',
         defaultValues: {macAddress: "", deviceSecret: ""}
     });
+
+    const onFormSubmit = (data: FormValues) => {
+        onSubmit({
+            macAddress: data.macAddress,
+            deviceSecret: data.deviceSecret
+        });
+    };
 
     return (
         <View style={[styles.container, {backgroundColor: theme.background}]}>
@@ -73,6 +81,19 @@ export default function ManualDeviceForm({onSubmit, onSwitchToScanner}: ManualDe
                     />
                 )}
             />
+
+            {/* Buttons */}
+            <View style={styles.buttonContainer}>
+                <CustomButton
+                    title={"Pair Device"}
+                    onPress={handleSubmit(onFormSubmit)}
+                />
+                <CustomButton
+                    title={"Back to Scanner"}
+                    variant={"text"}
+                    onPress={onSwitchToScanner}
+                />
+            </View>
         </View>
     );
 }
@@ -87,5 +108,9 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         marginBottom: 20,
+    },
+    buttonContainer: {
+        gap: 16,
+        marginTop: 32,
     },
 });
