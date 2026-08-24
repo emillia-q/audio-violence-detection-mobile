@@ -7,6 +7,7 @@ import {useState} from "react";
 import {deviceService} from "@/src/api/service/device";
 import Toast from "react-native-toast-message";
 import DeviceScanner from "@/src/components/dashboard/user/devices/DeviceScanner";
+import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 
 export default function AddDeviceScreen() {
     const router = useRouter();
@@ -14,7 +15,7 @@ export default function AddDeviceScreen() {
 
     const [isPairing, setIsPairing] = useState(false);
 
-    const handlePairDevice = async (macAddress: string, deviceSecret: string) => {
+    const handlePairDevice = async (data: DeviceCredentialsRequest) => {
         // Double scan protection
         if (isPairing)
             return;
@@ -22,7 +23,7 @@ export default function AddDeviceScreen() {
         setIsPairing(true);
 
         try {
-            await deviceService.pairDevice({macAddress, deviceSecret});
+            await deviceService.pairDevice(data);
 
             Toast.show({
                 type: 'success',
