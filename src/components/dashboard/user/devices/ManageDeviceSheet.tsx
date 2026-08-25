@@ -10,6 +10,7 @@ import Toast from "react-native-toast-message";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomInput} from "@/src/components/ui/CustomInput";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -101,6 +102,18 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                                 />
                             )}
                         />
+
+                        {/* Buttons */}
+                        <View style={styles.buttonRow}>
+                            <CustomButton
+                                title={"Delete device"}
+                                isDanger={true}
+                            />
+                            <CustomButton
+                                title={"Save"}
+                                disabled={!isDirty || isSubmitting}
+                            />
+                        </View>
                     </>
                 )}
             </View>
@@ -122,4 +135,10 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginBottom: 8,
     },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 16,
+    }
 });
