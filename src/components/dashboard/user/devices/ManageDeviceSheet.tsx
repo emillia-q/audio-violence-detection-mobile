@@ -3,6 +3,10 @@ import {useTheme} from "@/src/context/ModeContext";
 import {useState} from "react";
 import {DeviceDetailsResponse} from "@/src/api/dto/response/DeviceDetailsResponse";
 import {z} from "zod";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import {deviceService} from "@/src/api/service/device";
+import Toast from "react-native-toast-message";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -27,6 +31,40 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
 
     // Api data
     const [deviceDetails, setDeviceDetails] = useState<DeviceDetailsResponse | null>(null);
+
+    // Form
+    const {control, handleSubmit, reset, formState: {isDirty, isSubmitting}} = useForm<FormValues>({
+        resolver: zodResolver(formSchema),
+        mode: "onTouched",
+        defaultValues: {deviceName: ""}
+    });
+
+    // Fetch api data
+    const fetchDeviceDetails = async (id: number) => {
+        setIsLoading(true);
+        try {
+            const data = await deviceService.getDeviceDetails(id);
+
+            setDeviceDetails(data);
+
+            // Set device name in input
+            reset({deviceName: data.name || ""});
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Device not found'
+                });
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Could not load device details'
+                });
+            }
+        }
+    };
 }
 
 const styles = StyleSheet.create({
