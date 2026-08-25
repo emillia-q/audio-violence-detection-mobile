@@ -16,6 +16,11 @@ export const deviceService = {
         return response.data;
     },
 
+    getDeviceDetails: async (id: number): Promise<DeviceDetailsResponse> => {
+        const response = await apiClient.get(`${PATH}/${id}`);
+        return response.data;
+    },
+
     pairDevice: async (data: DeviceCredentialsRequest): Promise<DeviceDetailsResponse> => {
         const response = await apiClient.patch(`${PATH}/pair-device`, data);
         return response.data;
