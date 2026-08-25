@@ -1,12 +1,15 @@
-import {StyleSheet} from "react-native";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
 import {useState} from "react";
 import {DeviceDetailsResponse} from "@/src/api/dto/response/DeviceDetailsResponse";
 import {z} from "zod";
-import {useForm} from "react-hook-form";
+import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {deviceService} from "@/src/api/service/device";
 import Toast from "react-native-toast-message";
+import BottomSheet from "@/src/components/ui/BottomSheet";
+import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
+import {CustomInput} from "@/src/components/ui/CustomInput";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -65,6 +68,44 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
             }
         }
     };
+
+    return (
+        <BottomSheet
+            isVisible={isVisible}
+            onClose={onClose}
+        >
+            <View style={styles.content}>
+                {isLoading || !deviceDetails ? (
+                    // When data is not ready
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator size={"large"} color={theme.tint}/>
+                    </View>
+                ) : (
+                    // Target form
+                    <>
+                        <Text style={[styles.title, {color: theme.text}]}>Manage Device</Text>
+
+                        {/* Device name */}
+                        <AboveInputLabel title={"Device name"}/>
+                        <Controller
+                            control={control}
+                            name={"deviceName"}
+                            render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                                <CustomInput
+                                    placeholder={"e.g. Room 1"}
+                                    placeholderTextColor={theme.placeholder}
+                                    value={value}
+                                    onChangeText={onChange}
+                                    onBlur={onBlur}
+                                    errorMessage={error?.message}
+                                />
+                            )}
+                        />
+                    </>
+                )}
+            </View>
+        </BottomSheet>
+    );
 }
 
 const styles = StyleSheet.create({
