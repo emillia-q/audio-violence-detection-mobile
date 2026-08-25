@@ -2,6 +2,7 @@ import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {apiClient} from "@/src/api/client";
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 import {DeviceDetailsResponse} from "@/src/api/dto/response/DeviceDetailsResponse";
+import {UpdateDeviceNameRequest} from "@/src/api/dto/request/UpdateDeviceNameRequest";
 
 const PATH = '/devices'
 
@@ -23,6 +24,11 @@ export const deviceService = {
 
     pairDevice: async (data: DeviceCredentialsRequest): Promise<DeviceDetailsResponse> => {
         const response = await apiClient.patch(`${PATH}/pair-device`, data);
+        return response.data;
+    },
+
+    updateDeviceName: async (id: number, data: UpdateDeviceNameRequest): Promise<DeviceDetailsResponse> => {
+        const response = await apiClient.patch(`${PATH}/${id}`, data);
         return response.data;
     }
 };
