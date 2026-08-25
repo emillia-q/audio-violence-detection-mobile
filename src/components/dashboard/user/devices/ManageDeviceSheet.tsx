@@ -67,6 +67,8 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                     text1: 'Could not load device details'
                 });
             }
+        } finally {
+            setIsLoading(false);
         }
     };
 
