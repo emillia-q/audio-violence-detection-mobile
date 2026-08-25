@@ -43,6 +43,40 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
         defaultValues: {deviceName: ""}
     });
 
+    // Device name change
+    const onValidSubmit = async (data: FormValues) => {
+        if (!deviceId)
+            return;
+
+        try {
+            await deviceService.updateDeviceName(deviceId, {
+                name: data.deviceName?.trim() || "",
+            });
+
+            Toast.show({
+                type: 'success',
+                text1: 'Device name updated'
+            });
+
+            onSuccess();
+            onClose();
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Device not found'
+                });
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Failed to update device name'
+                });
+            }
+        }
+    };
+
     // Fetch api data
     const fetchDeviceDetails = async (id: number) => {
         setIsLoading(true);
@@ -113,6 +147,7 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                             />
                             <CustomButton
                                 title={"Save"}
+                                onPress={handleSubmit(onValidSubmit)}
                                 disabled={!isDirty || isSubmitting}
                             />
                         </View>
