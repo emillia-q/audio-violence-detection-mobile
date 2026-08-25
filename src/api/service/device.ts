@@ -30,5 +30,9 @@ export const deviceService = {
     updateDeviceName: async (id: number, data: UpdateDeviceNameRequest): Promise<DeviceDetailsResponse> => {
         const response = await apiClient.patch(`${PATH}/${id}`, data);
         return response.data;
+    },
+
+    disconnectDevice: async (id: number): Promise<void> => {
+        await apiClient.delete(`${PATH}/${id}`);
     }
 };
