@@ -146,11 +146,21 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
 
             // Set nickname in input
             reset({nickname: data.customNickname || ""});
-        } catch (error) {
-            Toast.show({
-                type: 'error',
-                text1: 'Could not load user details'
-            });
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({
+                    type: 'error',
+                    text1: 'User not found'
+                });
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Could not load user details'
+                });
+            }
+
             onClose();
         } finally {
             setIsLoading(false);
@@ -160,9 +170,8 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
     useEffect(() => {
         if (isVisible && userId)
             fetchUserDetails(userId);
-        else {
+        else
             setUserDetails(null);
-        }
     }, [isVisible, userId]);
 
     return (

@@ -17,6 +17,7 @@ import {useTheme} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
 import {useFocusEffect, useRouter} from "expo-router";
+import ManageDeviceSheet from "@/src/components/dashboard/user/devices/ManageDeviceSheet";
 
 export default function UserDashboard() {
     const theme = useTheme();
@@ -35,10 +36,12 @@ export default function UserDashboard() {
     const [isAddUserVisible, setIsAddUserVisible] = useState(false);
     const [isManageUserVisible, setIsManageUserVisible] = useState(false);
     const [isManageAlertVisible, setIsManageAlertVisible] = useState(false);
+    const [isManageDeviceVisible, setIsManageDeviceVisible] = useState(false);
 
     // IDs
     const [selectedUserId, setSelectedUserId] = useState<number | null>(null);
     const [selectedAlertId, setSelectedAlertId] = useState<number | null>(null);
+    const [selectedDeviceId, setSelectedDeviceId] = useState<number | null>(null);
 
     // States
     const [selectedAlertIsRead, setSelectedAlertIsRead] = useState(false);
@@ -168,6 +171,10 @@ export default function UserDashboard() {
                     <DeviceList
                         devices={devices}
                         onAddDevice={() => router.push('/add-device')}
+                        onDevicePress={(id) => {
+                            setSelectedDeviceId(id);
+                            setIsManageDeviceVisible(true);
+                        }}
                     />
                 </DashboardSection>
                 <DashboardSection
@@ -215,6 +222,13 @@ export default function UserDashboard() {
             </ScrollView>
 
             {/* Modals */}
+            <ManageDeviceSheet
+                isVisible={isManageDeviceVisible}
+                deviceId={selectedDeviceId}
+                onClose={() => setIsManageDeviceVisible(false)}
+                onSuccess={() => fetchDashboardData(true)}
+            />
+
             <AddTrustedUserSheet
                 isVisible={isAddUserVisible}
                 onClose={() => setIsAddUserVisible(false)}
