@@ -13,6 +13,7 @@ import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useRouter} from "expo-router";
 import StatusBadge from "@/src/components/dashboard/shared/StatusBadge";
+import {Ionicons} from "@expo/vector-icons";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -207,6 +208,33 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                             />
                         </View>
 
+                        {/* SetUp info */}
+                        {!deviceDetails.isActivated && (
+                            <View style={[
+                                styles.setupBanner,
+                                {
+                                    backgroundColor: theme.warningBg,
+                                    borderColor: theme.warningBorder
+                                }
+                            ]}
+                            >
+                                <View style={styles.bannerHeader}>
+                                    <Ionicons name={"information-circle-outline"} size={24} color={theme.warning} />
+                                    <Text style={[styles.bannerTitle, {color: theme.text}]}>
+                                        Setup Required
+                                    </Text>
+                                </View>
+                                <Text style={[styles.bannerText, {color: theme.muted}]}>
+                                    This device needs to be activated before it can be used.
+                                </Text>
+                                <CustomButton
+                                    title={"View Setup Instructions"}
+                                    onPress={handleOpenSetUp}
+                                    variant={"outline"}
+                                />
+                            </View>
+                        )}
+
                         {/* Device name */}
                         <AboveInputLabel title={"Device name"}/>
                         <Controller
@@ -267,6 +295,26 @@ const styles = StyleSheet.create({
     macAddress: {
         fontSize: 16,
         marginBottom: 24,
+    },
+    setupBanner: {
+        borderWidth: 1,
+        borderRadius: 12,
+        padding: 16,
+        gap: 12,
+        marginBottom: 24,
+    },
+    bannerHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+    },
+    bannerTitle: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    bannerText: {
+        fontSize: 14,
+        lineHeight: 20,
     },
     buttonRow: {
         flexDirection: 'row',
