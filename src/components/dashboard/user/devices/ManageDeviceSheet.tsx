@@ -11,6 +11,7 @@ import BottomSheet from "@/src/components/ui/BottomSheet";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import {useRouter} from "expo-router";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -29,6 +30,7 @@ interface ManageDeviceSheetProps {
 
 export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSuccess}: ManageDeviceSheetProps) {
     const theme = useTheme();
+    const router = useRouter();
 
     // Load
     const [isLoading, setIsLoading] = useState(false);
@@ -42,6 +44,22 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
         mode: "onTouched",
         defaultValues: {deviceName: ""}
     });
+
+    const handleOpenSetUp = () => {
+        if (!deviceDetails)
+            return;
+
+        // First close bottom sheet
+        onClose();
+
+        // Then redirect
+        router.push({
+            pathname: '/setup-instructions',
+            params: {
+                macAddress: deviceDetails.macAddress
+            }
+        });
+    };
 
     // Device name change
     const onValidSubmit = async (data: FormValues) => {
