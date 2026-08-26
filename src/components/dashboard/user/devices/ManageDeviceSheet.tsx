@@ -174,6 +174,11 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                     <>
                         <Text style={[styles.title, {color: theme.text}]}>Manage Device</Text>
 
+                        {/* MAC address */}
+                        <Text style={[styles.deviceDetails, {color: theme.muted}]}>
+                            {deviceDetails.macAddress}
+                        </Text>
+
                         {/* Device name */}
                         <AboveInputLabel title={"Device name"}/>
                         <Controller
@@ -224,6 +229,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: '700',
         marginBottom: 8,
+    },
+    deviceDetails: {
+        fontSize: 16,
+        marginBottom: 24,
     },
     buttonRow: {
         flexDirection: 'row',
