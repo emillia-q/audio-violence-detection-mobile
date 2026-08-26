@@ -170,9 +170,8 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
     useEffect(() => {
         if (isVisible && userId)
             fetchUserDetails(userId);
-        else {
+        else
             setUserDetails(null);
-        }
     }, [isVisible, userId]);
 
     return (

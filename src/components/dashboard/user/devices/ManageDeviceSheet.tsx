@@ -1,6 +1,6 @@
 import {ActivityIndicator, Alert, StyleSheet, Text, View} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {DeviceDetailsResponse} from "@/src/api/dto/response/DeviceDetailsResponse";
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
@@ -150,6 +150,13 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
             setIsLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (isVisible && deviceId)
+            fetchDeviceDetails(deviceId);
+        else
+            setDeviceDetails(null);
+    }, [isVisible, deviceId]);
 
     return (
         <BottomSheet
