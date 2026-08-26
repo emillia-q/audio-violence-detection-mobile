@@ -1,20 +1,24 @@
 import {StyleSheet, Text, View} from "react-native";
+import {useTheme} from "@/src/context/ModeContext";
 
-type StatusType = 'online' | 'offline' | 'warning';
+type StatusType = 'online' | 'offline' | 'danger' | 'warning';
 
 interface StatusBadgeProps {
     status: StatusType;
     text: string;
 }
 
-// Defined once to avoid memory overhead
-const STATUS_COLORS: Record<StatusType, string> = {
-    online: '#10B981',
-    offline: '#64748B',
-    warning: '#EF4444',
-};
-
 export default function StatusBadge({status, text}: StatusBadgeProps) {
+    const theme = useTheme();
+
+    // Defined once to avoid memory overhead
+    const STATUS_COLORS: Record<StatusType, string> = {
+        online: theme.success,
+        offline: theme.disabled,
+        danger: theme.danger,
+        warning: theme.warning,
+    };
+
     // Set color based on status
     const color = STATUS_COLORS[status] ?? STATUS_COLORS.offline;
 
