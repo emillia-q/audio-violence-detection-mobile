@@ -1,4 +1,4 @@
-import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, Alert, StyleSheet, Text, View} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
 import {useState} from "react";
 import {DeviceDetailsResponse} from "@/src/api/dto/response/DeviceDetailsResponse";
@@ -77,6 +77,51 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
         }
     };
 
+    // Delete device
+    const handleDeleteDevice = async () => {
+        Alert.alert(
+            "Remove device",
+            "Are you sure you want to remove this device?",
+            [
+                {text: "Cancel", style: "cancel"},
+                {
+                    text: "Remove",
+                    style: "destructive",
+                    onPress: async () => {
+                        if (!deviceId)
+                            return;
+
+                        try {
+                            await deviceService.disconnectDevice(deviceId);
+
+                            Toast.show({
+                                type: "success",
+                                text1: "Device removed"
+                            });
+
+                            onSuccess();
+                            onClose();
+                        } catch (error: any) {
+                            const status = error?.response?.status;
+
+                            if (status === 404) {
+                                Toast.show({
+                                    type: 'error',
+                                    text1: 'Device not found'
+                                });
+                            } else {
+                                Toast.show({
+                                    type: 'error',
+                                    text1: 'Could not load device details'
+                                });
+                            }
+                        }
+                    }
+                }
+            ]
+        );
+    };
+
     // Fetch api data
     const fetchDeviceDetails = async (id: number) => {
         setIsLoading(true);
@@ -144,6 +189,7 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                             <CustomButton
                                 title={"Delete device"}
                                 isDanger={true}
+                                onPress={handleDeleteDevice}
                             />
                             <CustomButton
                                 title={"Save"}
