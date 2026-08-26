@@ -12,6 +12,7 @@ import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useRouter} from "expo-router";
+import StatusBadge from "@/src/components/dashboard/shared/StatusBadge";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -192,10 +193,19 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                     <>
                         <Text style={[styles.title, {color: theme.text}]}>Manage Device</Text>
 
-                        {/* MAC address */}
-                        <Text style={[styles.deviceDetails, {color: theme.muted}]}>
-                            {deviceDetails.macAddress}
-                        </Text>
+                        {/* Header row */}
+                        <View style={styles.headerRow}>
+                            {/* MAC address */}
+                            <Text style={[styles.macAddress, {color: theme.muted}]}>
+                                {deviceDetails.macAddress}
+                            </Text>
+
+                            {/* Device status */}
+                            <StatusBadge
+                                status={deviceDetails.isActivated ? "online" : "warning"}
+                                text={deviceDetails.isActivated ? "Activated" : "Action Required"}
+                            />
+                        </View>
 
                         {/* Device name */}
                         <AboveInputLabel title={"Device name"}/>
@@ -248,7 +258,13 @@ const styles = StyleSheet.create({
         fontWeight: '700',
         marginBottom: 8,
     },
-    deviceDetails: {
+    headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 8,
+    },
+    macAddress: {
         fontSize: 16,
         marginBottom: 24,
     },
