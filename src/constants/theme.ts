@@ -5,6 +5,8 @@ const textWhite = '#FFFFFF';
 const commonColors = {
   textActive: textWhite,
   danger: '#FB7185',
+  warningBg: 'rgba(251, 191, 36, 0.1)',
+  warningBorder: 'rgba(251, 191, 36, 0.3)',
 };
 
 export const Colors = {
