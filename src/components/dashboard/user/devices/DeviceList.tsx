@@ -6,9 +6,10 @@ import EmptyListView from "@/src/components/ui/EmptyListView";
 interface DeviceListProps {
     devices: DeviceListResponse[];
     onAddDevice: () => void;
+    onDevicePress: (id: number) => void;
 }
 
-export default function DeviceList({devices, onAddDevice}: DeviceListProps) {
+export default function DeviceList({devices, onAddDevice, onDevicePress}: DeviceListProps) {
     // 204 - empty list
     if (devices.length === 0) {
         return (
@@ -28,7 +29,7 @@ export default function DeviceList({devices, onAddDevice}: DeviceListProps) {
                 <NavigationCard
                     key={device.id}
                     title={device.name}
-                    onPress={() => console.log(`Device with id: ${device.id}`)}
+                    onPress={() => onDevicePress(device.id)}
                 />
             ))}
         </View>
