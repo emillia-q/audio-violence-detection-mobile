@@ -171,7 +171,10 @@ export default function UserDashboard() {
                     <DeviceList
                         devices={devices}
                         onAddDevice={() => router.push('/add-device')}
-                        onDevicePress={() => setIsManageDeviceVisible(true)}
+                        onDevicePress={(id) => {
+                            setSelectedDeviceId(id);
+                            setIsManageDeviceVisible(true);
+                        }}
                     />
                 </DashboardSection>
                 <DashboardSection
