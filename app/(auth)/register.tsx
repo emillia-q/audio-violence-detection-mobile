@@ -77,7 +77,7 @@ export default function Register() {
 
     return (
         <KeyboardAvoidingView
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
             style={styles.container}>
 
             <StatusBar barStyle="light-content" backgroundColor={Colors.default.background} />
