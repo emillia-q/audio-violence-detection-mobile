@@ -1,5 +1,6 @@
 import {useTheme} from "@/src/context/ModeContext";
 import {Modal, StyleSheet, Text, View} from "react-native";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 interface AlertModalProps {
     title: string;
@@ -38,6 +39,25 @@ export default function AlertModal({
 
                     {/* Message */}
                     <Text style={[styles.message, {color: theme.muted}]}>{message}</Text>
+
+                    {/* Buttons */}
+                    <View style={styles.buttonContainer}>
+
+                        {/* Cancel */}
+                        <CustomButton
+                            title={cancelText}
+                            variant={"text"}
+                            onPress={onCancel}
+                        />
+
+                        {/* Confirm */}
+                        <CustomButton
+                            title={confirmText}
+                            isDanger={true}
+                            variant={"text"}
+                            onPress={onConfirm}
+                        />
+                    </View>
                 </View>
             </View>
         </Modal>
@@ -71,5 +91,11 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
         marginBottom: 24,
+    },
+    buttonContainer: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        width: "100%",
+        paddingHorizontal: 20,
     }
 });
