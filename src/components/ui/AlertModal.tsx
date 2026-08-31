@@ -1,5 +1,5 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {Modal, StyleSheet, View} from "react-native";
+import {Modal, StyleSheet, Text, View} from "react-native";
 
 interface AlertModalProps {
     title: string;
@@ -30,7 +30,7 @@ export default function AlertModal({
         >
             <View style={styles.overlay}>
                 <View style={[styles.alertBox, {backgroundColor: theme.surfaceElevated}]}>
-
+                    <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
                 </View>
             </View>
         </Modal>
@@ -53,5 +53,11 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.1,
         shadowRadius: 10,
         elevation: 20,
+    },
+    title: {
+        fontSize: 20,
+        fontWeight: "bold",
+        marginBottom: 12,
+        textAlign: "center",
     }
 });
