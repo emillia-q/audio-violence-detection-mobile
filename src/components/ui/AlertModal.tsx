@@ -29,8 +29,15 @@ export default function AlertModal({
             animationType={"fade"}
         >
             <View style={styles.overlay}>
+
+                {/* Main container */}
                 <View style={[styles.alertBox, {backgroundColor: theme.surfaceElevated}]}>
+
+                    {/* Title */}
                     <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
+
+                    {/* Message */}
+                    <Text style={[styles.message, {color: theme.muted}]}>{message}</Text>
                 </View>
             </View>
         </Modal>
@@ -59,5 +66,10 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         marginBottom: 12,
         textAlign: "center",
+    },
+    message: {
+        fontSize: 16,
+        textAlign: "center",
+        marginBottom: 24,
     }
 });
