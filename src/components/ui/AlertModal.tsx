@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: "center",
         marginBottom: 24,
+        lineHeight: 22,
     },
     buttonContainer: {
         flexDirection: "row",
