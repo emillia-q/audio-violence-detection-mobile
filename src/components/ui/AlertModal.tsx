@@ -29,7 +29,9 @@ export default function AlertModal({
             animationType={"fade"}
         >
             <View style={styles.overlay}>
+                <View style={[styles.alertBox, {backgroundColor: theme.surfaceElevated}]}>
 
+                </View>
             </View>
         </Modal>
     );
@@ -42,4 +44,14 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
     },
+    alertBox: {
+        width: "80%",
+        padding: 24,
+        borderRadius: 16,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 10,
+        elevation: 20,
+    }
 });
