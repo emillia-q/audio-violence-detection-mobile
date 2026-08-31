@@ -1,5 +1,5 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {Modal, StyleSheet} from "react-native";
+import {Modal, StyleSheet, View} from "react-native";
 
 interface AlertModalProps {
     title: string;
@@ -28,9 +28,18 @@ export default function AlertModal({
             transparent={true}
             animationType={"fade"}
         >
+            <View style={styles.overlay}>
 
+            </View>
         </Modal>
     );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    overlay: {
+        flex: 1,
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        justifyContent: "center",
+        alignItems: "center",
+    },
+});
