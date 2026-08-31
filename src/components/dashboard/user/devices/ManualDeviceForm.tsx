@@ -1,6 +1,6 @@
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 import {useTheme} from "@/src/context/ModeContext";
-import {StyleSheet, Text, View} from "react-native";
+import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View} from "react-native";
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -40,76 +40,88 @@ export default function ManualDeviceForm({onSubmit, onSwitchToScanner, onCancel}
     };
 
     return (
-        <View style={[styles.container, {backgroundColor: theme.background}]}>
+        <KeyboardAvoidingView
+            behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+            style={[styles.container, {backgroundColor: theme.background}]}>
+            <ScrollView
+                contentContainerStyle={styles.scrollContainer}
+                showsVerticalScrollIndicator={false}
+            >
 
-            {/* Title */}
-            <Text style={[styles.title, {color: theme.text}]}>Add Device</Text>
+                {/* Title */}
+                <Text style={[styles.title, {color: theme.text}]}>Add Device</Text>
 
-            {/* Inputs */}
-            {/* MAC address */}
-            <AboveInputLabel title={"MAC Address"}/>
-            <Controller
-                control={control}
-                name={"macAddress"}
-                render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
-                    <CustomInput
-                        placeholder={"00:1B:44:11:3A:B7"}
-                        placeholderTextColor={theme.placeholder}
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        autoCapitalize={"characters"}
-                        errorMessage={error?.message}
+                {/* Inputs */}
+                {/* MAC address */}
+                <AboveInputLabel title={"MAC Address"}/>
+                <Controller
+                    control={control}
+                    name={"macAddress"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"00:1B:44:11:3A:B7"}
+                            placeholderTextColor={theme.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            autoCapitalize={"characters"}
+                            errorMessage={error?.message}
+                        />
+                    )}
+                />
+
+                {/* Device secret key */}
+                <AboveInputLabel title={"Device Secret Key"}/>
+                <Controller
+                    control={control}
+                    name={"deviceSecret"}
+                    render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                        <CustomInput
+                            placeholder={"Enter device secret key"}
+                            placeholderTextColor={theme.placeholder}
+                            value={value}
+                            onChangeText={onChange}
+                            onBlur={onBlur}
+                            secureTextEntry
+                            errorMessage={error?.message}
+                        />
+                    )}
+                />
+
+                {/* Buttons */}
+                <View style={styles.buttonContainer}>
+                    <CustomButton
+                        title={"Pair Device"}
+                        onPress={handleSubmit(onFormSubmit)}
                     />
-                )}
-            />
-
-            {/* Device secret key */}
-            <AboveInputLabel title={"Device Secret Key"}/>
-            <Controller
-                control={control}
-                name={"deviceSecret"}
-                render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
-                    <CustomInput
-                        placeholder={"Enter device secret key"}
-                        placeholderTextColor={theme.placeholder}
-                        value={value}
-                        onChangeText={onChange}
-                        onBlur={onBlur}
-                        secureTextEntry
-                        errorMessage={error?.message}
+                    <CustomButton
+                        title={"Back to Scanner"}
+                        variant={"text"}
+                        onPress={onSwitchToScanner}
                     />
-                )}
-            />
-
-            {/* Buttons */}
-            <View style={styles.buttonContainer}>
-                <CustomButton
-                    title={"Pair Device"}
-                    onPress={handleSubmit(onFormSubmit)}
-                />
-                <CustomButton
-                    title={"Back to Scanner"}
-                    variant={"text"}
-                    onPress={onSwitchToScanner}
-                />
-                <CustomButton
-                    style={{marginTop: 16}}
-                    title={"Cancel"}
-                    variant={"text"}
-                    isDanger={true}
-                    onPress={onCancel}
-                />
-            </View>
-        </View>
+                    <CustomButton
+                        style={{marginTop: 16}}
+                        title={"Cancel"}
+                        variant={"text"}
+                        isDanger={true}
+                        onPress={onCancel}
+                    />
+                </View>
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 24,
+    },
+    scrollContainer: {
+        flexGrow: 1,
         justifyContent: 'center',
+        paddingHorizontal: 25,
+        paddingTop: 40,
+        paddingBottom: 60,
     },
     title: {
         fontSize: 20,
