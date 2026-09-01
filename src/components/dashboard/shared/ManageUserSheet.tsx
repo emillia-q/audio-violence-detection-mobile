@@ -2,7 +2,7 @@ import {z} from "zod";
 import {useTheme} from "@/src/context/ModeContext";
 import {useEffect, useState} from "react";
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
-import {ActivityIndicator, Alert, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {userService} from "@/src/api/service/user";
 import Toast from "react-native-toast-message";
@@ -12,6 +12,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {ProtectedUserDetailsResponse} from "@/src/api/dto/response/ProtectedUserDetailsResponse";
+import AlertModal from "@/src/components/ui/AlertModal";
 
 const formSchema = z.object({
     nickname: z.string()
@@ -33,6 +34,13 @@ interface ManageUserSheetProps {
 
 export default function ManageUserSheet({isVisible, userId, userType, onClose, onSuccess}: ManageUserSheetProps) {
     const theme = useTheme();
+    const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
+
+    // Text based on user type
+    const title = userType === "trusted" ? "Remove Trusted User"
+        : "Remove Protected User";
+    const message = userType === "trusted" ? "Are you sure you want to remove this user from your trusted list?"
+        : "Are you sure you want to remove this user from your protected list?"
 
     // Load
     const [isLoading, setIsLoading] = useState(false);
@@ -83,54 +91,45 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
         }
     };
 
-    // Delete trusted user
-    const handleDeleteUser = () => {
-        // Text based on user type
-        const title = userType === "trusted" ? "Remove Trusted User"
-            : "Remove Protected User";
-        const message = userType === "trusted" ? "Are you sure you want to remove this user from your trusted list?"
-            : "Are you sure you want to remove this user from your protected list?"
+    // Delete related user
+    const handleDeleteUserPress = () => {
+        setIsAlertModalVisible(true);
+    };
 
-        Alert.alert(
-            title,
-            message,
-            [
-                {text: "Cancel", style: "cancel"},
-                {
-                    text: "Remove",
-                    style: "destructive",
-                    onPress: async () => {
-                        if (!userId)
-                            return;
+    const handleConfirm = async () => {
+        setIsAlertModalVisible(false);
 
-                        try {
-                            if (userType === "trusted") {
-                                await userService.deleteTrustedUser(userId);
-                            } else {
-                                await userService.deleteProtectedUser(userId);
-                            }
+        if (!userId)
+            return;
 
-                            Toast.show({
-                                type: 'success',
-                                text1: 'User removed'
-                            });
+        try {
+            if (userType === "trusted") {
+                await userService.deleteTrustedUser(userId);
+            } else {
+                await userService.deleteProtectedUser(userId);
+            }
 
-                            onSuccess();
-                            onClose();
-                        } catch (error: any) {
-                            const status = error?.response?.status;
+            Toast.show({
+                type: 'success',
+                text1: 'User removed'
+            });
 
-                            if (status === 404) {
-                                Toast.show({type: 'error', text1: 'User not found'});
-                            } else {
-                                Toast.show({type: 'error', text1: 'Failed to remove user'});
-                            }
-                        }
-                    }
-                }
-            ]
-        )
-    }
+            onSuccess();
+            onClose();
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({type: 'error', text1: 'User not found'});
+            } else {
+                Toast.show({type: 'error', text1: 'Failed to remove user'});
+            }
+        }
+    };
+
+    const handleCancel = () => {
+        setIsAlertModalVisible(false);
+    };
 
     // Fetch api data
     const fetchUserDetails = async (id: number) => {
@@ -175,61 +174,74 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
     }, [isVisible, userId]);
 
     return (
-        <BottomSheet
-            isVisible={isVisible}
-            onClose={onClose}
-        >
-            <View style={styles.content}>
-                {isLoading || !userDetails ? (
-                    // When data is not ready
-                    <View style={styles.loadingContainer}>
-                        <ActivityIndicator size={"large"} color={theme.tint}/>
-                    </View>
-                ) : (
-                    // Target form
-                    <>
-                        <Text style={[styles.title, {color: theme.text}]}>Manage User</Text>
-
-                        {/* First & last name */}
-                        <Text style={[styles.userName, {color: theme.muted}]}>
-                            {userDetails.firstName} {userDetails.lastName}
-                        </Text>
-
-                        {/* Nickname */}
-                        <AboveInputLabel title={"Nickname (optional)"}/>
-                        <Controller
-                            control={control}
-                            name={"nickname"}
-                            render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
-                                <CustomInput
-                                    placeholder={"e.g. Ania"}
-                                    placeholderTextColor={theme.placeholder}
-                                    value={value}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                    errorMessage={error?.message}
-                                />
-                            )}
-                        />
-
-                        <View style={styles.buttonRow}>
-                            {/* Delete trusted user btn */}
-                            <CustomButton
-                                title={"Remove user"}
-                                isDanger={true}
-                                onPress={handleDeleteUser}
-                            />
-                            {/* Change nickname btn */}
-                            <CustomButton
-                                title={"Save"}
-                                onPress={handleSubmit(onValidSubmit)}
-                                disabled={!isDirty || isSubmitting}
-                            />
+        <>
+            <BottomSheet
+                isVisible={isVisible}
+                onClose={onClose}
+            >
+                <View style={styles.content}>
+                    {isLoading || !userDetails ? (
+                        // When data is not ready
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size={"large"} color={theme.tint}/>
                         </View>
-                    </>
-                )}
-            </View>
-        </BottomSheet>
+                    ) : (
+                        // Target form
+                        <>
+                            <Text style={[styles.title, {color: theme.text}]}>Manage User</Text>
+
+                            {/* First & last name */}
+                            <Text style={[styles.userName, {color: theme.muted}]}>
+                                {userDetails.firstName} {userDetails.lastName}
+                            </Text>
+
+                            {/* Nickname */}
+                            <AboveInputLabel title={"Nickname (optional)"}/>
+                            <Controller
+                                control={control}
+                                name={"nickname"}
+                                render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                                    <CustomInput
+                                        placeholder={"e.g. Ania"}
+                                        placeholderTextColor={theme.placeholder}
+                                        value={value}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                        errorMessage={error?.message}
+                                    />
+                                )}
+                            />
+
+                            <View style={styles.buttonRow}>
+                                {/* Delete trusted user btn */}
+                                <CustomButton
+                                    title={"Remove user"}
+                                    isDanger={true}
+                                    onPress={handleDeleteUserPress}
+                                />
+                                {/* Change nickname btn */}
+                                <CustomButton
+                                    title={"Save"}
+                                    onPress={handleSubmit(onValidSubmit)}
+                                    disabled={!isDirty || isSubmitting}
+                                />
+                            </View>
+                        </>
+                    )}
+                </View>
+            </BottomSheet>
+
+            {/* Modals */}
+            <AlertModal
+                title={title}
+                message={message}
+                isVisible={isAlertModalVisible}
+                cancelText={"Cancel"}
+                confirmText={"Remove"}
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+            />
+        </>
     );
 }
 
