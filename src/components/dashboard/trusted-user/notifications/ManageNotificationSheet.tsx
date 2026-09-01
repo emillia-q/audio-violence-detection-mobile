@@ -1,10 +1,9 @@
-import {Alert, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
 import {notificationService} from "@/src/api/service/notification";
 import Toast from "react-native-toast-message";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
-import {alertService} from "@/src/api/service/alert";
 import {useState} from "react";
 import AlertModal from "@/src/components/ui/AlertModal";
 

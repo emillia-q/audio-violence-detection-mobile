@@ -1,5 +1,5 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {Alert, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
 import BottomSheet from "@/src/components/ui/BottomSheet";
