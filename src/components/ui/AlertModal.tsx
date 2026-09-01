@@ -34,7 +34,7 @@ export default function AlertModal({
             <View style={styles.overlay}>
 
                 {/* Main container */}
-                <View style={[styles.alertBox, {backgroundColor: theme.surfaceElevated}]}>
+                <View style={[styles.alertBox, {backgroundColor: theme.surfaceElevated, borderColor: theme.border}]}>
 
                     {/* Title */}
                     <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
         width: "80%",
         padding: 24,
         borderRadius: 16,
+        borderWidth: 2,
         shadowColor: '#000',
         shadowOffset: {width: 0, height: -4},
         shadowOpacity: 0.1,
