@@ -1,4 +1,4 @@
-import {ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
+import {ActivityIndicator, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {useCallback, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";
@@ -18,10 +18,12 @@ import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
 import {useFocusEffect, useRouter} from "expo-router";
 import ManageDeviceSheet from "@/src/components/dashboard/user/devices/ManageDeviceSheet";
+import AlertModal from "@/src/components/ui/AlertModal";
 
 export default function UserDashboard() {
     const theme = useTheme();
     const router = useRouter();
+    const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
     // Load/refresh
     const [isLoading, setIsLoading] = useState(true);
@@ -79,11 +81,7 @@ export default function UserDashboard() {
             hasErrors = true;
 
         if (hasErrors) {
-            Alert.alert(
-                "Sync Issue",
-                "Some dashboard data could not be loaded. " +
-                "Please check your internet connection."
-            );
+            setIsAlertModalVisible(true);
         }
 
         // Remove loading flags
@@ -255,6 +253,16 @@ export default function UserDashboard() {
                     setSelectedAlertId(null);
                 }}
                 onSuccess={() => fetchDashboardData(true)}
+            />
+
+            <AlertModal
+                title={"Sync Issue"}
+                message={"Some dashboard data could not be loaded. Please check your internet connection."}
+                isVisible={isAlertModalVisible}
+                confirmText={"OK"}
+                onCancel={() => setIsAlertModalVisible(false)}
+                onConfirm={() => setIsAlertModalVisible(false)}
+                showCancelButton={false}
             />
         </>
     );

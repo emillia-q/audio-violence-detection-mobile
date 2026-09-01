@@ -1,4 +1,4 @@
-import {ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
+import {ActivityIndicator, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {useEffect, useState} from "react";
 import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserListResponse";
 import {userService} from "@/src/api/service/user";
@@ -11,9 +11,11 @@ import {useTheme} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import ManageNotificationSheet from "@/src/components/dashboard/trusted-user/notifications/ManageNotificationSheet";
+import AlertModal from "@/src/components/ui/AlertModal";
 
 export default function TrustedUserDashboard() {
     const theme = useTheme();
+    const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
     // Api data
     const [notifications, setNotifications] = useState<NotificationListResponse[]>([]);
@@ -59,11 +61,7 @@ export default function TrustedUserDashboard() {
             hasErrors = true;
 
         if (hasErrors) {
-            Alert.alert(
-                "Sync Issue",
-                "Some dashboard data could not be loaded. " +
-                "Please check your internet connection."
-            );
+            setIsAlertModalVisible(true);
         }
 
         if (isRefresh)
@@ -153,6 +151,16 @@ export default function TrustedUserDashboard() {
                     setIsManageUserVisible(false)
                 }}
                 onSuccess={() => fetchDashboardData(true)}
+            />
+
+            <AlertModal
+                title={"Sync Issue"}
+                message={"Some dashboard data could not be loaded. Please check your internet connection."}
+                isVisible={isAlertModalVisible}
+                confirmText={"OK"}
+                onCancel={() => setIsAlertModalVisible(false)}
+                onConfirm={() => setIsAlertModalVisible(false)}
+                showCancelButton={false}
             />
         </>
     );

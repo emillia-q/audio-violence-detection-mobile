@@ -1,9 +1,11 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {Alert, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import {useState} from "react";
+import AlertModal from "@/src/components/ui/AlertModal";
 
 interface ManageAlertSheetProps {
     isVisible: boolean;
@@ -15,7 +17,9 @@ interface ManageAlertSheetProps {
 
 export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, onSuccess}: ManageAlertSheetProps) {
     const theme = useTheme();
+    const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
+    // Toggle isRead flag
     const handleToggleStatus = async () => {
         if (!alertId) return;
 
@@ -34,70 +38,81 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
         }
     };
 
-    const handleDelete = () => {
-        Alert.alert(
-            "False Alarm",
-            "Are you sure you want to mark this alert as a false alarm and delete it?",
-            [
-                {text: "Cancel", style: "cancel"},
-                {
-                    text: "Delete",
-                    style: "destructive",
-                    onPress: async () => {
-                        if (!alertId)
-                            return;
+    // Delete alert
+    const handleDeletePress = () => {
+        setIsAlertModalVisible(true);
+    };
 
-                        try {
-                            await alertService.deleteFalseAlert(alertId);
+    const handleConfirm = async () => {
+        setIsAlertModalVisible(false);
 
-                            // Toast success
-                            Toast.show({
-                                type: "success",
-                                text1: "Alert removed"
-                            });
+        if (!alertId)
+            return;
 
-                            onSuccess();
-                            onClose();
-                        } catch (error: any) {
-                            const status = error?.response?.status;
+        try {
+            await alertService.deleteFalseAlert(alertId);
 
-                            if (status === 404) {
-                                Toast.show({type: 'error', text1: 'Alert not found'});
-                            } else {
-                                Toast.show({type: 'error', text1: 'Failed to delete alert'});
-                            }
-                        }
-                    }
-                }
-            ]
-        )
+            // Toast success
+            Toast.show({
+                type: "success",
+                text1: "Alert removed"
+            });
+
+            onSuccess();
+            onClose();
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({type: 'error', text1: 'Alert not found'});
+            } else {
+                Toast.show({type: 'error', text1: 'Failed to delete alert'});
+            }
+        }
+    };
+
+    const handleCancel = () => {
+        setIsAlertModalVisible(false);
     };
 
     return (
-        <BottomSheet
-            isVisible={isVisible}
-            onClose={onClose}
-        >
-            <View style={styles.content}>
-                <Text style={[styles.title, {color: theme.text}]}>Manage Alert</Text>
+        <>
+            <BottomSheet
+                isVisible={isVisible}
+                onClose={onClose}
+            >
+                <View style={styles.content}>
+                    <Text style={[styles.title, {color: theme.text}]}>Manage Alert</Text>
 
-                <View style={styles.button}>
-                    {/* Status button */}
-                    <CustomButton
-                        title={isRead ? "Mark as unread" : "Mark as read"}
-                        variant={"outline"}
-                        onPress={handleToggleStatus}
-                    />
-                    {/* Delete button */}
-                    <CustomButton
-                        title={"Delete false alarm"}
-                        variant={"text"}
-                        isDanger={true}
-                        onPress={handleDelete}
-                    />
+                    <View style={styles.button}>
+                        {/* Status button */}
+                        <CustomButton
+                            title={isRead ? "Mark as unread" : "Mark as read"}
+                            variant={"outline"}
+                            onPress={handleToggleStatus}
+                        />
+                        {/* Delete button */}
+                        <CustomButton
+                            title={"Delete false alarm"}
+                            variant={"text"}
+                            isDanger={true}
+                            onPress={handleDeletePress}
+                        />
+                    </View>
                 </View>
-            </View>
-        </BottomSheet>
+            </BottomSheet>
+
+            {/* Modals */}
+            <AlertModal
+                title={"False Alarm"}
+                message={"Are you sure you want to mark this alert as a false alarm and delete it?"}
+                isVisible={isAlertModalVisible}
+                cancelText={"Cancel"}
+                confirmText={"Delete"}
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+            />
+        </>
     );
 }
 
