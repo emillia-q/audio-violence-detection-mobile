@@ -13,7 +13,7 @@ import DashboardSection from "@/src/components/dashboard/shared/DashboardSection
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import AddTrustedUserSheet from "@/src/components/dashboard/user/trusted-users/AddTrustedUserSheet";
 import Toast from "react-native-toast-message";
-import {useTheme} from "@/src/context/ModeContext";
+import {useTheme, useMode} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
 import {useFocusEffect, useRouter} from "expo-router";
@@ -22,6 +22,7 @@ import AlertModal from "@/src/components/ui/AlertModal";
 
 export default function UserDashboard() {
     const theme = useTheme();
+    const {mode} = useMode();
     const router = useRouter();
     const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
@@ -92,8 +93,9 @@ export default function UserDashboard() {
     };
     useFocusEffect(
         useCallback(() => {
-            fetchDashboardData();
-        }, [])
+            if (mode === 'user')
+                fetchDashboardData();
+        }, [mode])
     );
 
     // Add new trusted user modal

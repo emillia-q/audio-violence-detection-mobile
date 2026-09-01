@@ -7,7 +7,7 @@ import DashboardSection from "@/src/components/dashboard/shared/DashboardSection
 import NotificationList from "@/src/components/dashboard/trusted-user/notifications/NotificationList";
 import {NotificationListResponse} from "@/src/api/dto/response/NotificationListResponse";
 import {notificationService} from "@/src/api/service/notification";
-import {useTheme} from "@/src/context/ModeContext";
+import {useTheme, useMode} from "@/src/context/ModeContext";
 import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import ManageNotificationSheet from "@/src/components/dashboard/trusted-user/notifications/ManageNotificationSheet";
@@ -15,6 +15,7 @@ import AlertModal from "@/src/components/ui/AlertModal";
 
 export default function TrustedUserDashboard() {
     const theme = useTheme();
+    const {mode} = useMode();
     const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
     // Api data
@@ -71,8 +72,9 @@ export default function TrustedUserDashboard() {
     };
 
     useEffect(() => {
-        fetchDashboardData();
-    }, []);
+        if (mode === 'trustedUser')
+            fetchDashboardData();
+    }, [mode]);
 
     // Loading screen at first
     if (isLoading) {
