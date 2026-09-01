@@ -1,9 +1,11 @@
 import {useTheme} from "@/src/context/ModeContext";
 import {CameraView, useCameraPermissions} from "expo-camera";
-import {Alert, StyleSheet, Text, View} from "react-native";
+import {StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 import {Ionicons} from "@expo/vector-icons";
+import {useState} from "react";
+import AlertModal from "@/src/components/ui/AlertModal";
 
 interface DeviceScannerProps {
     onScan: (data: DeviceCredentialsRequest) => void;
@@ -14,6 +16,7 @@ interface DeviceScannerProps {
 export default function DeviceScanner({onScan, onSwitchToManual, onCancel}: DeviceScannerProps) {
     const theme = useTheme();
     const [permission, requestPermission] = useCameraPermissions();
+    const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
     // Check if permission exists
     if (!permission) {
@@ -53,39 +56,49 @@ export default function DeviceScanner({onScan, onSwitchToManual, onCancel}: Devi
                     deviceSecret: parsed.deviceSecret
                 });
         } catch (error) {
-            Alert.alert(
-                "Invalid QR code format",
-                "Please scan a valid device QR code"
-            );
+            setIsAlertModalVisible(true);
         }
     };
 
     return (
-        <View style={styles.container}>
-            <CameraView
-                style={styles.camera}
-                onBarcodeScanned={handleScanned}
-                barcodeScannerSettings={{
-                    barcodeTypes: ["qr"],
-                }}
-            >
-                <View style={styles.overlay}>
+        <>
+            <View style={styles.container}>
+                <CameraView
+                    style={styles.camera}
+                    onBarcodeScanned={handleScanned}
+                    barcodeScannerSettings={{
+                        barcodeTypes: ["qr"],
+                    }}
+                >
+                    <View style={styles.overlay}>
 
-                    {/* Cancel button */}
-                    <View style={styles.header}>
-                        <Ionicons name={"close"} size={36} color={theme.text} onPress={onCancel} />
+                        {/* Cancel button */}
+                        <View style={styles.header}>
+                            <Ionicons name={"close"} size={36} color={theme.text} onPress={onCancel} />
+                        </View>
+
+                        <View style={styles.scanFrame}/>
+                        <Text style={styles.scanText}>Scan the QR code on your device</Text>
+                        <CustomButton
+                            title="Cannot scan? Enter manually"
+                            variant="text"
+                            onPress={onSwitchToManual}
+                        />
                     </View>
+                </CameraView>
+            </View>
 
-                    <View style={styles.scanFrame}/>
-                    <Text style={styles.scanText}>Scan the QR code on your device</Text>
-                    <CustomButton
-                        title="Cannot scan? Enter manually"
-                        variant="text"
-                        onPress={onSwitchToManual}
-                    />
-                </View>
-            </CameraView>
-        </View>
+            {/* Modals */}
+            <AlertModal
+                title={"Invalid QR code format"}
+                message={"Please scan a valid device QR code."}
+                isVisible={isAlertModalVisible}
+                confirmText={"OK"}
+                onCancel={() => setIsAlertModalVisible(false)}
+                onConfirm={() => setIsAlertModalVisible(false)}
+                showCancelButton={false}
+            />
+        </>
     );
 }
 
