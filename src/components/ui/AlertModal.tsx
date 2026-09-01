@@ -57,7 +57,7 @@ export default function AlertModal({
                         {/* Confirm */}
                         <CustomButton
                             title={confirmText}
-                            isDanger={true}
+                            isDanger={showCancelButton}
                             variant={"text"}
                             onPress={onConfirm}
                         />
