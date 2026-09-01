@@ -10,6 +10,7 @@ interface AlertModalProps {
     onConfirm: () => void;
     cancelText?: string;
     confirmText?: string;
+    showCancelButton?: boolean;
 }
 
 export default function AlertModal({
@@ -19,7 +20,8 @@ export default function AlertModal({
                                        onCancel,
                                        onConfirm,
                                        cancelText = "Cancel",
-                                       confirmText = "Confirm"
+                                       confirmText = "Confirm",
+                                       showCancelButton = true,
                                    }: AlertModalProps) {
     const theme = useTheme();
 
@@ -41,14 +43,16 @@ export default function AlertModal({
                     <Text style={[styles.message, {color: theme.muted}]}>{message}</Text>
 
                     {/* Buttons */}
-                    <View style={styles.buttonContainer}>
+                    <View style={[styles.buttonContainer, !showCancelButton && {justifyContent: "center"}]}>
 
                         {/* Cancel */}
-                        <CustomButton
-                            title={cancelText}
-                            variant={"text"}
-                            onPress={onCancel}
-                        />
+                        {showCancelButton && (
+                            <CustomButton
+                                title={cancelText}
+                                variant={"text"}
+                                onPress={onCancel}
+                            />
+                        )}
 
                         {/* Confirm */}
                         <CustomButton
@@ -76,7 +80,7 @@ const styles = StyleSheet.create({
         padding: 24,
         borderRadius: 16,
         shadowColor: '#000',
-        shadowOffset: { width: 0, height: -4 },
+        shadowOffset: {width: 0, height: -4},
         shadowOpacity: 0.1,
         shadowRadius: 10,
         elevation: 20,
