@@ -1,4 +1,4 @@
-import {ActivityIndicator, Alert, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
 import {useEffect, useState} from "react";
 import {DeviceDetailsResponse} from "@/src/api/dto/response/DeviceDetailsResponse";
@@ -14,6 +14,7 @@ import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useRouter} from "expo-router";
 import StatusBadge from "@/src/components/dashboard/shared/StatusBadge";
 import {Ionicons} from "@expo/vector-icons";
+import AlertModal from "@/src/components/ui/AlertModal";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -33,6 +34,7 @@ interface ManageDeviceSheetProps {
 export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSuccess}: ManageDeviceSheetProps) {
     const theme = useTheme();
     const router = useRouter();
+    const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
     // Load
     const [isLoading, setIsLoading] = useState(false);
@@ -98,48 +100,45 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
     };
 
     // Delete device
-    const handleDeleteDevice = async () => {
-        Alert.alert(
-            "Remove device",
-            "Are you sure you want to remove this device?",
-            [
-                {text: "Cancel", style: "cancel"},
-                {
-                    text: "Remove",
-                    style: "destructive",
-                    onPress: async () => {
-                        if (!deviceId)
-                            return;
+    const handleDeleteDevicePress = () => {
+        setIsAlertModalVisible(true);
+    };
 
-                        try {
-                            await deviceService.disconnectDevice(deviceId);
+    const handleConfirm = async () => {
+        setIsAlertModalVisible(false);
 
-                            Toast.show({
-                                type: "success",
-                                text1: "Device removed"
-                            });
+        if (!deviceId)
+            return;
 
-                            onSuccess();
-                            onClose();
-                        } catch (error: any) {
-                            const status = error?.response?.status;
+        try {
+            await deviceService.disconnectDevice(deviceId);
 
-                            if (status === 404) {
-                                Toast.show({
-                                    type: 'error',
-                                    text1: 'Device not found'
-                                });
-                            } else {
-                                Toast.show({
-                                    type: 'error',
-                                    text1: 'Could not load device details'
-                                });
-                            }
-                        }
-                    }
-                }
-            ]
-        );
+            Toast.show({
+                type: "success",
+                text1: "Device removed"
+            });
+
+            onSuccess();
+            onClose();
+        } catch (error: any) {
+            const status = error?.response?.status;
+
+            if (status === 404) {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Device not found'
+                });
+            } else {
+                Toast.show({
+                    type: 'error',
+                    text1: 'Failed to remove device'
+                });
+            }
+        }
+    };
+
+    const handleCancel = () => {
+        setIsAlertModalVisible(false);
     };
 
     // Fetch api data
@@ -179,96 +178,109 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
     }, [isVisible, deviceId]);
 
     return (
-        <BottomSheet
-            isVisible={isVisible}
-            onClose={onClose}
-        >
-            <View style={styles.content}>
-                {isLoading || !deviceDetails ? (
-                    // When data is not ready
-                    <View style={styles.loadingContainer}>
-                        <ActivityIndicator size={"large"} color={theme.tint}/>
-                    </View>
-                ) : (
-                    // Target form
-                    <>
-                        <Text style={[styles.title, {color: theme.text}]}>Manage Device</Text>
-
-                        {/* Header row */}
-                        <View style={styles.headerRow}>
-                            {/* MAC address */}
-                            <Text style={[styles.macAddress, {color: theme.muted}]}>
-                                {deviceDetails.macAddress}
-                            </Text>
-
-                            {/* Device status */}
-                            <StatusBadge
-                                status={deviceDetails.isActivated ? "online" : "warning"}
-                                text={deviceDetails.isActivated ? "Activated" : "Action Required"}
-                            />
+        <>
+            <BottomSheet
+                isVisible={isVisible}
+                onClose={onClose}
+            >
+                <View style={styles.content}>
+                    {isLoading || !deviceDetails ? (
+                        // When data is not ready
+                        <View style={styles.loadingContainer}>
+                            <ActivityIndicator size={"large"} color={theme.tint}/>
                         </View>
+                    ) : (
+                        // Target form
+                        <>
+                            <Text style={[styles.title, {color: theme.text}]}>Manage Device</Text>
 
-                        {/* SetUp info */}
-                        {!deviceDetails.isActivated && (
-                            <View style={[
-                                styles.setupBanner,
-                                {
-                                    backgroundColor: theme.warningBg,
-                                    borderColor: theme.warningBorder
-                                }
-                            ]}
-                            >
-                                <View style={styles.bannerHeader}>
-                                    <Ionicons name={"information-circle-outline"} size={24} color={theme.warning} />
-                                    <Text style={[styles.bannerTitle, {color: theme.text}]}>
-                                        Setup Required
-                                    </Text>
-                                </View>
-                                <Text style={[styles.bannerText, {color: theme.muted}]}>
-                                    This device needs to be activated before it can be used.
+                            {/* Header row */}
+                            <View style={styles.headerRow}>
+                                {/* MAC address */}
+                                <Text style={[styles.macAddress, {color: theme.muted}]}>
+                                    {deviceDetails.macAddress}
                                 </Text>
-                                <CustomButton
-                                    title={"View Setup Instructions"}
-                                    onPress={handleOpenSetUp}
-                                    variant={"outline"}
+
+                                {/* Device status */}
+                                <StatusBadge
+                                    status={deviceDetails.isActivated ? "online" : "warning"}
+                                    text={deviceDetails.isActivated ? "Activated" : "Action Required"}
                                 />
                             </View>
-                        )}
 
-                        {/* Device name */}
-                        <AboveInputLabel title={"Device name"}/>
-                        <Controller
-                            control={control}
-                            name={"deviceName"}
-                            render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
-                                <CustomInput
-                                    placeholder={"e.g. Room 1"}
-                                    placeholderTextColor={theme.placeholder}
-                                    value={value}
-                                    onChangeText={onChange}
-                                    onBlur={onBlur}
-                                    errorMessage={error?.message}
-                                />
+                            {/* SetUp info */}
+                            {!deviceDetails.isActivated && (
+                                <View style={[
+                                    styles.setupBanner,
+                                    {
+                                        backgroundColor: theme.warningBg,
+                                        borderColor: theme.warningBorder
+                                    }
+                                ]}
+                                >
+                                    <View style={styles.bannerHeader}>
+                                        <Ionicons name={"information-circle-outline"} size={24} color={theme.warning} />
+                                        <Text style={[styles.bannerTitle, {color: theme.text}]}>
+                                            Setup Required
+                                        </Text>
+                                    </View>
+                                    <Text style={[styles.bannerText, {color: theme.muted}]}>
+                                        This device needs to be activated before it can be used.
+                                    </Text>
+                                    <CustomButton
+                                        title={"View Setup Instructions"}
+                                        onPress={handleOpenSetUp}
+                                        variant={"outline"}
+                                    />
+                                </View>
                             )}
-                        />
 
-                        {/* Buttons */}
-                        <View style={styles.buttonRow}>
-                            <CustomButton
-                                title={"Delete device"}
-                                isDanger={true}
-                                onPress={handleDeleteDevice}
+                            {/* Device name */}
+                            <AboveInputLabel title={"Device name"}/>
+                            <Controller
+                                control={control}
+                                name={"deviceName"}
+                                render={({field: {onChange, onBlur, value}, fieldState: {error}}) => (
+                                    <CustomInput
+                                        placeholder={"e.g. Room 1"}
+                                        placeholderTextColor={theme.placeholder}
+                                        value={value}
+                                        onChangeText={onChange}
+                                        onBlur={onBlur}
+                                        errorMessage={error?.message}
+                                    />
+                                )}
                             />
-                            <CustomButton
-                                title={"Save"}
-                                onPress={handleSubmit(onValidSubmit)}
-                                disabled={!isDirty || isSubmitting}
-                            />
-                        </View>
-                    </>
-                )}
-            </View>
-        </BottomSheet>
+
+                            {/* Buttons */}
+                            <View style={styles.buttonRow}>
+                                <CustomButton
+                                    title={"Delete device"}
+                                    isDanger={true}
+                                    onPress={handleDeleteDevicePress}
+                                />
+                                <CustomButton
+                                    title={"Save"}
+                                    onPress={handleSubmit(onValidSubmit)}
+                                    disabled={!isDirty || isSubmitting}
+                                />
+                            </View>
+                        </>
+                    )}
+                </View>
+            </BottomSheet>
+
+            {/* Modals */}
+            <AlertModal
+                title={"Remove device"}
+                message={"Are you sure you want to remove this device?"}
+                isVisible={isAlertModalVisible}
+                cancelText={"Cancel"}
+                confirmText={"Remove"}
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+            />
+        </>
     );
 }
 
