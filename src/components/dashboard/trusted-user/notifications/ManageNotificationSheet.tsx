@@ -104,7 +104,7 @@ export default function ManageNotificationSheet({isVisible, notificationId, isRe
                 message={"Are you sure you want to remove this notification?"}
                 isVisible={isAlertModalVisible}
                 cancelText={"Cancel"}
-                confirmText={"Delete"}
+                confirmText={"Remove"}
                 onCancel={handleCancel}
                 onConfirm={handleConfirm}
             />
