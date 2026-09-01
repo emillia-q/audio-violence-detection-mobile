@@ -19,6 +19,7 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
     const theme = useTheme();
     const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
+    // Toggle isRead flag
     const handleToggleStatus = async () => {
         if (!alertId) return;
 
@@ -37,6 +38,7 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
         }
     };
 
+    // Delete alert
     const handleDeletePress = () => {
         setIsAlertModalVisible(true);
     };
