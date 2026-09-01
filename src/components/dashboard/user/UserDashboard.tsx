@@ -1,4 +1,4 @@
-import {ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
+import {ActivityIndicator, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {useCallback, useState} from "react";
 import {DeviceListResponse} from "@/src/api/dto/response/DeviceListResponse";
 import {deviceService} from "@/src/api/service/device";

@@ -1,4 +1,4 @@
-import {ActivityIndicator, Alert, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
+import {ActivityIndicator, RefreshControl, ScrollView, StyleSheet, View} from "react-native";
 import {useEffect, useState} from "react";
 import {ProtectedUserListResponse} from "@/src/api/dto/response/ProtectedUserListResponse";
 import {userService} from "@/src/api/service/user";
