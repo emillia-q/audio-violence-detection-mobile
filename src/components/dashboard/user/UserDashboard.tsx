@@ -157,6 +157,27 @@ export default function UserDashboard() {
                 }
             >
                 <DashboardSection
+                    title={"Alerts"}
+                    actionButton={
+                        alerts.length > 0 && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => console.log("full alert history")}
+                            />
+                        )
+                    }
+                >
+                    <AlertList
+                        alerts={alerts}
+                        onManage={(id, isRead) => {
+                            setSelectedAlertId(id);
+                            setSelectedAlertIsRead(isRead)
+                            setIsManageAlertVisible(true);
+                        }}
+                    />
+                </DashboardSection>
+                <DashboardSection
                     title={"My devices"}
                     actionButton={
                         devices.length > 0 && (
@@ -198,30 +219,20 @@ export default function UserDashboard() {
                         }}
                     />
                 </DashboardSection>
-                <DashboardSection
-                    title={"Alerts"}
-                    actionButton={
-                        alerts.length > 0 && (
-                            <CustomButton
-                                title={"View all"}
-                                variant={"text"}
-                                onPress={() => console.log("full alert history")}
-                            />
-                        )
-                    }
-                >
-                    <AlertList
-                        alerts={alerts}
-                        onManage={(id, isRead) => {
-                            setSelectedAlertId(id);
-                            setSelectedAlertIsRead(isRead)
-                            setIsManageAlertVisible(true);
-                        }}
-                    />
-                </DashboardSection>
             </ScrollView>
 
             {/* Modals */}
+            <ManageAlertSheet
+                isVisible={isManageAlertVisible}
+                alertId={selectedAlertId}
+                isRead={selectedAlertIsRead}
+                onClose={() => {
+                    setIsManageAlertVisible(false);
+                    setSelectedAlertId(null);
+                }}
+                onSuccess={() => fetchDashboardData(true)}
+            />
+
             <ManageDeviceSheet
                 isVisible={isManageDeviceVisible}
                 deviceId={selectedDeviceId}
@@ -242,17 +253,6 @@ export default function UserDashboard() {
                 onClose={() => {
                     setIsManageUserVisible(false);
                     setSelectedUserId(null);
-                }}
-                onSuccess={() => fetchDashboardData(true)}
-            />
-
-            <ManageAlertSheet
-                isVisible={isManageAlertVisible}
-                alertId={selectedAlertId}
-                isRead={selectedAlertIsRead}
-                onClose={() => {
-                    setIsManageAlertVisible(false);
-                    setSelectedAlertId(null);
                 }}
                 onSuccess={() => fetchDashboardData(true)}
             />
