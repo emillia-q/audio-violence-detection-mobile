@@ -191,7 +191,7 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
                         <>
                             <SectionHeader
                                 title={`Manage ${userType === "trusted" ? "Trusted" : "Protected"} User`}
-                                iconName={userType === "trusted" ? "person-outline" : "shield-checkmark-outline"}
+                                iconName={"person-outline"}
                                 subtitle={`${userDetails.firstName} ${userDetails.lastName}`}
                                 description="Set a custom nickname to quickly identify this user on your list, or remove their access entirely."
                             />
