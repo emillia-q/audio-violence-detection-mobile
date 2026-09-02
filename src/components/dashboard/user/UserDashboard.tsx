@@ -199,7 +199,7 @@ export default function UserDashboard() {
                     />
                 </DashboardSection>
                 <DashboardSection
-                    title={"Recent alerts"}
+                    title={"Alerts"}
                     actionButton={
                         alerts.length > 0 && (
                             <CustomButton
