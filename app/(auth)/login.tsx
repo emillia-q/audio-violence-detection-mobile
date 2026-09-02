@@ -5,7 +5,7 @@ import {
     Platform,
     TouchableOpacity,
     View,
-    StatusBar, ScrollView
+    StatusBar, ScrollView, Image
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
@@ -70,6 +70,11 @@ export default function Login() {
                 showsVerticalScrollIndicator={false}
             >
                 <View style={styles.headerContainer}>
+                    <Image
+                        source={require('@/assets/logos/echo-logo.jpg')}
+                        style={styles.logo}
+                        resizeMode={"contain"}
+                    />
                     <Text style={styles.title}>
                         Audio Detection System
                     </Text>
@@ -160,6 +165,12 @@ const styles = StyleSheet.create({
     headerContainer: {
         alignItems: 'center',
         marginBottom: 32,
+    },
+    logo: {
+        width: 200,
+        height: 200,
+        marginBottom: 16,
+        borderRadius: 24,
     },
     title: {
         fontSize: 30,
