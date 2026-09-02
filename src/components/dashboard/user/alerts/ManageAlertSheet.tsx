@@ -1,12 +1,12 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useState} from "react";
 import AlertModal from "@/src/components/ui/AlertModal";
-import {Ionicons} from "@expo/vector-icons";
+import BottomSheetHeader from "@/src/components/ui/BottomSheetHeader";
 
 interface ManageAlertSheetProps {
     isVisible: boolean;
@@ -83,20 +83,12 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
                 onClose={onClose}
             >
                 <View style={styles.content}>
-                    <View style={styles.header}>
-                        <View style={[styles.iconWrapper, {backgroundColor: theme.surface}]}>
-                            <Ionicons name="warning-outline" size={28} color={theme.warning}/>
-                        </View>
-                        <View style={styles.headerText}>
-                            <Text style={[styles.title, {color: theme.text}]}>Manage Alert</Text>
-                        </View>
-                    </View>
-
-                    {/* Info text */}
-                    <Text style={[styles.description, {color: theme.muted}]}>
-                        Change the visibility status or permanently remove this alert if it was verified as a
-                        false alarm.
-                    </Text>
+                    <BottomSheetHeader
+                        title="Manage Alert"
+                        iconName="warning-outline"
+                        iconColor={theme.warning}
+                        description="Change the visibility status or permanently remove this alert if it was verified as a false alarm."
+                    />
 
                     <View style={styles.button}>
                         {/* Status button */}
@@ -133,31 +125,6 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
 const styles = StyleSheet.create({
     content: {
         padding: 24,
-    },
-    header: {
-        flexDirection: "row",
-        alignItems: "center",
-        marginBottom: 16,
-    },
-    iconWrapper: {
-        width: 48,
-        height: 48,
-        borderRadius: 12,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginRight: 16,
-    },
-    headerText: {
-        flex: 1,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-    },
-    description: {
-        fontSize: 14,
-        lineHeight: 20,
-        marginBottom: 24,
     },
     button: {
         gap: 16,
