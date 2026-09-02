@@ -128,12 +128,6 @@ const styles = StyleSheet.create({
     content: {
         padding: 24,
     },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 20,
-        color: Colors.user.text,
-    },
     addButton: {
         alignSelf: 'flex-end',
     }
