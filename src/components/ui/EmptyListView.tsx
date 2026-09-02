@@ -1,5 +1,4 @@
 import {StyleSheet, Text, View} from "react-native";
-import {Colors} from "@/src/constants/theme";
 import {useTheme} from "@/src/context/ModeContext";
 import {Ionicons} from "@expo/vector-icons";
 import {CustomButton} from "@/src/components/ui/CustomButton";
@@ -23,26 +22,31 @@ export default function EmptyListView({
         <View style={[
             styles.container,
             {
-                backgroundColor: theme.background,
-                borderColor: theme.border
+                backgroundColor: theme.surfaceElevated,
             }
         ]}
         >
             {/* Optional icon */}
             {iconName && (
-                <Ionicons
-                    name={iconName}
-                    size={48}
-                    color={theme.muted}
-                    style={styles.icon}
-                />
+                <View style={[
+                    styles.iconWrapper,
+                    {
+                        backgroundColor: theme.background
+                    }]}
+                >
+                    <Ionicons
+                        name={iconName}
+                        size={42}
+                        color={theme.tint}
+                    />
+                </View>
             )}
 
             {/* Title */}
             <Text style={[
                 styles.title,
                 {
-                    color: theme.muted
+                    color: theme.text
                 }
             ]}
             >
@@ -67,13 +71,22 @@ const styles = StyleSheet.create({
     container: {
         width: '100%',
         alignItems: 'center',
-        paddingVertical: 32,
-        borderWidth: 1,
+        paddingVertical: 40,
+        paddingHorizontal: 24,
         borderRadius: 16,
-        borderStyle: 'dashed',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 6,
+        elevation: 2,
     },
-    icon: {
-        marginBottom: 12,
+    iconWrapper: {
+        width: 72,
+        height: 72,
+        borderRadius: 36,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 16,
     },
     title: {
         fontSize: 15,

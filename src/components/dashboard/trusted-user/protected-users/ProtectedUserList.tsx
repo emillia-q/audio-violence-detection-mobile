@@ -25,6 +25,7 @@ export default function ProtectedUserList({protectedUsers, onUserPress}: Protect
                 <NavigationCard
                     key={protectedUser.protectedUserId}
                     title={protectedUser.protectedUserNickname}
+                    iconName="person-outline"
                     onPress={() => onUserPress(protectedUser.protectedUserId)}
                 />
             ))}

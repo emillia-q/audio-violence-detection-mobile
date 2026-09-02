@@ -1,6 +1,7 @@
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {useMode, useTheme} from "@/src/context/ModeContext";
+import {Ionicons} from "@expo/vector-icons";
 
 export default function ModeSwitcher() {
     const {mode, setMode} = useMode();
@@ -18,12 +19,19 @@ export default function ModeSwitcher() {
                     ]}
                     onPress={() => setMode('user')}
                 >
-                    <Text style={[
-                        styles.tabText,
-                        {color: isUserMode ? Colors.user.textActive : theme.textInactive}]}
-                    >
-                        My safety
-                    </Text>
+                    <View style={styles.tabContent}>
+                        <Ionicons
+                            name="shield-checkmark-outline"
+                            size={18}
+                            color={isUserMode ? Colors.user.textActive : theme.textInactive}
+                        />
+                        <Text style={[
+                            styles.tabText,
+                            {color: isUserMode ? Colors.user.textActive : theme.textInactive}]}
+                        >
+                            Safety
+                        </Text>
+                    </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                     activeOpacity={0.8}
@@ -33,12 +41,19 @@ export default function ModeSwitcher() {
                     ]}
                     onPress={() => setMode('trustedUser')}
                 >
-                    <Text style={[
-                        styles.tabText,
-                        {color: !isUserMode ? Colors.trustedUser.textActive : theme.textInactive}]}
-                    >
-                        Superman
-                    </Text>
+                    <View style={styles.tabContent}>
+                        <Ionicons
+                            name="people-outline"
+                            size={18}
+                            color={!isUserMode ? Colors.trustedUser.textActive : theme.textInactive}
+                        />
+                        <Text style={[
+                            styles.tabText,
+                            {color: !isUserMode ? Colors.trustedUser.textActive : theme.textInactive}]}
+                        >
+                            Guardian
+                        </Text>
+                    </View>
                 </TouchableOpacity>
             </View>
         </View>
@@ -61,6 +76,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 8,
+    },
+    tabContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
     },
     tabText: {
         fontSize: 14,

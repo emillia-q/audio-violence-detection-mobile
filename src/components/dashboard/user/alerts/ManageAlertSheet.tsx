@@ -1,11 +1,12 @@
 import {useTheme} from "@/src/context/ModeContext";
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useState} from "react";
 import AlertModal from "@/src/components/ui/AlertModal";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 interface ManageAlertSheetProps {
     isVisible: boolean;
@@ -82,7 +83,12 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
                 onClose={onClose}
             >
                 <View style={styles.content}>
-                    <Text style={[styles.title, {color: theme.text}]}>Manage Alert</Text>
+                    <SectionHeader
+                        title="Manage Alert"
+                        iconName="warning-outline"
+                        iconColor={theme.warning}
+                        description="Change the visibility status or permanently remove this alert if it was verified as a false alarm."
+                    />
 
                     <View style={styles.button}>
                         {/* Status button */}
@@ -119,11 +125,6 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
 const styles = StyleSheet.create({
     content: {
         padding: 24,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 24,
     },
     button: {
         gap: 16,

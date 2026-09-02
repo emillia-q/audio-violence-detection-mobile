@@ -5,7 +5,7 @@ import {
     Platform,
     TouchableOpacity,
     View,
-    StatusBar, ScrollView
+    StatusBar, ScrollView, Image
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
 import {Link} from "expo-router";
@@ -70,11 +70,13 @@ export default function Login() {
                 showsVerticalScrollIndicator={false}
             >
                 <View style={styles.headerContainer}>
-                    <Text style={styles.title}>
-                        Audio Detection System
-                    </Text>
+                    <Image
+                        source={require('@/assets/logos/echo-logo.jpg')}
+                        style={styles.logo}
+                        resizeMode={"contain"}
+                    />
                     <Text style={styles.subtitle}>
-                        Authenticate to access the audio monitoring system.
+                        Authenticate to access the system.
                     </Text>
                 </View>
 
@@ -161,13 +163,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginBottom: 32,
     },
-    title: {
-        fontSize: 30,
-        fontWeight: '800',
-        textAlign: 'center',
-        marginBottom: 8,
-        letterSpacing: 0.5,
-        color: Colors.default.text,
+    logo: {
+        width: 200,
+        height: 200,
+        marginBottom: 16,
+        borderRadius: 24,
     },
     subtitle: {
         fontSize: 15,

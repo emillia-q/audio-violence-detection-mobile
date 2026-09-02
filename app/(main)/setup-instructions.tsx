@@ -3,6 +3,7 @@ import {useTheme} from "@/src/context/ModeContext";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const SETUP_STEPS = [
     "Turn on your audio device.",
@@ -20,17 +21,19 @@ export default function SetupInstructionsScreen() {
     return (
         <SafeAreaView style={[styles.safeArea, {backgroundColor: theme.background}]}>
             <View style={styles.content}>
-                <Text style={[styles.title, {color: theme.text}]}>Next Steps</Text>
-                <Text style={[styles.subtitle, {color: theme.muted}]}>
-                    Device ({macAddress}) is paired to your account. Follow these steps to activate it:
-                </Text>
+
+                <SectionHeader
+                    title="Setup Instructions"
+                    iconName="wifi-outline"
+                    description={`Follow the steps below to connect device (${macAddress}) to your local network and complete the activation process.`}
+                />
 
                 {/* Next steps */}
                 <View style={[styles.card, {backgroundColor: theme.surface, borderColor: theme.border}]}>
                     {SETUP_STEPS.map((step, index) => (
                         <View key={index} style={styles.stepRow}>
                             <Text style={[styles.stepNumber, {color: theme.text}]}>
-                                {index+1}.
+                                {index + 1}.
                             </Text>
                             <Text style={[styles.stepText, {color: theme.text}]}>
                                 {step}
@@ -58,22 +61,17 @@ const styles = StyleSheet.create({
         padding: 24,
         justifyContent: 'center',
     },
-    title: {
-        fontSize: 32,
-        fontWeight: '800',
-        marginBottom: 12,
-    },
-    subtitle: {
-        fontSize: 16,
-        lineHeight: 24,
-        marginBottom: 32,
-    },
     card: {
         padding: 24,
         borderRadius: 16,
         borderWidth: 1,
         gap: 16,
         marginBottom: 32,
+        shadowColor: '#000',
+        shadowOffset: {width: 0, height: 4},
+        shadowOpacity: 0.15,
+        shadowRadius: 8,
+        elevation: 3,
     },
     stepRow: {
         flexDirection: 'row',
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
     },
     stepNumber: {
         fontSize: 16,
-        fontWeight: '700',
+        fontWeight: '900',
         width: 24,
         marginTop: 2,
     },

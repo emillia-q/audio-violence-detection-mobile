@@ -29,8 +29,8 @@ export default function AlertList({alerts, onManage}: AlertListProps) {
                     title={alert.deviceName}
                     subtitle={formatDateTime(alert.createdAt)}
                     isRead={alert.isRead}
-                    onPress={() => console.log(`Alert with id: ${alert.id}`)}
-                    onMorePress={() => onManage && onManage(alert.id, alert.isRead)}
+                    iconName="warning-outline"
+                    onPress={() => onManage && onManage(alert.id, alert.isRead)}
                 />
             ))}
         </View>

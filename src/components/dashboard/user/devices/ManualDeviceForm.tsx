@@ -1,12 +1,13 @@
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 import {useTheme} from "@/src/context/ModeContext";
-import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View} from "react-native";
+import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View} from "react-native";
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const formSchema = z.object({
     macAddress: z.string()
@@ -48,8 +49,11 @@ export default function ManualDeviceForm({onSubmit, onSwitchToScanner, onCancel}
                 showsVerticalScrollIndicator={false}
             >
 
-                {/* Title */}
-                <Text style={[styles.title, {color: theme.text}]}>Add Device</Text>
+                <SectionHeader
+                    title="Add Device Manually"
+                    iconName="hardware-chip-outline"
+                    description="Enter the physical MAC address and secret key found on the back of your device."
+                />
 
                 {/* Inputs */}
                 {/* MAC address */}
@@ -122,11 +126,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
         paddingTop: 40,
         paddingBottom: 60,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 20,
     },
     buttonContainer: {
         gap: 16,

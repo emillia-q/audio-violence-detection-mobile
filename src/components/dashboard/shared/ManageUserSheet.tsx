@@ -2,7 +2,7 @@ import {z} from "zod";
 import {useTheme} from "@/src/context/ModeContext";
 import {useEffect, useState} from "react";
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
-import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {userService} from "@/src/api/service/user";
 import Toast from "react-native-toast-message";
@@ -13,6 +13,7 @@ import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {ProtectedUserDetailsResponse} from "@/src/api/dto/response/ProtectedUserDetailsResponse";
 import AlertModal from "@/src/components/ui/AlertModal";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const formSchema = z.object({
     nickname: z.string()
@@ -188,12 +189,12 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
                     ) : (
                         // Target form
                         <>
-                            <Text style={[styles.title, {color: theme.text}]}>Manage User</Text>
-
-                            {/* First & last name */}
-                            <Text style={[styles.userName, {color: theme.muted}]}>
-                                {userDetails.firstName} {userDetails.lastName}
-                            </Text>
+                            <SectionHeader
+                                title={`Manage ${userType === "trusted" ? "Trusted" : "Protected"} User`}
+                                iconName={"person-outline"}
+                                subtitle={`${userDetails.firstName} ${userDetails.lastName}`}
+                                description="Set a custom nickname to quickly identify this user on your list, or remove their access entirely."
+                            />
 
                             {/* Nickname */}
                             <AboveInputLabel title={"Nickname (optional)"}/>
@@ -253,15 +254,6 @@ const styles = StyleSheet.create({
         paddingVertical: 40,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 8,
-    },
-    userName: {
-        fontSize: 16,
-        marginBottom: 24,
     },
     buttonRow: {
         flexDirection: 'row',
