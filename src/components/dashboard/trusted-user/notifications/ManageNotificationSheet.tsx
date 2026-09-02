@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from "react-native";
+import {StyleSheet, View} from "react-native";
 import {useTheme} from "@/src/context/ModeContext";
 import {notificationService} from "@/src/api/service/notification";
 import Toast from "react-native-toast-message";
@@ -17,7 +17,6 @@ interface ManageNotificationSheetProps {
 }
 
 export default function ManageNotificationSheet({isVisible, notificationId, isRead, onClose, onSuccess}: ManageNotificationSheetProps) {
-    const theme = useTheme();
     const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
     // Toggle isRead flag
@@ -121,11 +120,6 @@ export default function ManageNotificationSheet({isVisible, notificationId, isRe
 const styles = StyleSheet.create({
     content: {
         padding: 24,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 24,
     },
     button: {
         gap: 16,
