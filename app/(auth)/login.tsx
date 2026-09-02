@@ -75,11 +75,8 @@ export default function Login() {
                         style={styles.logo}
                         resizeMode={"contain"}
                     />
-                    <Text style={styles.title}>
-                        Audio Detection System
-                    </Text>
                     <Text style={styles.subtitle}>
-                        Authenticate to access the audio monitoring system.
+                        Authenticate to access the system.
                     </Text>
                 </View>
 
