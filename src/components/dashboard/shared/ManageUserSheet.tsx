@@ -2,7 +2,7 @@ import {z} from "zod";
 import {useTheme} from "@/src/context/ModeContext";
 import {useEffect, useState} from "react";
 import {TrustedUserDetailsResponse} from "@/src/api/dto/response/TrustedUserDetailsResponse";
-import {ActivityIndicator, StyleSheet, Text, View} from "react-native";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
 import BottomSheet from "@/src/components/ui/BottomSheet";
 import {userService} from "@/src/api/service/user";
 import Toast from "react-native-toast-message";
