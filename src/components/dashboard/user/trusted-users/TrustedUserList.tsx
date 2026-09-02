@@ -22,13 +22,13 @@ export default function TrustedUserList({trustedUsers, onAddTrustedUser, onUserP
         );
     }
 
-    // 200 - list of trusted users
     return (
         <View style={styles.listContainer}>
             {trustedUsers.map((trustedUser) => (
                 <NavigationCard
                     key={trustedUser.trustedUserId}
                     title={trustedUser.trustedUserNickname}
+                    iconName="person-outline"
                     onPress={() => onUserPress(trustedUser.trustedUserId)}
                 />
             ))}
