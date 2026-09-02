@@ -29,6 +29,7 @@ export default function NotificationList({notifications, onManage}: Notification
                     title={notification.protectedUserDisplayName}
                     subtitle={formatDateTime(notification.createdAt)}
                     isRead={notification.isRead}
+                    iconName="warning-outline"
                     onPress={() => console.log(`Notification with id: ${notification.notificationId}`)}
                     onMorePress={() => onManage && onManage(notification.notificationId, notification.isRead)}
                 />
