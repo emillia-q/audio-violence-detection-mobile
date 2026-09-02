@@ -20,7 +20,7 @@ export default function NavigationCard({title, subtitle, isRead, onPress, onMore
             style={[
                 styles.cardContainer,
                 {
-                    backgroundColor: theme.surface,
+                    backgroundColor: theme.surfaceElevated,
                     borderColor: theme.border
                 },
                 style
@@ -79,7 +79,6 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        borderWidth: 1,
         borderRadius: 16,
         padding: 16,
         marginBottom: 12,
