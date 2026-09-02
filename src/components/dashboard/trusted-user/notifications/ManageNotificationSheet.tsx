@@ -1,5 +1,4 @@
 import {StyleSheet, View} from "react-native";
-import {useTheme} from "@/src/context/ModeContext";
 import {notificationService} from "@/src/api/service/notification";
 import Toast from "react-native-toast-message";
 import BottomSheet from "@/src/components/ui/BottomSheet";
