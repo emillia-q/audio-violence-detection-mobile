@@ -14,45 +14,48 @@ export default function DashboardSection({title, children, actionButton}: Dashbo
     return (
         <View style={styles.container}>
             {/* Section title */}
-            <Text style={[
-                styles.title,
-                {color: theme.muted}
-            ]}
-            >
-                {title}
-            </Text>
+            <View style={styles.headerRow}>
+                <Text style={[styles.title, {color: theme.muted}]}>
+                    {title}
+                </Text>
+
+                {/* Optional button */}
+                {actionButton && (
+                    <View style={styles.actionContainer}>
+                        {actionButton}
+                    </View>
+                )}
+            </View>
 
             {/* Main content */}
             <View style={styles.content}>
                 {children}
             </View>
-
-            {/* Optional button */}
-            {actionButton && (
-                <View style={styles.actionContainer}>
-                    {actionButton}
-                </View>
-            )}
         </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 24,
+        marginBottom: 32,
+    },
+    headerRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: 16,
+        paddingHorizontal: 4,
     },
     title: {
         fontSize: 14,
         fontWeight: '700',
         textTransform: 'uppercase',
         letterSpacing: 1.2,
-        marginBottom: 12,
-        marginLeft: 4,
     },
     content: {
+
     },
     actionContainer: {
-        marginTop: 12,
-        alignItems: 'flex-start',
+
     },
 });
