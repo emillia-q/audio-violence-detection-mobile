@@ -1,5 +1,5 @@
 import {
-    StyleSheet, Text,
+    StyleSheet,
     View
 } from "react-native";
 import {Colors} from "@/src/constants/theme";
