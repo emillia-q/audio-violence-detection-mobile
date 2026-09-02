@@ -37,7 +37,7 @@ export default function ModeSwitcher() {
                         styles.tabText,
                         {color: !isUserMode ? Colors.trustedUser.textActive : theme.textInactive}]}
                     >
-                        Superman
+                        Guardian
                     </Text>
                 </TouchableOpacity>
             </View>
