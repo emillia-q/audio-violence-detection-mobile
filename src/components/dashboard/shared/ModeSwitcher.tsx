@@ -29,7 +29,7 @@ export default function ModeSwitcher() {
                             styles.tabText,
                             {color: isUserMode ? Colors.user.textActive : theme.textInactive}]}
                         >
-                            Safe Zone
+                            My Safety
                         </Text>
                     </View>
                 </TouchableOpacity>
@@ -51,7 +51,7 @@ export default function ModeSwitcher() {
                             styles.tabText,
                             {color: !isUserMode ? Colors.trustedUser.textActive : theme.textInactive}]}
                         >
-                            Watch Zone
+                            My Network
                         </Text>
                     </View>
                 </TouchableOpacity>
