@@ -8,11 +8,10 @@ interface NavigationCardProps {
     isRead?: boolean;
     iconName?: keyof typeof Ionicons.glyphMap;
     onPress: () => void;
-    onMorePress?: () => void;
     style?: StyleProp<ViewStyle>;
 }
 
-export default function NavigationCard({title, subtitle, isRead, iconName, onPress, onMorePress, style}: NavigationCardProps) {
+export default function NavigationCard({title, subtitle, isRead, iconName, onPress, style}: NavigationCardProps) {
     const theme = useTheme();
 
     return (
@@ -63,19 +62,10 @@ export default function NavigationCard({title, subtitle, isRead, iconName, onPre
                 </View>
             </View>
 
-            {onMorePress ? (
-                <TouchableOpacity
-                    style={styles.moreButton}
-                    onPress={onMorePress}
-                    hitSlop={{top: 10, bottom: 10, left: 10, right: 10}} // Enlarges the click area
-                >
-                    <Ionicons name={"ellipsis-vertical"} size={20} color={theme.muted}/>
-                </TouchableOpacity>
-            ) : (
-                <View style={styles.chevronIcon}>
-                    <Ionicons name="chevron-forward" size={20} color={theme.muted} />
-                </View>
-            )}
+            {/* Chevron icon */}
+            <View style={styles.chevronIcon}>
+                <Ionicons name="chevron-forward" size={20} color={theme.muted} />
+            </View>
         </TouchableOpacity>
     );
 }
@@ -137,9 +127,5 @@ const styles = StyleSheet.create({
     },
     chevronIcon: {
         paddingLeft: 4,
-    },
-    moreButton: {
-        paddingLeft: 12,
-        paddingVertical: 4,
     },
 });

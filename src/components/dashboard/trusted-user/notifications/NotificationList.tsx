@@ -30,8 +30,7 @@ export default function NotificationList({notifications, onManage}: Notification
                     subtitle={formatDateTime(notification.createdAt)}
                     isRead={notification.isRead}
                     iconName="warning-outline"
-                    onPress={() => console.log(`Notification with id: ${notification.notificationId}`)}
-                    onMorePress={() => onManage && onManage(notification.notificationId, notification.isRead)}
+                    onPress={() => onManage && onManage(notification.notificationId, notification.isRead)}
                 />
             ))}
         </View>
