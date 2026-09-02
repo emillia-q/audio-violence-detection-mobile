@@ -38,7 +38,11 @@ export default function BottomSheetHeader({
                         <Text style={[styles.title, {color: theme.text}]}>{title}</Text>
 
                         {/* Space for e.g. StatusBadge */}
-                        {rightElement && rightElement}
+                        {rightElement && (
+                            <View style={styles.rightElementContainer}>
+                                {rightElement}
+                            </View>
+                        )}
                     </View>
 
                     {subtitle && (
@@ -84,8 +88,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         fontWeight: '700',
+    },
+    rightElementContainer: {
+        transform: [{ scale: 0.9 }], // Downscale the badge by 10%
     },
     subtitle: {
         fontSize: 14,
