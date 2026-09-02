@@ -12,7 +12,7 @@ interface BottomSheetHeaderProps {
     rightElement?: ReactNode;
 }
 
-export default function BottomSheetHeader({
+export default function SectionHeader({
                                               title,
                                               iconName,
                                               iconColor,

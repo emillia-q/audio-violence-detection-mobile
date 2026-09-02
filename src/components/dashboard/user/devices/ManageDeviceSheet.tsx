@@ -15,7 +15,7 @@ import {useRouter} from "expo-router";
 import StatusBadge from "@/src/components/dashboard/shared/StatusBadge";
 import {Ionicons} from "@expo/vector-icons";
 import AlertModal from "@/src/components/ui/AlertModal";
-import BottomSheetHeader from "@/src/components/ui/BottomSheetHeader";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -193,7 +193,7 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                     ) : (
                         // Target form
                         <>
-                            <BottomSheetHeader
+                            <SectionHeader
                                 title="Manage Device"
                                 iconName="hardware-chip-outline"
                                 subtitle={deviceDetails.macAddress}

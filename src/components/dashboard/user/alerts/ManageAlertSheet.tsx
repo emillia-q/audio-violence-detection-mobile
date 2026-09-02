@@ -6,7 +6,7 @@ import BottomSheet from "@/src/components/ui/BottomSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useState} from "react";
 import AlertModal from "@/src/components/ui/AlertModal";
-import BottomSheetHeader from "@/src/components/ui/BottomSheetHeader";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 interface ManageAlertSheetProps {
     isVisible: boolean;
@@ -83,7 +83,7 @@ export default function ManageAlertSheet({isVisible, alertId, isRead, onClose, o
                 onClose={onClose}
             >
                 <View style={styles.content}>
-                    <BottomSheetHeader
+                    <SectionHeader
                         title="Manage Alert"
                         iconName="warning-outline"
                         iconColor={theme.warning}

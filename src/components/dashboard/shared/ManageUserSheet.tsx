@@ -13,7 +13,7 @@ import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {ProtectedUserDetailsResponse} from "@/src/api/dto/response/ProtectedUserDetailsResponse";
 import AlertModal from "@/src/components/ui/AlertModal";
-import BottomSheetHeader from "@/src/components/ui/BottomSheetHeader";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const formSchema = z.object({
     nickname: z.string()
@@ -189,7 +189,7 @@ export default function ManageUserSheet({isVisible, userId, userType, onClose, o
                     ) : (
                         // Target form
                         <>
-                            <BottomSheetHeader
+                            <SectionHeader
                                 title={`Manage ${userType === "trusted" ? "Trusted" : "Protected"} User`}
                                 iconName={userType === "trusted" ? "person-outline" : "shield-checkmark-outline"}
                                 subtitle={`${userDetails.firstName} ${userDetails.lastName}`}

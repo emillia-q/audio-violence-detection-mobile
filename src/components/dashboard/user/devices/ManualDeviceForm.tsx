@@ -7,7 +7,7 @@ import {zodResolver} from "@hookform/resolvers/zod";
 import AboveInputLabel from "@/src/components/ui/AboveInputLabel";
 import {CustomInput} from "@/src/components/ui/CustomInput";
 import {CustomButton} from "@/src/components/ui/CustomButton";
-import BottomSheetHeader from "@/src/components/ui/BottomSheetHeader";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const formSchema = z.object({
     macAddress: z.string()
@@ -49,7 +49,7 @@ export default function ManualDeviceForm({onSubmit, onSwitchToScanner, onCancel}
                 showsVerticalScrollIndicator={false}
             >
 
-                <BottomSheetHeader
+                <SectionHeader
                     title="Add Device Manually"
                     iconName="hardware-chip-outline"
                     description="Enter the physical MAC address and secret key found on the back of your device."

@@ -10,7 +10,7 @@ import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import BottomSheet from "@/src/components/ui/BottomSheet";
-import BottomSheetHeader from "@/src/components/ui/BottomSheetHeader";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const formSchema = z.object({
     email: z.string().min(1, "E-mail is required").email("Invalid email format"),
@@ -70,7 +70,7 @@ export default function AddTrustedUserSheet({isVisible, onClose, onSubmit}: AddT
             onClose={handleClose}>
             <View style={styles.content}>
 
-                <BottomSheetHeader
+                <SectionHeader
                     title="Add Trusted User"
                     iconName="person-add-outline"
                     description="Enter the email address of the user you want to grant trusted access to."
