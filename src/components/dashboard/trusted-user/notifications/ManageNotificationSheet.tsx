@@ -6,6 +6,7 @@ import BottomSheet from "@/src/components/ui/BottomSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import {useState} from "react";
 import AlertModal from "@/src/components/ui/AlertModal";
+import SectionHeader from "@/src/components/ui/SectionHeader";
 
 interface ManageNotificationSheetProps {
     isVisible: boolean;
@@ -81,7 +82,12 @@ export default function ManageNotificationSheet({isVisible, notificationId, isRe
                 onClose={onClose}
             >
                 <View style={styles.content}>
-                    <Text style={[styles.title, {color: theme.text}]}>Manage Notification</Text>
+                    <SectionHeader
+                        title="Manage Notification"
+                        iconName="warning-outline"
+                        description="Change the visibility status or permanently remove this notification from your history."
+                    />
+
                     <View style={styles.button}>
                         <CustomButton
                             title={isRead ? "Mark as unread" : "Mark as read"}
