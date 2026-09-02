@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: '700',
         textTransform: 'uppercase',
-        letterSpacing: 1.2,
+        letterSpacing: 1.5,
     },
     content: {
 
