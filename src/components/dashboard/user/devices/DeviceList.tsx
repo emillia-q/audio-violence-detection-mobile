@@ -29,6 +29,7 @@ export default function DeviceList({devices, onAddDevice, onDevicePress}: Device
                 <NavigationCard
                     key={device.id}
                     title={device.name}
+                    iconName="hardware-chip-outline"
                     onPress={() => onDevicePress(device.id)}
                 />
             ))}
