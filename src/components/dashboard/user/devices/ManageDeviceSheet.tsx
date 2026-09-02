@@ -15,6 +15,7 @@ import {useRouter} from "expo-router";
 import StatusBadge from "@/src/components/dashboard/shared/StatusBadge";
 import {Ionicons} from "@expo/vector-icons";
 import AlertModal from "@/src/components/ui/AlertModal";
+import BottomSheetHeader from "@/src/components/ui/BottomSheetHeader";
 
 const formSchema = z.object({
     deviceName: z.string()
@@ -192,21 +193,18 @@ export default function ManageDeviceSheet({isVisible, deviceId, onClose, onSucce
                     ) : (
                         // Target form
                         <>
-                            <Text style={[styles.title, {color: theme.text}]}>Manage Device</Text>
-
-                            {/* Header row */}
-                            <View style={styles.headerRow}>
-                                {/* MAC address */}
-                                <Text style={[styles.macAddress, {color: theme.muted}]}>
-                                    {deviceDetails.macAddress}
-                                </Text>
-
-                                {/* Device status */}
-                                <StatusBadge
-                                    status={deviceDetails.isActivated ? "online" : "warning"}
-                                    text={deviceDetails.isActivated ? "Activated" : "Action Required"}
-                                />
-                            </View>
+                            <BottomSheetHeader
+                                title="Manage Device"
+                                iconName="hardware-chip-outline"
+                                subtitle={deviceDetails.macAddress}
+                                description="Change the device name for easier identification or permanently disconnect it."
+                                rightElement={
+                                    <StatusBadge
+                                        status={deviceDetails.isActivated ? "online" : "warning"}
+                                        text={deviceDetails.isActivated ? "Activated" : "Action Required"}
+                                    />
+                                }
+                            />
 
                             {/* SetUp info */}
                             {!deviceDetails.isActivated && (
@@ -292,21 +290,6 @@ const styles = StyleSheet.create({
         paddingVertical: 40,
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 8,
-    },
-    headerRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        marginBottom: 8,
-    },
-    macAddress: {
-        fontSize: 16,
-        marginBottom: 24,
     },
     setupBanner: {
         borderWidth: 1,
