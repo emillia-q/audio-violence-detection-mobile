@@ -3,7 +3,6 @@ import {useTheme} from "@/src/context/ModeContext";
 import {SafeAreaView} from "react-native-safe-area-context";
 import {StyleSheet, Text, View} from "react-native";
 import {CustomButton} from "@/src/components/ui/CustomButton";
-import {Ionicons} from "@expo/vector-icons";
 import SectionHeader from "@/src/components/ui/SectionHeader";
 
 const SETUP_STEPS = [
