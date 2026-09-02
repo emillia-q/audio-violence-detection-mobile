@@ -1,6 +1,6 @@
 import {DeviceCredentialsRequest} from "@/src/api/dto/request/DeviceCredentialsRequest";
 import {useTheme} from "@/src/context/ModeContext";
-import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet, Text, View} from "react-native";
+import {KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View} from "react-native";
 import {z} from "zod";
 import {Controller, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
@@ -126,11 +126,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 25,
         paddingTop: 40,
         paddingBottom: 60,
-    },
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        marginBottom: 20,
     },
     buttonContainer: {
         gap: 16,
