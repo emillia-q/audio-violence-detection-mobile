@@ -12,10 +12,16 @@ import ManageUserSheet from "@/src/components/dashboard/shared/ManageUserSheet";
 import {CustomButton} from "@/src/components/ui/CustomButton";
 import ManageNotificationSheet from "@/src/components/dashboard/trusted-user/notifications/ManageNotificationSheet";
 import AlertModal from "@/src/components/ui/AlertModal";
+import {useRouter} from "expo-router";
+
+const PAGE_NB = 0;
+const PAGE_SIZE = 3;
+const UPPER_LIMIT = 2;
 
 export default function TrustedUserDashboard() {
     const theme = useTheme();
     const {mode} = useMode();
+    const router = useRouter();
     const [isAlertModalVisible, setIsAlertModalVisible] = useState(false);
 
     // Api data
@@ -43,7 +49,7 @@ export default function TrustedUserDashboard() {
             setIsRefreshing(true);
 
         const [notificationsResult, protectedUsersResult] = await Promise.allSettled([
-            notificationService.getProtectedUsersNotifications(0, 3),
+            notificationService.getProtectedUsersNotifications(PAGE_NB, PAGE_SIZE),
             userService.getListOfProtectedUsers()
         ]);
 
@@ -102,12 +108,12 @@ export default function TrustedUserDashboard() {
             >
                 <DashboardSection
                     title={"Notifications"}
-                    actionButton={
-                        notifications.length > 0 && (
+                    footerAction={
+                        notifications.length > UPPER_LIMIT && (
                             <CustomButton
                                 title={"View all"}
                                 variant={"text"}
-                                onPress={() => console.log("full notification history")}
+                                onPress={() => router.push('/notification-history')}
                             />
                         )
                     }
