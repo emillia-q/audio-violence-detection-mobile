@@ -3,6 +3,8 @@ import {useEffect, useState} from "react";
 import {AlertListResponse} from "@/src/api/dto/response/AlertListResponse";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
+import {StyleSheet, View} from "react-native";
+import { Stack } from "expo-router";
 
 const PAGE_SIZE = 10;
 
@@ -31,4 +33,26 @@ export default function AlertHistoryScreen() {
     useEffect(() => {
         fetchAlerts(page);
     }, [page]);
+
+    return (
+        <View style={[styles.container, { backgroundColor: theme.background }]}>
+            {/* Header config via expo-router */}
+            <Stack.Screen
+                options={{
+                    headerShown: true,
+                    title: "History of alerts",
+                    headerBackTitle: "Back", // iOS
+                    headerTintColor: theme.tint,
+                    headerStyle: { backgroundColor: theme.background },
+                    headerShadowVisible: false
+                }}
+            />
+        </View>
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});
