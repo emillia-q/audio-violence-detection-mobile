@@ -3,8 +3,9 @@ import {useEffect, useState} from "react";
 import {AlertListResponse} from "@/src/api/dto/response/AlertListResponse";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
-import {ActivityIndicator, StyleSheet, View} from "react-native";
+import {ActivityIndicator, ScrollView, StyleSheet, View} from "react-native";
 import { Stack } from "expo-router";
+import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
 
 const PAGE_SIZE = 10;
 
@@ -58,6 +59,20 @@ export default function AlertHistoryScreen() {
                 </View>
             ) : (
                 <>
+                    <ScrollView
+                        contentContainerStyle={styles.scrollContainer}
+                        showsVerticalScrollIndicator={false}
+                    >
+                        <AlertList
+                            alerts={alerts}
+                            onManage={(id, isRead) => {
+                                setSelectedAlertId(id);
+                                setSelectedAlertIsRead(isRead);
+                                setIsManageAlertVisible(true);
+                            }}
+                        />
+                    </ScrollView>
+
                 </>
             )}
         </View>
@@ -72,5 +87,9 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    scrollContainer: {
+        padding: 16,
+        paddingBottom: 24,
     },
 });
