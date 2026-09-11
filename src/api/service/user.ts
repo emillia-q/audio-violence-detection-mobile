@@ -10,8 +10,8 @@ const PATH = '/users'
 
 export const userService = {
     // Trusted Users
-    getListOfTrustedUsers: async (): Promise<TrustedUserListResponse[]> => {
-        const response = await apiClient.get(`${PATH}/trusted-users`);
+    getListOfTrustedUsers: async (pageNumber: number = 0, pageSize: number = 10): Promise<TrustedUserListResponse[]> => {
+        const response = await apiClient.get(`${PATH}/trusted-users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
         // 204 support
         if (response.status === 204)
@@ -40,8 +40,8 @@ export const userService = {
     },
 
     // Protected users
-    getListOfProtectedUsers: async (): Promise<ProtectedUserListResponse[]> => {
-        const response = await apiClient.get(`${PATH}/protected-users`);
+    getListOfProtectedUsers: async (pageNumber: number = 0, pageSize: number = 10): Promise<ProtectedUserListResponse[]> => {
+        const response = await apiClient.get(`${PATH}/protected-users?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
         // 204
         if (response.status === 204)

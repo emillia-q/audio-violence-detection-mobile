@@ -4,7 +4,7 @@ import {apiClient} from "@/src/api/client";
 const PATH = '/notifications'
 
 export const notificationService = {
-    getProtectedUsersNotifications: async (pageNumber: number = 0, pageSize: number = 5): Promise<NotificationListResponse[]> => {
+    getProtectedUsersNotifications: async (pageNumber: number = 0, pageSize: number = 10): Promise<NotificationListResponse[]> => {
         const response = await apiClient.get(`${PATH}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
         // 204

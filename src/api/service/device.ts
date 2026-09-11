@@ -7,8 +7,8 @@ import {UpdateDeviceNameRequest} from "@/src/api/dto/request/UpdateDeviceNameReq
 const PATH = '/devices'
 
 export const deviceService = {
-    getUserDevices: async (): Promise<DeviceListResponse[]> => {
-        const response = await apiClient.get(`${PATH}`);
+    getUserDevices: async (pageNumber: number = 0, pageSize: number = 10): Promise<DeviceListResponse[]> => {
+        const response = await apiClient.get(`${PATH}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
         // 204 support
         if (response.status === 204)
