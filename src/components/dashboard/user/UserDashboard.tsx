@@ -158,7 +158,7 @@ export default function UserDashboard() {
             >
                 <DashboardSection
                     title={"Alerts"}
-                    actionButton={
+                    footerAction={
                         alerts.length > 0 && (
                             <CustomButton
                                 title={"View all"}
