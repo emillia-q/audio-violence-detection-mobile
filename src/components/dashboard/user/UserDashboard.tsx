@@ -222,6 +222,15 @@ export default function UserDashboard() {
                             />
                         )
                     }
+                    footerAction={
+                        trustedUsers.length > UPPER_LIMIT && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => router.push('/all-trusted-users')}
+                            />
+                        )
+                    }
                 >
                     <TrustedUserList
                         trustedUsers={trustedUsers}
