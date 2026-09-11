@@ -33,7 +33,7 @@ export default function AllTrustedUsersScreen() {
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error fetching devices',
+                text1: 'Error fetching trusted users',
             });
         } finally {
             setIsLoading(false);

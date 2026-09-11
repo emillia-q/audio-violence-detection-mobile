@@ -34,7 +34,7 @@ export default function NotificationHistoryScreen() {
         } catch (error) {
             Toast.show({
                 type: 'error',
-                text1: 'Error fetching alerts',
+                text1: 'Error fetching notifications',
             });
         } finally {
             setIsLoading(false);
