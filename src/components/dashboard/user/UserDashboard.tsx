@@ -163,7 +163,7 @@ export default function UserDashboard() {
                             <CustomButton
                                 title={"View all"}
                                 variant={"text"}
-                                onPress={() => console.log("full alert history")}
+                                onPress={() => router.push('/alert-history')}
                             />
                         )
                     }
