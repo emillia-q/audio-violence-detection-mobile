@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {AlertListResponse} from "@/src/api/dto/response/AlertListResponse";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
-import {ActivityIndicator, ScrollView, StyleSheet, View} from "react-native";
+import {ActivityIndicator, ScrollView, StyleSheet, Text, View} from "react-native";
 import { Stack } from "expo-router";
 import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
@@ -90,6 +90,14 @@ export default function AlertHistoryScreen() {
                                 setPage(prev => Math.max(0, prev - 1))
                             }}
                         />
+                        <Text style={[
+                            styles.pageText,
+                            {
+                                color: theme.tint,
+                            }
+                        ]}>
+                            {page + 1}
+                        </Text>
                         <CustomButton
                             title={"Next"}
                             variant={"text"}
@@ -136,6 +144,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 12,
-        paddingBottom: 48,
-    }
+        paddingBottom: 64,
+    },
+    pageText: {
+        fontSize: 16,
+        fontWeight: '600',
+    },
 });
