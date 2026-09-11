@@ -27,7 +27,7 @@ export default function AlertHistoryScreen() {
         try {
             const data = await alertService.getListOfAlerts(pageNumber, PAGE_SIZE);
             setAlerts(data);
-            if (data.length <= PAGE_SIZE)
+            if (data.length < PAGE_SIZE)
                 setHasMorePages(false);
             else
                 setHasMorePages(true);
@@ -93,9 +93,9 @@ export default function AlertHistoryScreen() {
                         <CustomButton
                             title={"Next"}
                             variant={"text"}
-                            disabled={page === 0}
+                            disabled={!hasMorePages}
                             onPress={() => {
-                                setPage(prev => Math.max(0, prev - 1))
+                                setPage(prev => prev + 1)
                             }}
                         />
                     </View>
@@ -136,6 +136,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 12,
-        paddingBottom: 32,
+        paddingBottom: 48,
     }
 });

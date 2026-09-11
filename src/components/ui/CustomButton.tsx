@@ -13,6 +13,7 @@ export function CustomButton({style, title, variant = 'solid', isDanger = false,
     return (
         <TouchableOpacity
             activeOpacity={0.85} // Smoother click
+            disabled={disabled}
             {...rest}
             style={[
                 styles.baseButton,
