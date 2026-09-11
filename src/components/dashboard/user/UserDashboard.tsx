@@ -20,6 +20,9 @@ import {useFocusEffect, useRouter} from "expo-router";
 import ManageDeviceSheet from "@/src/components/dashboard/user/devices/ManageDeviceSheet";
 import AlertModal from "@/src/components/ui/AlertModal";
 
+const PAGE_NB = 0;
+const PAGE_SIZE = 3;
+
 export default function UserDashboard() {
     const theme = useTheme();
     const {mode} = useMode();
@@ -58,7 +61,7 @@ export default function UserDashboard() {
         const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
             deviceService.getUserDevices(),
             userService.getListOfTrustedUsers(),
-            alertService.getListOfAlerts(0, 3)
+            alertService.getListOfAlerts(PAGE_NB, PAGE_SIZE)
         ]);
 
         let hasErrors = false;
