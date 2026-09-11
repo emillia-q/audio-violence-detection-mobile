@@ -7,6 +7,7 @@ import {ActivityIndicator, ScrollView, StyleSheet, View} from "react-native";
 import { Stack } from "expo-router";
 import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
+import {CustomButton} from "@/src/components/ui/CustomButton";
 
 const PAGE_SIZE = 10;
 
@@ -14,6 +15,7 @@ export default function AlertHistoryScreen() {
     const theme = useTheme();
 
     const [page, setPage] = useState(0);
+    const [hasMorePages, setHasMorePages] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
     const [alerts, setAlerts] = useState<AlertListResponse[]>([]);
     const [isManageAlertVisible, setIsManageAlertVisible] = useState(false);
@@ -25,6 +27,10 @@ export default function AlertHistoryScreen() {
         try {
             const data = await alertService.getListOfAlerts(pageNumber, PAGE_SIZE);
             setAlerts(data);
+            if (data.length <= PAGE_SIZE)
+                setHasMorePages(false);
+            else
+                setHasMorePages(true);
         } catch (error) {
             Toast.show({
                 type: 'error',
@@ -74,6 +80,26 @@ export default function AlertHistoryScreen() {
                         />
                     </ScrollView>
 
+                    {/* Pagination */}
+                    <View style={styles.paginationContainer}>
+                        <CustomButton
+                            title={"Prev"}
+                            variant={"text"}
+                            disabled={page === 0}
+                            onPress={() => {
+                                setPage(prev => Math.max(0, prev - 1))
+                            }}
+                        />
+                        <CustomButton
+                            title={"Next"}
+                            variant={"text"}
+                            disabled={page === 0}
+                            onPress={() => {
+                                setPage(prev => Math.max(0, prev - 1))
+                            }}
+                        />
+                    </View>
+
                     {/* Alert manage modal */}
                     <ManageAlertSheet
                         isVisible={isManageAlertVisible}
@@ -104,4 +130,12 @@ const styles = StyleSheet.create({
         padding: 16,
         paddingBottom: 24,
     },
+    paginationContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingHorizontal: 16,
+        paddingVertical: 12,
+        paddingBottom: 32,
+    }
 });
