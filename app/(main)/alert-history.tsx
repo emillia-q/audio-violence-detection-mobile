@@ -12,12 +12,14 @@ export default function AlertHistoryScreen() {
     const theme = useTheme();
 
     const [page, setPage] = useState(0);
+    const [isLoading, setIsLoading] = useState(true);
     const [alerts, setAlerts] = useState<AlertListResponse[]>([]);
     const [isManageAlertVisible, setIsManageAlertVisible] = useState(false);
     const [selectedAlertId, setSelectedAlertId] = useState<number | null>(null);
     const [selectedAlertIsRead, setSelectedAlertIsRead] = useState(false);
 
     const fetchAlerts = async (pageNumber: number) => {
+        setIsLoading(true);
         try {
             const data = await alertService.getListOfAlerts(pageNumber, PAGE_SIZE);
             setAlerts(data);
@@ -26,6 +28,8 @@ export default function AlertHistoryScreen() {
                 type: 'error',
                 text1: 'Error fetching alerts',
             });
+        } finally {
+            setIsLoading(false);
         }
     }
 
