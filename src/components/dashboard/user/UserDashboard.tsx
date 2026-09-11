@@ -22,6 +22,7 @@ import AlertModal from "@/src/components/ui/AlertModal";
 
 const PAGE_NB = 0;
 const PAGE_SIZE = 3;
+const UPPER_LIMIT = 2;
 
 export default function UserDashboard() {
     const theme = useTheme();
@@ -59,8 +60,8 @@ export default function UserDashboard() {
 
         // Execute requests concurrently to optimize loading time
         const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
-            deviceService.getUserDevices(),
-            userService.getListOfTrustedUsers(),
+            deviceService.getUserDevices(PAGE_NB, PAGE_SIZE),
+            userService.getListOfTrustedUsers(PAGE_NB, PAGE_SIZE),
             alertService.getListOfAlerts(PAGE_NB, PAGE_SIZE)
         ]);
 
@@ -162,7 +163,7 @@ export default function UserDashboard() {
                 <DashboardSection
                     title={"Alerts"}
                     footerAction={
-                        alerts.length > 0 && (
+                        alerts.length > UPPER_LIMIT && (
                             <CustomButton
                                 title={"View all"}
                                 variant={"text"}
@@ -188,6 +189,15 @@ export default function UserDashboard() {
                                 title={"+ Add device"}
                                 variant={"text"}
                                 onPress={() => router.push('/add-device')}
+                            />
+                        )
+                    }
+                    footerAction={
+                        devices.length > UPPER_LIMIT && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => router.push('/all-devices')}
                             />
                         )
                     }
