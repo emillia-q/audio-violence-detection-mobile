@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import {AlertListResponse} from "@/src/api/dto/response/AlertListResponse";
 import {alertService} from "@/src/api/service/alert";
 import Toast from "react-native-toast-message";
-import {StyleSheet, View} from "react-native";
+import {ActivityIndicator, StyleSheet, View} from "react-native";
 import { Stack } from "expo-router";
 
 const PAGE_SIZE = 10;
@@ -51,6 +51,15 @@ export default function AlertHistoryScreen() {
                     headerShadowVisible: false
                 }}
             />
+
+            {isLoading ? (
+                <View style={styles.centered}>
+                    <ActivityIndicator size={"large"} color={theme.tint}/>
+                </View>
+            ) : (
+                <>
+                </>
+            )}
         </View>
     );
 }
@@ -58,5 +67,10 @@ export default function AlertHistoryScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    centered: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
 });
