@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     },
     paginationContainer: {
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         alignItems: 'center',
         paddingHorizontal: 16,
         paddingVertical: 12,
