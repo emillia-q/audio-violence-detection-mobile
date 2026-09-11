@@ -7,7 +7,7 @@ import {ActivityIndicator, ScrollView, StyleSheet, Text, View} from "react-nativ
 import { Stack } from "expo-router";
 import AlertList from "@/src/components/dashboard/user/alerts/AlertList";
 import ManageAlertSheet from "@/src/components/dashboard/user/alerts/ManageAlertSheet";
-import {CustomButton} from "@/src/components/ui/CustomButton";
+import PaginationFooter from "@/src/components/ui/PaginationFooter";
 
 const PAGE_SIZE = 10;
 
@@ -81,32 +81,16 @@ export default function AlertHistoryScreen() {
                     </ScrollView>
 
                     {/* Pagination */}
-                    <View style={styles.paginationContainer}>
-                        <CustomButton
-                            title={"Prev"}
-                            variant={"text"}
-                            disabled={page === 0}
-                            onPress={() => {
-                                setPage(prev => Math.max(0, prev - 1))
-                            }}
-                        />
-                        <Text style={[
-                            styles.pageText,
-                            {
-                                color: theme.tint,
-                            }
-                        ]}>
-                            {page + 1}
-                        </Text>
-                        <CustomButton
-                            title={"Next"}
-                            variant={"text"}
-                            disabled={!hasMorePages}
-                            onPress={() => {
-                                setPage(prev => prev + 1)
-                            }}
-                        />
-                    </View>
+                    <PaginationFooter
+                        page={page}
+                        hasMorePages={hasMorePages}
+                        onPrev={() => {
+                            setPage(prev => Math.max(0, prev - 1))
+                        }}
+                        onNext={() => {
+                        setPage(prev => prev + 1)
+                        }}
+                    />
 
                     {/* Alert manage modal */}
                     <ManageAlertSheet
@@ -137,17 +121,5 @@ const styles = StyleSheet.create({
     scrollContainer: {
         padding: 16,
         paddingBottom: 24,
-    },
-    paginationContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        paddingHorizontal: 16,
-        paddingVertical: 12,
-        paddingBottom: 64,
-    },
-    pageText: {
-        fontSize: 16,
-        fontWeight: '600',
     },
 });
