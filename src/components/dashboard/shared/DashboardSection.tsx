@@ -6,9 +6,10 @@ interface DashboardSectionProps {
     title: string;
     children: ReactNode;
     actionButton?: ReactNode;
+    footerAction?: ReactNode;
 }
 
-export default function DashboardSection({title, children, actionButton}: DashboardSectionProps) {
+export default function DashboardSection({title, children, actionButton, footerAction}: DashboardSectionProps) {
     const theme = useTheme();
 
     return (
@@ -21,15 +22,22 @@ export default function DashboardSection({title, children, actionButton}: Dashbo
 
                 {/* Optional button */}
                 {actionButton && (
-                    <View style={styles.actionContainer}>
+                    <View>
                         {actionButton}
                     </View>
                 )}
             </View>
 
             {/* Main content */}
-            <View style={styles.content}>
+            <View>
                 {children}
+
+                {/* Optional footer btn */}
+                {footerAction && (
+                    <View style={styles.footerContainer}>
+                        {footerAction}
+                    </View>
+                )}
             </View>
         </View>
     );
@@ -52,10 +60,7 @@ const styles = StyleSheet.create({
         textTransform: 'uppercase',
         letterSpacing: 1.5,
     },
-    content: {
-
-    },
-    actionContainer: {
-
-    },
+    footerContainer: {
+        alignItems: 'flex-start',
+    }
 });

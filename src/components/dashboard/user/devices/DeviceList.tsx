@@ -5,7 +5,7 @@ import EmptyListView from "@/src/components/ui/EmptyListView";
 
 interface DeviceListProps {
     devices: DeviceListResponse[];
-    onAddDevice: () => void;
+    onAddDevice?: () => void;
     onDevicePress: (id: number) => void;
 }
 

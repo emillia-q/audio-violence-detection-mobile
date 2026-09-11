@@ -20,6 +20,10 @@ import {useFocusEffect, useRouter} from "expo-router";
 import ManageDeviceSheet from "@/src/components/dashboard/user/devices/ManageDeviceSheet";
 import AlertModal from "@/src/components/ui/AlertModal";
 
+const PAGE_NB = 0;
+const PAGE_SIZE = 3;
+const UPPER_LIMIT = 2;
+
 export default function UserDashboard() {
     const theme = useTheme();
     const {mode} = useMode();
@@ -56,9 +60,9 @@ export default function UserDashboard() {
 
         // Execute requests concurrently to optimize loading time
         const [devicesResult, trustedUsersResult, alertsResult] = await Promise.allSettled([
-            deviceService.getUserDevices(),
-            userService.getListOfTrustedUsers(),
-            alertService.getListOfAlerts(0, 3)
+            deviceService.getUserDevices(PAGE_NB, PAGE_SIZE),
+            userService.getListOfTrustedUsers(PAGE_NB, PAGE_SIZE),
+            alertService.getListOfAlerts(PAGE_NB, PAGE_SIZE)
         ]);
 
         let hasErrors = false;
@@ -158,12 +162,12 @@ export default function UserDashboard() {
             >
                 <DashboardSection
                     title={"Alerts"}
-                    actionButton={
-                        alerts.length > 0 && (
+                    footerAction={
+                        alerts.length > UPPER_LIMIT && (
                             <CustomButton
                                 title={"View all"}
                                 variant={"text"}
-                                onPress={() => console.log("full alert history")}
+                                onPress={() => router.push('/alert-history')}
                             />
                         )
                     }
@@ -188,6 +192,15 @@ export default function UserDashboard() {
                             />
                         )
                     }
+                    footerAction={
+                        devices.length > UPPER_LIMIT && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => router.push('/all-devices')}
+                            />
+                        )
+                    }
                 >
                     <DeviceList
                         devices={devices}
@@ -206,6 +219,15 @@ export default function UserDashboard() {
                                 title={"+ Add trusted user"}
                                 variant={"text"}
                                 onPress={() => setIsAddUserVisible(true)}
+                            />
+                        )
+                    }
+                    footerAction={
+                        trustedUsers.length > UPPER_LIMIT && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => router.push('/all-trusted-users')}
                             />
                         )
                     }

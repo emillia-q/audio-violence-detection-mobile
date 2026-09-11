@@ -4,7 +4,7 @@ import {apiClient} from "@/src/api/client";
 const PATH = '/alerts'
 
 export const alertService = {
-    getListOfAlerts: async (pageNumber: number = 0, pageSize: number = 5): Promise<AlertListResponse[]> => {
+    getListOfAlerts: async (pageNumber: number = 0, pageSize: number = 10): Promise<AlertListResponse[]> => {
         const response = await apiClient.get(`${PATH}?pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
         // 204
