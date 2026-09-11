@@ -61,7 +61,6 @@ const styles = StyleSheet.create({
         letterSpacing: 1.5,
     },
     footerContainer: {
-        marginTop: 12,
         alignItems: 'flex-start',
     }
 });
