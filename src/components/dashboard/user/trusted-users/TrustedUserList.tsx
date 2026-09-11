@@ -5,7 +5,7 @@ import EmptyListView from "@/src/components/ui/EmptyListView";
 
 interface TrustedUserListProps {
     trustedUsers: TrustedUserListResponse[];
-    onAddTrustedUser: () => void;
+    onAddTrustedUser?: () => void;
     onUserPress: (id: number) => void;
 }
 
