@@ -19,8 +19,8 @@ export function CustomButton({style, title, variant = 'solid', isDanger = false,
                 styles.baseButton,
                 // solid
                 variant === 'solid' && {
-                    backgroundColor: isDanger ? theme.danger : theme.primaryButton,
-                    shadowColor: isDanger ? theme.danger : theme.primaryButton,
+                    backgroundColor: disabled ? theme.disabled : (isDanger ? theme.danger : theme.primaryButton),
+                    shadowColor: disabled ? 'transparent' : (isDanger ? theme.danger : theme.primaryButton),
                     elevation: 4,
                     shadowOffset: {width: 0, height: 4},
                     shadowOpacity: 0.25,
@@ -31,7 +31,7 @@ export function CustomButton({style, title, variant = 'solid', isDanger = false,
                 variant === 'outline' && {
                     backgroundColor: 'transparent',
                     borderWidth: 1.5,
-                    borderColor: isDanger ? theme.danger : theme.tint,
+                    borderColor: disabled ? theme.disabled : (isDanger ? theme.danger : theme.tint),
                 },
 
                 // text
@@ -44,8 +44,11 @@ export function CustomButton({style, title, variant = 'solid', isDanger = false,
         >
             <Text style={[
                 styles.text,
-                {color: disabled ? (theme.disabled)
-                        : (variant === 'solid' ? theme.primaryButtonText : (isDanger ? theme.danger : theme.tint))}
+                {
+                    color: disabled
+                        ? (variant === 'solid' ? theme.primaryButtonText : theme.disabled)
+                        : (variant === 'solid' ? theme.primaryButtonText : (isDanger ? theme.danger : theme.tint)),
+                }
             ]}>
                 {title}
             </Text>
