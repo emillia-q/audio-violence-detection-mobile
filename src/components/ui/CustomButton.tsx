@@ -7,7 +7,7 @@ interface CustomButtonProps extends TouchableOpacityProps {
     isDanger?: boolean;
 }
 
-export function CustomButton({style, title, variant = 'solid', isDanger = false,  ...rest}: CustomButtonProps) {
+export function CustomButton({style, title, variant = 'solid', isDanger = false, disabled,  ...rest}: CustomButtonProps) {
     const theme = useTheme();
 
     return (
@@ -43,7 +43,8 @@ export function CustomButton({style, title, variant = 'solid', isDanger = false,
         >
             <Text style={[
                 styles.text,
-                {color: variant === 'solid' ? theme.primaryButtonText : (isDanger ? theme.danger : theme.tint)}
+                {color: disabled ? (theme.disabled)
+                        : (variant === 'solid' ? theme.primaryButtonText : (isDanger ? theme.danger : theme.tint))}
             ]}>
                 {title}
             </Text>
