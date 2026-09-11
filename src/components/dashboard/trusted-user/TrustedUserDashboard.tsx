@@ -127,7 +127,18 @@ export default function TrustedUserDashboard() {
                         }}
                     />
                 </DashboardSection>
-                <DashboardSection title={"Protected users"}>
+                <DashboardSection
+                    title={"Protected users"}
+                    footerAction={
+                        notifications.length > UPPER_LIMIT && (
+                            <CustomButton
+                                title={"View all"}
+                                variant={"text"}
+                                onPress={() => router.push('/all-protected-users')}
+                            />
+                        )
+                    }
+                >
                     <ProtectedUserList
                         protectedUsers={protectedUsers}
                         onUserPress={(id) => {
