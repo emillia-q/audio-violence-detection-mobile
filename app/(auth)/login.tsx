@@ -71,7 +71,7 @@ export default function Login() {
             >
                 <View style={styles.headerContainer}>
                     <Image
-                        source={require('@/assets/logos/echo-logo.jpg')}
+                        source={require('@/assets/logos/sone-logo.jpg')}
                         style={styles.logo}
                         resizeMode={"contain"}
                     />
