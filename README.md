@@ -25,8 +25,8 @@ This repository contains the **React Native application** in a four-component sy
 | Repository                                                                               | Role                                                             |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
 | [React Native application](https://github.com/emillia-q/audio-violence-detection-mobile) | Mobile experience for protected and trusted users                |
-| [IoT hardware](https://github.com/emillia-q/audio-violence-detection-hardware)           | Edge device that runs the model and sends alerts                 |
 | [Backend API](https://github.com/emillia-q/audio-violence-detection-backend)             | Authentication, device lifecycle, alerts, and user relationships |
+| [IoT hardware](https://github.com/emillia-q/audio-violence-detection-hardware)           | Edge device that runs the model and sends alerts                 |
 | [TinyML model](https://github.com/emillia-q/audio-violence-detection-tinyml)             | On-device audio violence classification                          |
 
 ## 🎬 Demo
