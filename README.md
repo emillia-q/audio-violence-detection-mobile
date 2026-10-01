@@ -24,10 +24,10 @@ This repository contains the **React Native application** in a four-component sy
 
 | Repository                                                                               | Role                                                             |
 | ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [React Native application](https://github.com/emillia-q/audio-violence-detection-mobile) | Mobile experience for protected and trusted users                |
+| [IoT hardware](https://github.com/emillia-q/audio-violence-detection-hardware)           | Edge device that runs the model and sends alerts                 |
 | [Backend API](https://github.com/emillia-q/audio-violence-detection-backend)             | Authentication, device lifecycle, alerts, and user relationships |
 | [TinyML model](https://github.com/emillia-q/audio-violence-detection-tinyml)             | On-device audio violence classification                          |
-| [IoT hardware](https://github.com/emillia-q/audio-violence-detection-hardware)           | Edge device that runs the model and sends alerts                 |
-| [React Native application](https://github.com/emillia-q/audio-violence-detection-mobile) | Mobile experience for protected and trusted users                |
 
 ## 🎬 Demo
 
@@ -50,13 +50,6 @@ This repository contains the **React Native application** in a four-component sy
 - **Forms:** React Hook Form and Zod for form state and validation
 - **Secure storage:** Expo SecureStore for token persistence
 - **Gestures:** React Native Pager View for swipeable dashboard modes
-
-## 🚀 Getting started
-
-- Install Node.js and the project dependencies with `npm install`.
-- Set `EXPO_PUBLIC_API_URL` to the address of a running backend API. For a physical device, use a host address reachable from that device rather than `localhost`.
-- Start Expo with `npm start`, then open the app in an Android or iOS development environment.
-- Use `npm run android` or `npm run ios` to run the native development build.
 
 ## 👩‍💻 Author
 
