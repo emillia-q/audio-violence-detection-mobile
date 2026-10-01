@@ -30,8 +30,21 @@ This repository contains the **React Native application** in a four-component sy
 | [TinyML model](https://github.com/emillia-q/audio-violence-detection-tinyml)             | On-device audio violence classification                          |
 
 ## 🎬 Demo
+
+### Video preview
+
+Preview of the application in use from the users perspective.
+
 <div align="center">
   <video src="https://github.com/user-attachments/assets/ba57972f-3cfa-43a6-bb9f-39862ee69104"></video>
+</div>
+
+### Adding a device with a QR code
+
+Users can add a device by scanning its QR code in the app.
+
+<div align="center">
+  <img src="assets/demo/qr-scan.jpg" alt="Scanning a QR code to add a device" width="320">
 </div>
 
 ## ✨ Key features
