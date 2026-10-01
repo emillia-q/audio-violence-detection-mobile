@@ -10,7 +10,7 @@
 > [!IMPORTANT]
 > **React Native mobile application** for managing a personal safety network. The app connects protected users, trusted contacts, and devices that can report potential danger.
 >
-> ⚠️ *This engineering-thesis proof of concept does not replace professional emergency services.*
+> ⚠️ _This engineering-thesis proof of concept does not replace professional emergency services._
 
 ## 🧩 Engineering thesis project
 
@@ -22,12 +22,12 @@ Instead of relying only on manual intervention, the system uses **TinyML on an I
 
 This repository contains the **React Native application** in a four-component system:
 
-| Repository | Role |
-| --- | --- |
-| [Backend API](https://github.com/emillia-q/audio-violence-detection-backend) | Authentication, device lifecycle, alerts, and user relationships |
-| [TinyML model](https://github.com/emillia-q/audio-violence-detection-tinyml) | On-device audio violence classification |
-| [IoT hardware](https://github.com/emillia-q/audio-violence-detection-hardware) | Edge device that runs the model and sends alerts |
-| [React Native application](https://github.com/emillia-q/audio-violence-detection-mobile) | Mobile experience for protected and trusted users |
+| Repository                                                                               | Role                                                             |
+| ---------------------------------------------------------------------------------------- | ---------------------------------------------------------------- |
+| [Backend API](https://github.com/emillia-q/audio-violence-detection-backend)             | Authentication, device lifecycle, alerts, and user relationships |
+| [TinyML model](https://github.com/emillia-q/audio-violence-detection-tinyml)             | On-device audio violence classification                          |
+| [IoT hardware](https://github.com/emillia-q/audio-violence-detection-hardware)           | Edge device that runs the model and sends alerts                 |
+| [React Native application](https://github.com/emillia-q/audio-violence-detection-mobile) | Mobile experience for protected and trusted users                |
 
 ## 🎬 Demo
 
