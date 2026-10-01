@@ -41,7 +41,7 @@ Preview of the application in use from the users perspective.
 
 ### Adding a device with a QR code
 
-Users can add a device by scanning its QR code in the app.
+Users can add a device by scanning its QR code in the app. The example screenshot also shows how the app handles an error when a scanned QR code does not belong to a device.
 
 <div align="center">
   <img src="assets/demo/qr-scan.jpg" alt="Scanning a QR code to add a device" width="320">
