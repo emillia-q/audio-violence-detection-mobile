@@ -30,8 +30,9 @@ This repository contains the **React Native application** in a four-component sy
 | [TinyML model](https://github.com/emillia-q/audio-violence-detection-tinyml)             | On-device audio violence classification                          |
 
 ## 🎬 Demo
-
-<!-- Add the app walkthrough video at assets/demo/mobile-demo.mp4, then link it here. -->
+<div align="center">
+  <video src="https://github.com/user-attachments/assets/ba57972f-3cfa-43a6-bb9f-39862ee69104"></video>
+</div>
 
 ## ✨ Key features
 
